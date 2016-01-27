@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const GET_CHANGES = 'GET_CHANGES';
 export const GET_CHANGE = 'GET_CHANGE';
+export const EDIT_CHANGE = 'EDIT_CHANGE';
 
 export function getChanges(data) {
   const url = `/api/changes/${data}`;
@@ -24,3 +25,7 @@ export function getChange(data) {
   }
 
 }
+
+// TODO: Create an action Creator
+// TODO: Sent data to the server PUT /api/change/:id
+// TODO: Update the EDIT_CHANGE reducer

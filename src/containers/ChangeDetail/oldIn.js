@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ChangeForm from 'components/Changes/change-form';
-import toastr from 'toastr';
 
 class ChangeDetail extends Component {
   state = {
@@ -28,12 +27,54 @@ class ChangeDetail extends Component {
       this.props.history.push('/changes');
   };
 
-  handleSubmit = (data) => {
-    console.log(data);
-    // TODO: Dispatch action EDIT_CHANGE to the changes
+  saveChange = (event) => {
+    event.preventDefault();
+    // var _change = this.state.change;
+    // var tDate = new Date(_change.CC_TDate);
+    //
+    // if(!this.changeFormIsValid()) {
+    //     return;
+    // }
+    //
+    // if (this.state.change.CC_No) {
+    //     actions.updateChange(_change);
+    // } else {
+    //     var created = [];
+    //     created.push({CC_Id : 0, CC_Action : "Created", CC_ActBy : window.USER.fullname, CC_ActDept : window.USER.dept, CC_ActDate : new Date()});
+    //     _change.CC_LOG = created;
+    //     _change.CC_Stat = this.state.change.CC_Stat || 1;
+    //     _change.CC_TDate = tDate.toISOString();
+    //     actions.createChange(_change);
+    // }
+
+    console.log(event);
+
     toastr.success('Change has been saved','Change Detail', {timeOut: 1000});
     //this.setState({dirty: false});
-    this.props.history.push('/changes');
+    history.push('/changes');
+  };
+
+  setChangeState = (event) => {
+        // this.setState({dirty: true});
+        // var field = event.target.name;
+        // var value = event.target.value;
+        // this.state.change[field] = value;
+        // return this.setState({change: this.state.change});
+        console.log(event);
+  };
+
+  setChangeStateDate = (field, value) => {
+      this.setState({dirty: true});
+      this.state.change[field] = value;
+      return this.setState({change: this.state.change});
+      console.log(field, value);
+  };
+
+  setChangeStateSelect = (field, value) => {
+      // this.setState({dirty: true});
+      // this.state.change[field] = value.id;
+      // return this.setState({change: this.state.change});
+      console.log(field, value);
   };
 
   showChange = () => {
@@ -99,7 +140,15 @@ class ChangeDetail extends Component {
           <div className={this.state.detailTab}>
             <div className="panel panel-default">
               <div className="panel-body">
-                <ChangeForm onSubmit={this.handleSubmit}/>
+                <ChangeForm
+                  change={this.props.change}
+                  onChange={this.setChangeState}
+                  onCancel={this.cancelChange}
+                  onSave={this.saveChange}
+                  errors={this.state.errors}
+                  onDateChange={this.setChangeStateDate}
+                  onSelectChange={this.setChangeStateSelect}
+                  status={this.state.status}/>
               </div>
             </div>
           </div>
