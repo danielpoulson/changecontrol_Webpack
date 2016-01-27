@@ -17,8 +17,7 @@ class ChangeDetail extends Component {
   };
 
   componentDidMount(){
-    console.log("This.props");
-    console.log(this.props.change);
+
   }
 
   handleStartDateChange = (startDate) => {
@@ -179,6 +178,7 @@ class ChangeDetail extends Component {
 export default reduxForm({
   form: 'change',
   fields,
+  touchOnChange: true
   },
   state => ({ // mapStateToProps
   initialValues: state.change // will pull state into form's initialValues
