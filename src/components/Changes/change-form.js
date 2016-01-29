@@ -1,8 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import {reduxForm} from 'redux-form';
 import Input from 'components/Common/text-input';
-import TextArea from 'components/Common/text-area'
-import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import TextArea from 'components/Common/text-area';
+import DateTimePicker from 'components/Common/date-picker';
+import ComboBox from 'components/Common/combo-box';
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(Moment);
@@ -29,7 +30,8 @@ class ChangeDetail extends Component {
       fields: {CC_Descpt, CC_Code, CC_Multi, CC_ASS, CC_Champ, CC_Comp, CC_TDate, CC_CDate, CC_Pry, CC_Stat, CC_Curt, CC_Prop, CC_Rat},
       handleSubmit,
       resetForm,
-      submitting
+      submitting,
+      status
       } = this.props;
     return (
       <form onSubmit={handleSubmit}>
@@ -91,17 +93,18 @@ class ChangeDetail extends Component {
         </div>
         <div className="row">
           <div className="col-sm-2">
-            <label className="control-label" htmlFor="CC_TDate">Target Date</label>
             <DateTimePicker
-              format={'DD/MM/YY'}
-              name="CC_TDate"
-              time={false}
-              value={fields.CC_TDate}
+              label="Target Date"
+              onChange={this.handleStartDateChange}
+              {...CC_TDate}
             />
           </div>
           <div className="col-sm-2">
-            <label className="control-label" htmlFor="CC_CDate">Date Completed</label>
-
+            <DateTimePicker
+              label="Complete Date"
+              onChange={this.handleStartDateChange}
+              {...CC_CDate}
+            />
           </div>
           <div className="col-sm-1">
             <Input
@@ -111,20 +114,12 @@ class ChangeDetail extends Component {
               inputstyle="form-control"  />
           </div>
           <div className="col-sm-4">
-            <label className="control-label" htmlFor="CC_Stat">Change Status</label>
-            <select className="form-control"
+            <ComboBox
+              label="Complete Date"
+              onChange={this.handleStartDateChange}
+              status={status}
               {...CC_Stat}
-              value={CC_Stat.value || ''}  // required syntax for reset form to work
-              // undefined will not change value to first empty option
-              // when resetting
-            >
-              <option></option>
-              <option value="1">Review</option>
-              <option value="2">Approved</option>
-              <option value="3">On-hold</option>
-              <option value="4">Closed</option>
-              <option value="5">Cancelled</option>
-            </select>
+            />
           </div>
         </div>
 

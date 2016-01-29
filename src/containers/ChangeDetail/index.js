@@ -99,7 +99,7 @@ class ChangeDetail extends Component {
           <div className={this.state.detailTab}>
             <div className="panel panel-default">
               <div className="panel-body">
-                <ChangeForm onSubmit={this.handleSubmit}/>
+                <ChangeForm onSubmit={this.handleSubmit} status={this.state.status}/>
               </div>
             </div>
           </div>
