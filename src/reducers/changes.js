@@ -1,6 +1,6 @@
 import { GET_CHANGES, EDIT_CHANGE } from 'actions/actions_changes';
 
-export default function(state = null, action) {
+export default function(state = [], action) {
   switch (action.type) {
     case GET_CHANGES:
       return action.payload.data;

@@ -15,7 +15,7 @@ class Changes extends Component {
   }
 
   componentWillMount() {
-    if (!this.props.changes) {
+    if (!this.props.changes.length > 0) {
       this.props.getChanges(4);
     }
   }
