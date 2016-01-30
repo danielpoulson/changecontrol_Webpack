@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ChangeForm from 'components/Changes/change-form';
 import toastr from 'toastr';
+
+/* actions */
+import { editChange } from 'actions/actions_changes';
 
 class ChangeDetail extends Component {
   state = {
@@ -29,10 +33,11 @@ class ChangeDetail extends Component {
   };
 
   handleSubmit = (data) => {
-    console.log(data);
-    // TODO: Dispatch action EDIT_CHANGE to the changes
+    data._id = this.props.change._id;
+    data.CC_No = this.props.change.CC_No;
+    data.CC_Stat = data.CC_Stat.id;
+    this.props.editChange(data);
     toastr.success('Change has been saved','Change Detail', {timeOut: 1000});
-    //this.setState({dirty: false});
     this.props.history.push('/changes');
   };
 
@@ -135,8 +140,8 @@ function mapStateToProps(state) {
   };
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({ getChanges, setMain }, dispatch);
-// }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ editChange }, dispatch);
+}
 
-export default connect(mapStateToProps)(ChangeDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(ChangeDetail);

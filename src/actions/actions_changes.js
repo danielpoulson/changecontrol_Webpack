@@ -26,6 +26,13 @@ export function getChange(data) {
 
 }
 
-// TODO: Create an action Creator
-// TODO: Sent data to the server PUT /api/change/:id
-// TODO: Update the EDIT_CHANGE reducer
+export function editChange(data) {
+  const url = `/api/change/${data._id}`;
+  const request = axios.put(url, data);
+
+  return {
+    type: EDIT_CHANGE,
+    payload: data
+  }
+
+}

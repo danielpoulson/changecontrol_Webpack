@@ -14,8 +14,10 @@ class Changes extends Component {
     super(props);
   }
 
-  componentWillMount(){
-    this.props.getChanges(4);
+  componentWillMount() {
+    if (!this.props.changes) {
+      this.props.getChanges(4);
+    }
   }
 
   render() {

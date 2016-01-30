@@ -8,8 +8,11 @@ import configureStore from './store/configureStore';
 import routes from './routes';
 import 'react-widgets/lib/less/react-widgets.less';
 
+
 const history = useRouterHistory(createHashHistory)({ queryKey: false });
 const store = configureStore();
+
+
 
 syncReduxAndRouter(history, store);
 
