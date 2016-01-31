@@ -14,6 +14,14 @@ module.exports = {
     loaders: [{
       test: /\.scss$/,
       loader: 'style!css!postcss-loader!sass',
+    },
+    {
+      test: /\.css$/, // Only .css files
+      loader: 'style-loader!css-loader' // Run both loaders
+    },
+    {
+      test: /\.less$/,
+      loader: "style-loader!css-loader!less-loader"
     }],
   },
 

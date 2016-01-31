@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 /* component styles */
-import { topband, topband_h1 } from './styles.scss';
+import './styles.scss';
 
 
 export class Header extends Component {
@@ -19,10 +19,10 @@ export class Header extends Component {
 
         return (
             <div>
-                <div className={`${topband}`}>
+                <div className="topband">
                     <section className="col-sm-12">
                         <div className="col-sm-5">
-                            <h3 className={`${topband_h1}`}>Technical Services</h3>
+                            <h3 className="topband_h1">Technical Services</h3>
                         </div>
                         <div className="col-sm-7">
                             <h5 style={textStyle} className="pull-right">Welcome: {this.state.fullname} </h5>

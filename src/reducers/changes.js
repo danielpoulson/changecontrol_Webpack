@@ -1,4 +1,4 @@
-import { GET_CHANGES, EDIT_CHANGE } from 'actions/actions_changes';
+import { GET_CHANGES, EDIT_CHANGE, LOAD_PAGE } from 'actions/actions_changes';
 
 export default function(state = [], action) {
   switch (action.type) {
@@ -7,12 +7,6 @@ export default function(state = [], action) {
 
     case EDIT_CHANGE:
       const _data =  action.payload;
-    // TODO: Update the EDIT_CHANGE reducer
-      // console.log("Reducer Change");
-      // console.log("state");
-      // console.log(...state);
-      // console.log("data");
-      // console.log(_data);
       const currIds = state.map(function (c) { return c._id; });
       const index = currIds.indexOf(_data._id);
       console.log(`Index = ${index}`);
@@ -21,7 +15,23 @@ export default function(state = [], action) {
         // Copy the object before mutating
         Object.assign({}, _data),
         ...state.slice(index + 1)
-        ]
+      ];
+
+    case LOAD_PAGE:
+    // this.props.loadPage(page_num, this.state.numPage, search);
+      let per_page = action.data.per_page || 10;
+      let page = action.data.page || 1;
+      let offset = (page - 1) * per_page;
+      let paginatedItems = state.slice(offset, offset + per_page);
+
+      return {
+        page: page,
+        per_page: per_page,
+        total: state.length,
+        total_pages: Math.ceil(state.length / per_page),
+        data: paginatedItems
+      };
+
   }
 
   return state;

@@ -3,10 +3,13 @@
 @import 'fonts/roboto';
 @import 'typography';
 @import 'links';
+@import '../../../../node_modules/toastr/toastr';
+
 
 :global(body) {
 
 }
+
 
 /* ------------  File Icon Styles ---------*/
 .fa-file-image-o {
