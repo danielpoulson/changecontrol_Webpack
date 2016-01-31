@@ -1,9 +1,13 @@
-import { GET_CHANGES, EDIT_CHANGE, LOAD_PAGE } from 'actions/actions_changes';
+import { GET_CHANGES, EDIT_CHANGE, LOAD_PAGE_CHANGES } from 'actions/actions_changes';
 
 export default function(state = [], action) {
+  let alldata = [];
+  let per_page = 10;
+  let page = 1;
+  let offset = 0;
+  let paged = [];
+
   switch (action.type) {
-    case GET_CHANGES:
-      return action.payload.data;
 
     case EDIT_CHANGE:
       const _data =  action.payload;
@@ -17,20 +21,38 @@ export default function(state = [], action) {
         ...state.slice(index + 1)
       ];
 
-    case LOAD_PAGE:
+    case GET_CHANGES:
     // this.props.loadPage(page_num, this.state.numPage, search);
-      let per_page = action.data.per_page || 10;
-      let page = action.data.page || 1;
-      let offset = (page - 1) * per_page;
-      let paginatedItems = state.slice(offset, offset + per_page);
+      alldata = action.payload.data;
+      per_page = 10;
+      page = 1;
+      offset = (page - 1) * per_page;
+      paged = alldata.slice(offset, offset + per_page);
 
       return {
         page: page,
         per_page: per_page,
-        total: state.length,
-        total_pages: Math.ceil(state.length / per_page),
-        data: paginatedItems
+        total: alldata.length,
+        total_pages: Math.ceil(alldata.length / per_page),
+        paged: paged,
+        alldata : alldata
       };
+
+      case LOAD_PAGE_CHANGES:
+      // this.props.loadPage(page_num, this.state.numPage, search);
+        alldata = state.alldata;
+        per_page = 10;
+        page = action.data || 1;
+        offset = (page - 1) * per_page;
+        paged = alldata.slice(offset, offset + per_page);
+        return {
+          page: page,
+          per_page: per_page,
+          total: alldata.length,
+          total_pages: Math.ceil(alldata.length / per_page),
+          paged: paged,
+          alldata : alldata
+        };
 
   }
 

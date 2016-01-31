@@ -3,8 +3,8 @@ import ChangeRow from './change-row';
 
 export default class ChangeList extends Component {
   handleClick = (i) => {
-    const _id = this.props.changes[i].CC_No;
-    const _Title = this.props.changes[i].CC_Descpt;
+    const _id = this.props.changes.paged[i].CC_No;
+    const _Title = this.props.changes.paged[i].CC_Descpt;
     this.props.setMain({MainId : _id, MainTitle: _Title, CurrentMode: 'change'});
     this.props.getChange(_id);
     this.props.history.push(`/change/${_id}`);
@@ -12,7 +12,7 @@ export default class ChangeList extends Component {
 
     render () {
 
-        var _changes = this.props.changes;
+        var _changes = this.props.changes.paged;
 
         if(Object.keys(_changes).length > 0){
 

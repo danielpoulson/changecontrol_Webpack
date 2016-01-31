@@ -28,8 +28,6 @@ class Changes extends Component {
     if (!this.props.changes.length > 0) {
       this.props.getChanges(4);
     }
-
-    this.onChange();
   }
 
   newChange = () => {
@@ -69,7 +67,6 @@ class Changes extends Component {
     let search = searchText || this.state.txtSearch;
     // TODO: Write a function for call pages
     this.props.loadPage(page_num, this.state.numPage, search);
-    this.setState({count: this.props.changes.length});
   };
 
   render() {
@@ -123,8 +120,8 @@ class Changes extends Component {
         <div className="col-sm-6">
           <Pagination
             activePage = {this.state.activePage}
-            numPage = {this.state.numPage}
-            count = {this.state.count}
+            numPage = {this.props.changes.per_page}
+            count = {this.props.changes.total}
             getPage = {this.linkClick.bind(this)}/>
         </div>
       </section>

@@ -3,7 +3,8 @@ import axios from 'axios';
 export const GET_CHANGES = 'GET_CHANGES';
 export const GET_CHANGE = 'GET_CHANGE';
 export const EDIT_CHANGE = 'EDIT_CHANGE';
-export const LOAD_PAGE = 'LOAD_PAGE';
+export const LOAD_PAGE_CHANGES = 'LOAD_PAGE_CHANGES';
+
 
 export function getChanges(data) {
   const url = `/api/changes/${data}`;
@@ -40,9 +41,8 @@ export function editChange(data) {
 
 
 export function loadPage(data) {
-
   return {
-    type: LOAD_PAGE,
+    type: LOAD_PAGE_CHANGES,
     data
   }
 

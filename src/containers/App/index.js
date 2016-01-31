@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 /* global styles for app */
 
 import 'scss/bootstrap/css/bootstrap.min.css';
-import 'scss/font-awesome-4.4.0/css/font-awesome.min.css';
+import 'scss/font-awesome-4.5.0/css/font-awesome.min.css';
 import 'scss/styles.scss';
 
 
