@@ -22,6 +22,7 @@ class Changes extends Component {
       txtSearch: '',
       showAll: false
     };
+    this.searchText= this.searchText.bind(this);
   }
 
   componentWillMount() {
@@ -32,6 +33,7 @@ class Changes extends Component {
 
   newChange = () => {
     // TODO: Add in the fucntionality for a new change
+    this.props.setMain({MainId : null, MainTitle: 'New Change Control', CurrentMode: 'change'});
     this.props.history.push('/change/new');
   };
 
@@ -48,12 +50,12 @@ class Changes extends Component {
       this.setState({showAll:_showAll});
 
       if (this.state.showAll !== true) {
-          //actions.getChanges(5);
+          this.props.getChanges(5);
       } else {
-          //actions.getChanges(4);
+          this.props.getChanges(4);
       }
 
-      toastr.success('Only showing active changes - ' + this.state.showAll,'Change Detail', {timeOut: 1000});
+      Toastr.success('Only showing active changes - ' + this.state.showAll,'Change Detail', {timeOut: 1000});
   };
 
   linkClick(i){
@@ -63,11 +65,23 @@ class Changes extends Component {
   }
 
   onChange = (page_num, searchText) => {
-    var page_num = page_num || 1;
-    let search = searchText || this.state.txtSearch;
+    let action = {};
+    action.page_num = page_num || 1;
+    action.search = searchText || this.state.txtSearch;
+    action.numPage = this.state.numPage;
     // TODO: Write a function for call pages
-    this.props.loadPage(page_num, this.state.numPage, search);
+    this.props.loadPage(action);
   };
+
+  searchText(event){
+    let value = event.target.value;
+    let field = event.target.name;
+    this.setState({activePage: 0});
+
+    this.setState({txtSearch: value});
+    this.onChange(0, value);
+
+  }
 
   render() {
     var _changeTitle = "Register";
@@ -91,9 +105,22 @@ class Changes extends Component {
       <section>
 
         <div className="row">
-          <h3>
-          Changes - {this.props.main.MainId} - {this.props.main.MainTitle} - {this.props.main.CurrentMode}
-          </h3>
+           <div className="section-header">
+                <div className="col-sm-6 pull-left">
+                        <p className="section-header-text-main">Change Control - {_changeTitle} </p>
+                </div>
+
+                <div className="col-sm-6 pull-right input-group " style={divStyle}>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={this.state.txtSearch}
+                        onChange={this.searchText}
+                        placeholder="Enter Search Text"/>
+                    <span style={spanStyle} className="input-group-addon glyphicon glyphicon-search"></span>
+
+                </div>
+            </div>
         </div>
 
         <div className="row">

@@ -42,6 +42,7 @@ export function editChange(data) {
 
 export function loadPage(data) {
   return {
+
     type: LOAD_PAGE_CHANGES,
     data
   }

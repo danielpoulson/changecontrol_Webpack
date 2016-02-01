@@ -11,13 +11,13 @@ class ChangeDetail extends Component {
   state = {
             changeTitle: 'Get the main title',
             dirty: false,
-            detailTab: 'show',
+            DetailTab: 'show',
             errors: {},
-            fileTab: 'hidden',
+            FilesTab: 'hidden',
             fCount: 0,
-            logTab: 'hidden',
+            LogTab: 'hidden',
             tasks: [],
-            taskTab: 'hidden',
+            TasksTab: 'hidden',
             tCount: 0,
             status: [
                     { "id": 1 , "name": "Review" },
@@ -41,38 +41,42 @@ class ChangeDetail extends Component {
     this.props.history.push('/changes');
   };
 
-  showChange = () => {
-    this.setState({detailTab: 'show'});
-    this.setState({taskTab: 'hidden'});
-    this.setState({fileTab: 'hidden'});
-    this.setState({logTab: 'hidden'});
+  // showChange = () => {
+  //   this.setState({detailTab: 'show'});
+  //   this.setState({taskTab: 'hidden'});
+  //   this.setState({fileTab: 'hidden'});
+  //   this.setState({logTab: 'hidden'});
+  //
+  // };
+  //
+  // showTask = () => {
+  //     this.setState({detailTab: 'hidden'});
+  //     this.setState({taskTab: 'show'});
+  //     this.setState({fileTab: 'hidden'});
+  //     this.setState({logTab: 'hidden'});
+  //     this.setState({tasks: TaskStore.all()});
+  //
+  //
+  // };
+  //
+  // showFile = () => {
+  //
+  //     this.setState({detailTab: 'hidden'});
+  //     this.setState({taskTab: 'hidden'});
+  //     this.setState({logTab: 'hidden'});
+  //     this.setState({fileTab: 'show'});
+  // };
 
-  };
+  showTab = (event) => {
 
-  showTask = () => {
-      this.setState({detailTab: 'hidden'});
-      this.setState({taskTab: 'show'});
-      this.setState({fileTab: 'hidden'});
-      this.setState({logTab: 'hidden'});
-      this.setState({tasks: TaskStore.all()});
+    let tabType = `${event.target.innerText}Tab`;
+    tabType = tabType.replace(/\s+/g, '');
 
-
-  };
-
-  showFile = () => {
-
-      this.setState({detailTab: 'hidden'});
-      this.setState({taskTab: 'hidden'});
-      this.setState({logTab: 'hidden'});
-      this.setState({fileTab: 'show'});
-  };
-
-  showLog = () => {
-
-      this.setState({detailTab: 'hidden'});
-      this.setState({taskTab: 'hidden'});
-      this.setState({fileTab: 'hidden'});
-      this.setState({logTab: 'show'});
+      this.setState({DetailTab: 'hidden'});
+      this.setState({TasksTab: 'hidden'});
+      this.setState({FilesTab: 'hidden'});
+      this.setState({LogTab: 'hidden'});
+      this.setState({ [tabType] :'show'});
   };
 
 
@@ -84,27 +88,25 @@ class ChangeDetail extends Component {
               <p className="section-header-text-sub">{this.props.main.MainTitle}</p>
             </div>
           </div>
-
-
           <ul className="nav nav-tabs dpHand">
-            <li className={this.state.detailTab == 'show' ? "active" : "" }>
-              <a onClick={this.showChange} data-toggle="tab">Detail</a>
+            <li className={this.state.DetailTab == 'show' ? "active" : "" }>
+              <a onClick={this.showTab} data-toggle="tab">Detail</a>
             </li>
-            <li className={this.state.taskTab == 'show' ? "active" : "" }>
-              <a onClick={this.showTask} data-toggle="tab">Tasks <span className="badge"> {this.state.tCount} </span></a>
+            <li className={this.state.TasksTab == 'show' ? "active" : "" }>
+              <a onClick={this.showTab} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.state.tCount} </span></a>
             </li>
-            <li className={this.state.fileTab == 'show' ? "active" : "" }>
-              <a onClick={this.showFile} data-toggle="tab">Files <span className="badge"> {this.state.fCount} </span></a>
+            <li className={this.state.FilesTab == 'show' ? "active" : "" }>
+              <a onClick={this.showTab} data-toggle="tab">Files <span className="badge"> {this.state.fCount} </span></a>
             </li>
-            <li className={this.state.logTab == 'show' ? "active" : "" }>
-              <a onClick={this.showLog} data-toggle="tab">Log</a>
+            <li className={this.state.LogTab == 'show' ? "active" : "" }>
+              <a onClick={this.showTab} data-toggle="tab">Log</a>
             </li>
           </ul>
 
-          <div className={this.state.detailTab}>
+          <div className={this.state.DetailTab}>
             <div className="panel panel-default">
               <div className="panel-body">
-                <ChangeForm onSubmit={this.handleSubmit} status={this.state.status}/>
+                <ChangeForm onSubmit={this.handleSubmit} status={this.state.status} onCancel={this.cancelChange}/>
               </div>
             </div>
           </div>

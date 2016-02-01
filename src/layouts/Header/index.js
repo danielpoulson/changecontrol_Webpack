@@ -22,7 +22,7 @@ export class Header extends Component {
                 <div className="topband">
                     <section className="col-sm-12">
                         <div className="col-sm-5">
-                            <h3 className="topband_h1">Technical Services</h3>
+                            <h3 className="topband_h1">Change Control</h3>
                         </div>
                         <div className="col-sm-7">
                             <h5 style={textStyle} className="pull-right">Welcome: {this.state.fullname} </h5>

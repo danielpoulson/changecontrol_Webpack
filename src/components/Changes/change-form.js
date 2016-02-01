@@ -158,11 +158,11 @@ class ChangeDetail extends Component {
         </div>
 
         <div>
-          <button disabled={submitting} onClick={handleSubmit}>
+          <button className="btn btn-success pull-left" disabled={submitting} onClick={handleSubmit}>
             {submitting ? <i/> : <i/>} Submit
           </button>
-          <button disabled={submitting} onClick={resetForm}>
-            Clear Values
+          <button className="btn btn-info dp-margin-10-LR" disabled={submitting} onClick={this.props.onCancel}>
+            Cancel
           </button>
         </div>
       </form>

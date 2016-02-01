@@ -26,7 +26,7 @@ export class Navigation extends React.Component {
         return (
             <div>
                 <div className="list-group dp-nav">
-                  <Link className="list-group-item" to="/" activeClassName="active"><i className="fa fa-home fa-fw"></i>&nbsp; Home</Link>
+                  <Link className="list-group-item" to="/"><i className="fa fa-home fa-fw"></i>&nbsp; Home</Link>
                   <Link className="list-group-item" to="/changes" activeClassName="active"><i className="fa fa-list-ul fa-fw"></i>&nbsp; Change Register</Link>
                     <Link className="list-group-item" to="/tasks" activeClassName="active"><i className="fa fa-tasks fa-fw"></i>&nbsp; All Tasks</Link>
                     <a className="list-group-item" onClick={this.getFileList}><i className="fa fa-file-text-o fa-fw"></i>&nbsp; Files</a>
