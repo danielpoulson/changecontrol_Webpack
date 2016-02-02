@@ -4,6 +4,7 @@ import { reducer as formReducer } from 'redux-form';
 import ChangesReducer from './changes';
 import ChangeReducer from './reducer_change';
 import MainReducer from './reducer_main';
+import TasksReducer from './reducer_tasks';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
   /* your reducers */
   changes : ChangesReducer,
   change : ChangeReducer,
-  main: MainReducer
+  main: MainReducer,
+  tasks: TasksReducer
 });
 
 export default rootReducer;

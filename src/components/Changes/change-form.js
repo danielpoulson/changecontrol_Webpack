@@ -8,7 +8,12 @@ import Moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(Moment);
 export const fields = ['CC_Descpt', 'CC_Code', 'CC_Multi', 'CC_ASS', 'CC_Champ', 'CC_Comp', 'CC_TDate', 'CC_CDate', 'CC_Pry', 'CC_Stat', 'CC_Curt', 'CC_Prop', 'CC_Rat'];
-
+const newdata = {  // used to populate "account" reducer when "Load" is clicked
+  CC_Pry: 'A',
+  CC_Stat: 1,
+  CC_Champ: 'Daniel Poulson',
+  CC_TDate: new Date()
+};
 class ChangeDetail extends Component {
   static propTypes = {
     fields: PropTypes.object.isRequired,
@@ -101,7 +106,16 @@ class ChangeDetail extends Component {
           </div>
           <div className="col-sm-2">
             <DateTimePicker
-              label="Complete Date"
+              label="Complete Date"          // this.setState({tasks:{}});
+          // var _change = {};
+          // _change.CC_Descpt = '';
+          // _change.CC_Code = '';
+          // //TODO: Auto fill drop down for champ names
+          // _change.CC_Champ = '';
+          // _change.CC_Comp = '';
+          // _change.CC_Pry = 'A';
+          //
+          // this.setState({change : _change});
               onChange={this.handleStartDateChange}
               {...CC_CDate}
             />
@@ -175,7 +189,7 @@ export default reduxForm({
   fields,
   touchOnChange: true
   },
-  state => ({ // mapStateToProps
-  initialValues: state.change // will pull state into form's initialValues
+  state => ({
+  initialValues: state.change ? state.change : newdata // will pull state into form's initialValues
   })
 )(ChangeDetail);

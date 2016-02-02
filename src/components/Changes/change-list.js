@@ -13,6 +13,7 @@ export default class ChangeList extends Component {
     render () {
 
         var _changes = this.props.changes.paged;
+        console.log(_changes);
 
         if(Object.keys(_changes).length > 0){
 

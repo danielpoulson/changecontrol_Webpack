@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ChangeForm from 'components/Changes/change-form';
+import TaskList from 'components/Tasks/task-list';
 import toastr from 'toastr';
 
 /* actions */
-import { editChange } from 'actions/actions_changes';
+import { addChange, editChange } from 'actions/actions_changes';
+import { getProjectTasks } from 'actions/actions_tasks';
 
 class ChangeDetail extends Component {
   state = {
@@ -32,40 +34,38 @@ class ChangeDetail extends Component {
       this.props.history.push('/changes');
   };
 
-  handleSubmit = (data) => {
-    data._id = this.props.change._id;
-    data.CC_No = this.props.change.CC_No;
-    data.CC_Stat = data.CC_Stat.id;
-    this.props.editChange(data);
-    toastr.success('Change has been saved','Change Detail', {timeOut: 1000});
-    this.props.history.push('/changes');
-  };
+  componentWillMount(){
+    const CC_No = this.props.routing.path.split('/')[2];
+    this.props.getProjectTasks(CC_No);
+  }
 
-  // showChange = () => {
-  //   this.setState({detailTab: 'show'});
-  //   this.setState({taskTab: 'hidden'});
-  //   this.setState({fileTab: 'hidden'});
-  //   this.setState({logTab: 'hidden'});
-  //
+  // handleSubmit = (data) => {
+  //   data._id = this.props.change._id;
+  //   data.CC_No = this.props.change.CC_No;
+  //   data.CC_Stat = data.CC_Stat.id;
+  //   this.props.editChange(data);
+  //   toastr.success('Change has been saved','Change Detail', {timeOut: 1000});
+  //   this.props.history.push('/changes');
   // };
-  //
-  // showTask = () => {
-  //     this.setState({detailTab: 'hidden'});
-  //     this.setState({taskTab: 'show'});
-  //     this.setState({fileTab: 'hidden'});
-  //     this.setState({logTab: 'hidden'});
-  //     this.setState({tasks: TaskStore.all()});
-  //
-  //
-  // };
-  //
-  // showFile = () => {
-  //
-  //     this.setState({detailTab: 'hidden'});
-  //     this.setState({taskTab: 'hidden'});
-  //     this.setState({logTab: 'hidden'});
-  //     this.setState({fileTab: 'show'});
-  // };
+
+  saveChange = (data) => {
+        if (this.props.main.MainId !== 'new') {
+            data._id = this.props.change._id;
+            data.CC_Stat = data.CC_Stat.id;
+            data.CC_No = this.props.change.CC_No;
+            this.props.editChange(data);
+        } else {
+            var created = [];
+            created.push({CC_Id : 0, CC_Action : "Created", CC_ActBy : window.USER.fullname, CC_ActDept : window.USER.dept, CC_ActDate : new Date()});
+            data.CC_LOG = created;
+            data.CC_Stat = data.CC_Stat.id || 1;
+            this.props.addChange(data);
+        }
+
+        toastr.success('Change has been saved','Change Detail', {timeOut: 1000});
+        this.setState({dirty: false});
+        this.props.history.push('/changes');
+    };
 
   showTab = (event) => {
 
@@ -81,8 +81,9 @@ class ChangeDetail extends Component {
 
 
   render() {
+
     return (
-        <div>
+    <div>
           <div className="row">
             <div className="section-header">
               <p className="section-header-text-sub">{this.props.main.MainTitle}</p>
@@ -94,7 +95,17 @@ class ChangeDetail extends Component {
             </li>
             <li className={this.state.TasksTab == 'show' ? "active" : "" }>
               <a onClick={this.showTab} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.state.tCount} </span></a>
-            </li>
+            </li>         {/*<ChangeLog
+              className={this.state.logTab}
+              sourceId={this.state.change.CC_No}
+              onApprove={this.onApprove}
+              onFinal={this.onFinal}
+              onCancel={this.onCancel}
+              log={this.state.change.CC_LOG}/>
+
+          <FileList
+              className={this.state.fileTab}
+              sourceId={this.state.change.CC_No}/>*/}
             <li className={this.state.FilesTab == 'show' ? "active" : "" }>
               <a onClick={this.showTab} data-toggle="tab">Files <span className="badge"> {this.state.fCount} </span></a>
             </li>
@@ -106,18 +117,18 @@ class ChangeDetail extends Component {
           <div className={this.state.DetailTab}>
             <div className="panel panel-default">
               <div className="panel-body">
-                <ChangeForm onSubmit={this.handleSubmit} status={this.state.status} onCancel={this.cancelChange}/>
+                <ChangeForm onSubmit={this.saveChange} status={this.state.status} onCancel={this.cancelChange}/>
               </div>
             </div>
           </div>
 
-          {/*<TaskList
-            tasks={this.state.tasks}
+          <TaskList
+            tasks = {this.props.tasks}
             className={this.state.taskTab}
             title={this.state.changeTitle}
           />
 
-         <ChangeLog
+         {/*<ChangeLog
               className={this.state.logTab}
               sourceId={this.state.change.CC_No}
               onApprove={this.onApprove}
@@ -138,12 +149,14 @@ class ChangeDetail extends Component {
 function mapStateToProps(state) {
   return {
     change : state.change,
-    main: state.main
+    main: state.main,
+    tasks: state.tasks,
+    routing: state.routing
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ editChange }, dispatch);
+  return bindActionCreators({ addChange, editChange, getProjectTasks }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangeDetail);

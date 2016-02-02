@@ -33,7 +33,8 @@ class Changes extends Component {
 
   newChange = () => {
     // TODO: Add in the fucntionality for a new change
-    this.props.setMain({MainId : null, MainTitle: 'New Change Control', CurrentMode: 'change'});
+    this.props.setMain({MainId : 'new', MainTitle: 'New Change Control', CurrentMode: 'change'});
+    this.props.getChange(null);
     this.props.history.push('/change/new');
   };
 

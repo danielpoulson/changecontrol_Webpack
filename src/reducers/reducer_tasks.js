@@ -1,4 +1,4 @@
-import { GET_CHANGES, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES } from 'actions/actions_changes';
+import { ADD_TASK, EDIT_TASK, GET_TASKS, LOAD_PAGE_TASKS, GET_PROJECT_TASKS } from 'actions/actions_tasks';
 
 export default function(state = [], action) {
   let alldata = [];
@@ -11,14 +11,14 @@ export default function(state = [], action) {
 
   switch (action.type) {
 
-    case ADD_CHANGE:
+    case ADD_TASK:
       _data =  action.payload;
       return [
         ...state,
         _data
       ];
 
-    case EDIT_CHANGE:
+    case EDIT_TASK:
       _data =  action.payload;
       const currIds = state.alldata.map(function (c) { return c._id; });
       const index = currIds.indexOf(_data._id);
@@ -33,7 +33,23 @@ export default function(state = [], action) {
         alldata : alldata
       };
 
-    case GET_CHANGES:
+    case GET_PROJECT_TASKS:
+      alldata = action.payload.data;
+      per_page = 15;
+      page = 1;
+      offset = (page - 1) * per_page;
+      paged = alldata.slice(offset, offset + per_page);
+
+      return {
+        page: page,
+        per_page: per_page,
+        total: alldata.length,
+        total_pages: Math.ceil(alldata.length / per_page),
+        paged: paged,
+        alldata : alldata
+      };
+
+    case GET_TASKS:
     // this.props.loadPage(page_num, this.state.numPage, search);
       alldata = action.payload.data;
       per_page = 15;
@@ -50,7 +66,7 @@ export default function(state = [], action) {
         alldata : alldata
       };
 
-      case LOAD_PAGE_CHANGES:
+      case LOAD_PAGE_TASKS:
       // this.props.loadPage(page_num, this.state.numPage, search);
         alldata = state.alldata;
         per_page = action.data.numPage;
