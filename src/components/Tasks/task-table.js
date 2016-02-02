@@ -9,9 +9,9 @@ class TaskTable extends Component {
 
 	render() {
     var _tasks = this.props.tasks.paged;
-		console.log(tasks);
+		console.log(_tasks);
 
-		if(Object.keys(_tasks).length > 0){
+		if(_tasks.length > 0){
         var tasks = _tasks.map((task, i) => <TaskRow key={task._id} task={task}
         getTask = {this.props.handleClick.bind(null, i)} />);
     }
