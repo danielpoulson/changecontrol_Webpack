@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ChangeForm from 'components/Changes/change-form';
 import TaskList from 'components/Tasks/task-list';
+import ChangeLog from 'components/Changes/change-log';
 import toastr from 'toastr';
 
 /* actions */
@@ -10,25 +11,33 @@ import { addChange, editChange } from 'actions/actions_changes';
 import { getProjectTasks } from 'actions/actions_tasks';
 
 class ChangeDetail extends Component {
-  state = {
-            changeTitle: 'Get the main title',
-            dirty: false,
-            DetailTab: 'show',
-            errors: {},
-            FilesTab: 'hidden',
-            fCount: 0,
-            LogTab: 'hidden',
-            tasks: [],
-            TasksTab: 'hidden',
-            tCount: 0,
-            status: [
-                    { "id": 1 , "name": "Review" },
-                    { "id": 2 , "name": 'Approved' },
-                    { "id": 3 , "name": 'On-hold' },
-                    { "id": 4 , "name": 'Closed' },
-                    { "id": 5 , "name": 'Cancelled' }
-                ]
-        };
+  constructor(props) {
+    super(props);
+    this.state = {
+                changeTitle: 'Get the main title',
+                dirty: false,
+                DetailTab: 'show',
+                errors: {},
+                FilesTab: 'hidden',
+                fCount: 0,
+                LogTab: 'hidden',
+                tasks: [],
+                TasksTab: 'hidden',
+                tCount: 0,
+                status: [
+                        { "id": 1 , "name": "Review" },
+                        { "id": 2 , "name": 'Approved' },
+                        { "id": 3 , "name": 'On-hold' },
+                        { "id": 4 , "name": 'Closed' },
+                        { "id": 5 , "name": 'Cancelled' }
+                    ]
+            };
+
+    this.onApprove = this.onApprove.bind(this);
+    this.onFinal = this.onFinal.bind(this);
+    this.onCancel = this.onCancel.bind(this);
+  }
+
 
   cancelChange = () => {
       this.props.history.push('/changes');
@@ -47,6 +56,34 @@ class ChangeDetail extends Component {
   //   toastr.success('Change has been saved','Change Detail', {timeOut: 1000});
   //   this.props.history.push('/changes');
   // };
+
+  onApprove (){
+    var _change = this.state.change;
+    _change.CC_LOG.push({CC_Id : 1, CC_Action : "Approved to Implement", CC_ActDept : window.USER.dept, CC_ActBy : window.USER.fullname, CC_ActDate : new Date()});
+    actions.updateChange(_change);
+
+    toastr.success("Approved to Implement");
+    this.setState({dirty: false});
+  }
+
+  onFinal (){
+    var _change = this.state.change;
+    _change.CC_LOG.push({CC_Id : 2, CC_Action : "Closed and all actions completed", CC_ActDept : window.USER.dept, CC_ActBy : window.USER.fullname, CC_ActDate : new Date()});
+    actions.updateChange(_change);
+
+    toastr.success("Change Closed");
+    this.setState({dirty: false});
+  }
+
+  onCancel(){
+    event.preventDefault();
+    var _change = this.state.change;
+    _change.CC_LOG.push({CC_Id : 3, CC_Action : "Canelled and Withdrawn", CC_ActDept : window.USER.dept, CC_ActBy : window.USER.fullname, CC_ActDate : new Date()});
+    actions.updateChange(_change);
+
+    toastr.error("Change Cancelled");
+    this.setState({dirty: false});
+  }
 
   saveChange = (data) => {
         if (this.props.main.MainId !== 'new') {
@@ -76,6 +113,7 @@ class ChangeDetail extends Component {
       this.setState({TasksTab: 'hidden'});
       this.setState({FilesTab: 'hidden'});
       this.setState({LogTab: 'hidden'});
+
       this.setState({ [tabType] :'show'});
   };
 
@@ -94,18 +132,8 @@ class ChangeDetail extends Component {
               <a onClick={this.showTab} data-toggle="tab">Detail</a>
             </li>
             <li className={this.state.TasksTab == 'show' ? "active" : "" }>
-              <a onClick={this.showTab} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.state.tCount} </span></a>
-            </li>         {/*<ChangeLog
-              className={this.state.logTab}
-              sourceId={this.state.change.CC_No}
-              onApprove={this.onApprove}
-              onFinal={this.onFinal}
-              onCancel={this.onCancel}
-              log={this.state.change.CC_LOG}/>
-
-          <FileList
-              className={this.state.fileTab}
-              sourceId={this.state.change.CC_No}/>*/}
+              <a onClick={this.showTab} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.tasks.total} </span></a>
+            </li>
             <li className={this.state.FilesTab == 'show' ? "active" : "" }>
               <a onClick={this.showTab} data-toggle="tab">Files <span className="badge"> {this.state.fCount} </span></a>
             </li>
@@ -124,19 +152,18 @@ class ChangeDetail extends Component {
 
           <TaskList
             tasks = {this.props.tasks}
-            className={this.state.taskTab}
+            className={this.state.TasksTab}
             title={this.state.changeTitle}
           />
 
-         {/*<ChangeLog
-              className={this.state.logTab}
-              sourceId={this.state.change.CC_No}
+         <ChangeLog
+              className={this.state.LogTab}
               onApprove={this.onApprove}
               onFinal={this.onFinal}
               onCancel={this.onCancel}
-              log={this.state.change.CC_LOG}/>
+              log={this.props.change}/>
 
-          <FileList
+          {/*<FileList
               className={this.state.fileTab}
               sourceId={this.state.change.CC_No}/>*/}
 

@@ -14,7 +14,7 @@ export default class ChangeList extends Component {
 
         var _changes = this.props.changes.paged;
 
-        if(Object.keys(_changes).length > 0){
+        if(_changes !== undefined){
 
           var changes = _changes.map((change, i) => <ChangeRow key={change.CC_No} change={change}
               getChange = {this.handleClick.bind(null, i)} />);

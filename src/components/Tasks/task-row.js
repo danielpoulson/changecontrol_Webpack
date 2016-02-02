@@ -6,7 +6,6 @@ export default class TaskRow extends React.Component {
 
     render() {
     	var task = this.props.task;
-    console.log(task);
         return (
 
 	        	<tr onClick={this.props.getTask}>
