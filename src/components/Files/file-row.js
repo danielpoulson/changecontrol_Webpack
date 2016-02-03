@@ -5,10 +5,10 @@ import DownloadButton from 'components/Common/download-button';
 import BookoutButton from 'components/Common/bookout-button';
 
 
-var FileRow = React.createClass({
+class FileRow extends React.Component {
 
 
-    render: function  () {
+    render() {
     	var file = this.props.file;
         var fullFileName = file.fsSource + " - " + file.fsFileName + "." + file.fsFileExt
         return (
@@ -19,15 +19,15 @@ var FileRow = React.createClass({
                     <td>{file.fsAddedBy}</td>
                     <td>{moment(new Date(file.fsAddedAt)).format('DD/MM/YYYY')}</td>
                     <td>
-                        <DownloadButton fileLoad={fullFileName} fileId={file._id} export={this.props.export}/>
+                      <DownloadButton fileLoad={fullFileName} fileId={file._id} export={this.props.export}/>
                     </td>
                     <td className={this.props.export}>
-                        <BookoutButton fileLoad={fullFileName} source={file.fsSource} fileId={file._id} fsBooked={file.fsBooked}/>
+                      <BookoutButton fileLoad={fullFileName} source={file.fsSource} fileId={file._id} fsBooked={file.fsBooked}/>
                     </td>
                 </tr>
 
 			);
     }
-});
+};
 
-module.exports = FileRow;
+export default FileRow;

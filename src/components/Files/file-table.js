@@ -1,6 +1,7 @@
 import React from 'react';
 import FileRow from './file-row';
 
+// TODO: Convert to a stateless function
 class FileTable extends React.Component {
 //	propTypes: {
 //		onChange : React.PropTypes.func.isRequired,
@@ -10,6 +11,7 @@ class FileTable extends React.Component {
 	render() {
                 var _files = this.props.files;
                 var hidden = this.props.export;
+								console.log(hidden);
 
                 if(Object.keys(_files).length > 0){
                     var files = _files.map((file, i) => <FileRow key={file._id} file={file}

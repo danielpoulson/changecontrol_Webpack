@@ -6,6 +6,7 @@ import FileZone from 'components/Files/file-zone';
 
 /* actions */
 import { getFiles } from 'actions/actions_files';
+import { setFiletabCount } from 'actions/actions_main';
 
 class FileList extends Component {
 
@@ -13,12 +14,13 @@ class FileList extends Component {
 	componentWillMount() {
 		if (this.props.sourceId){
 			this.props.getFiles(this.props.sourceId);
-		}
 
-		console.log(this.props.sourceId);
+		}
 	}
 
-
+	componentDidUpdate(){
+		this.props.setFiletabCount(this.props.files.length);
+	}
 	render() {
        var tableStyle = {
                 marginTop : 20,
@@ -52,7 +54,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ getFiles }, dispatch);
+  return bindActionCreators({ getFiles, setFiletabCount }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FileList);

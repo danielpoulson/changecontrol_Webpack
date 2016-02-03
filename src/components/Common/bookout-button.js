@@ -1,7 +1,7 @@
 import React from 'react';
 import toastr from 'toastr';
 
-class BookoutButton extends React.Component{
+export default class BookoutButton extends React.Component{
 
     render() {
 
@@ -44,8 +44,8 @@ class BookoutButton extends React.Component{
 
             window.location.href = '/server/upload/' + this.props.fileLoad;
 
-            actions.createLog(_log);
-            actions.bookoutFile(this.props.fileId);
+            //actions.createLog(_log);
+            //actions.bookoutFile(this.props.fileId);
 
 
         }

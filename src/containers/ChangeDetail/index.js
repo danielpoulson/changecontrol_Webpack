@@ -94,7 +94,7 @@ class ChangeDetail extends Component {
             this.props.editChange(data);
         } else {
             var created = [];
-            created.push({CC_Id : 0, CC_Action : "Created", CC_ActBy : window.USER.fullname, CC_ActDept : window.USER.dept, CC_ActDate : new Date()});
+            created.push({CC_Id : 0, CC_Action: "Created", CC_ActBy : window.USER.fullname, CC_ActDept : window.USER.dept, CC_ActDate : new Date()});
             data.CC_LOG = created;
             data.CC_Stat = data.CC_Stat.id || 1;
             this.props.addChange(data);
@@ -105,18 +105,13 @@ class ChangeDetail extends Component {
         this.props.history.push('/changes');
     };
 
-  showTab = (event) => {
-
-    let tabType = `${event.target.innerText}Tab`;
-    tabType = tabType.replace(/\s+/g, '');
-
+  showTab(value) {
       this.setState({DetailTab: 'hidden'});
       this.setState({TasksTab: 'hidden'});
       this.setState({FilesTab: 'hidden'});
       this.setState({LogTab: 'hidden'});
-      this.setState({ [tabType] :'show'});
-      console.log(tabType);
-  };
+      this.setState({[value] :'show'});
+  }
 
 
   render() {
@@ -130,16 +125,16 @@ class ChangeDetail extends Component {
           </div>
           <ul className="nav nav-tabs dpHand">
             <li className={this.state.DetailTab == 'show' ? "active" : "" }>
-              <a onClick={this.showTab} data-toggle="tab">Detail</a>
+              <a onClick={this.showTab.bind(this, "DetailTab")} data-toggle="tab">Detail</a>
             </li>
             <li className={this.state.TasksTab == 'show' ? "active" : "" }>
-              <a onClick={this.showTab} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.tasks.total} </span></a>
+              <a onClick={this.showTab.bind(this, "TasksTab")} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.tasks.total} </span></a>
             </li>
             <li className={this.state.FilesTab == 'show' ? "active" : "" }>
-              <a onClick={this.showTab} data-toggle="tab">Files <span className="badge"> {this.state.fCount} </span></a>
+              <a onClick={this.showTab.bind(this, "FilesTab")} data-toggle="tab">Files <span className="badge"> {this.props.main.fileTabCount} </span></a>
             </li>
             <li className={this.state.LogTab == 'show' ? "active" : "" }>
-              <a onClick={this.showTab} data-toggle="tab">Log</a>
+              <a onClick={this.showTab.bind(this, "LogTab")} data-toggle="tab">Log</a>
             </li>
           </ul>
 
