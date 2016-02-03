@@ -5,6 +5,7 @@ import ChangesReducer from './changes';
 import ChangeReducer from './reducer_change';
 import MainReducer from './reducer_main';
 import TasksReducer from './reducer_tasks';
+import FilesReducer from './reducer_files';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   changes : ChangesReducer,
   change : ChangeReducer,
   main: MainReducer,
-  tasks: TasksReducer
+  tasks: TasksReducer,
+  files: FilesReducer,
 });
 
 export default rootReducer;

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ChangeForm from 'components/Changes/change-form';
 import TaskList from 'components/Tasks/task-list';
+import FileList from 'containers/Files/file-list';
 import ChangeLog from 'components/Changes/change-log';
 import toastr from 'toastr';
 
@@ -113,8 +114,8 @@ class ChangeDetail extends Component {
       this.setState({TasksTab: 'hidden'});
       this.setState({FilesTab: 'hidden'});
       this.setState({LogTab: 'hidden'});
-
       this.setState({ [tabType] :'show'});
+      console.log(tabType);
   };
 
 
@@ -163,10 +164,9 @@ class ChangeDetail extends Component {
               onCancel={this.onCancel}
               log={this.props.change}/>
 
-          {/*<FileList
-              className={this.state.fileTab}
-              sourceId={this.state.change.CC_No}/>*/}
-
+          <FileList
+              className={this.state.FilesTab}
+              sourceId={this.props.routing.path.split('/')[2]}/>
 
       </div>
     );
