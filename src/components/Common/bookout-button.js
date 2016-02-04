@@ -33,7 +33,7 @@ export default class BookoutButton extends React.Component{
         return <button onClick={action} className={classButton}><span className={classSpan}></span> {text} </button>
     }
 
-    onBookout() {
+    onBookout = () => {
         //TODO: If download does not complete donot delete from server.
         if(window.ActiveXObject || "ActiveXObject" in window){
             // Always true if browser is Internet Explorer
@@ -44,14 +44,14 @@ export default class BookoutButton extends React.Component{
 
             window.location.href = '/server/upload/' + this.props.fileLoad;
 
-            //actions.createLog(_log);
-            //actions.bookoutFile(this.props.fileId);
+            this.props.createLog(_log);
+            this.props.bookoutFile(this.props.fileId);
 
 
         }
-    }
+    };
 
-    deleteFile() {
-        actions.deleteFile(this.props.fileId);
-    }
+    deleteFile = () => {
+        //actions.deleteFile(this.props.fileId);
+    };
 };

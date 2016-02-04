@@ -80,7 +80,6 @@
     "react-transform-hmr": "^1.0.1",
     "redux-form": "^4.0.6",
     "redux-logger": "2.3.1",
-    "redux-simple-router": "^1.0.2",
     "resolve-url-loader": "^1.4.3",
     "rimraf": "^2.5.0",
     "sass-loader": "^3.0.0",
@@ -113,11 +112,12 @@
     "react-dropzone": "^3.3.2",
     "react-redux": "^4.0.0",
     "react-router": "^2.0.0-rc4",
+    "react-router-redux": "^3.0.0",
     "react-widgets": "^3.1.7",
     "redux": "^3.0.4",
     "redux-promise": "^0.5.1",
     "redux-promises": "^1.0.0",
-    "superagent": "^1.6.1",
+    "superagent": "^1.7.2",
     "toastr": "^2.1.2"
   }
 }

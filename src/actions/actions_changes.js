@@ -5,6 +5,8 @@ export const GET_CHANGE = 'GET_CHANGE';
 export const ADD_CHANGE = 'ADD_CHANGE';
 export const EDIT_CHANGE = 'EDIT_CHANGE';
 export const LOAD_PAGE_CHANGES = 'LOAD_PAGE_CHANGES';
+export const CREATE_LOG = 'CREATE_LOG';
+export const BOOKOUT_FILE = 'BOOKOUT_FILE';
 
 
 export function getChanges(data) {
@@ -53,12 +55,33 @@ export function editChange(data) {
 
 }
 
-
 export function loadPage(data) {
   return {
 
     type: LOAD_PAGE_CHANGES,
     data
+  }
+
+}
+
+export function createLog(data) {
+  const url = `/api/changelog/${data._id}`;
+  const request = axios.put(url, data);
+
+  return {
+    type: CREATE_LOG,
+    payload: data
+  }
+
+}
+
+export function bookoutFile(data) {
+  const url = `/api/filebooked/${data._id}`;
+  const request = axios.put(url);
+
+  return {
+    type: BOOKOUT_FILE,
+    payload: data
   }
 
 }

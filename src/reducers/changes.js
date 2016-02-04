@@ -1,4 +1,4 @@
-import { GET_CHANGES, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES } from 'actions/actions_changes';
+import { GET_CHANGES, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES, CREATE_LOG } from 'actions/actions_changes';
 
 export default function(state = [], action) {
   let alldata = [];
@@ -69,6 +69,21 @@ export default function(state = [], action) {
           paged: paged,
           alldata : alldata
         };
+
+        case CREATE_LOG:
+          _data =  action.payload;
+          const currIds = state.alldata.map(function (c) { return c._id; });
+          const index = currIds.indexOf(_data._id);
+          alldata = [
+            ...state.alldata.slice(0, index),
+            // Copy the object before mutating
+            Object.assign({}, state.alldata[index].CC_LOG.push(_data)),
+            ...state.alldata.slice(index + 1)
+          ];
+          return {
+            paged: paged,
+            alldata : alldata
+          };
 
   }
 

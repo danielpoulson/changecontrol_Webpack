@@ -39,13 +39,21 @@ class ChangeDetail extends Component {
     this.onCancel = this.onCancel.bind(this);
   }
 
+  static childContextTypes = {
+      location: React.PropTypes.object
+  };
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
 
   cancelChange = () => {
-      this.props.history.push('/changes');
+      this.context.router.push('/changes');
   };
 
   componentWillMount(){
-    const CC_No = this.props.routing.path.split('/')[2];
+    const CC_No = this.props.location.pathname.split('/')[2];
     this.props.getProjectTasks(CC_No);
   }
 
@@ -93,7 +101,7 @@ class ChangeDetail extends Component {
 
         toastr.success('Change has been saved','Change Detail', {timeOut: 1000});
         this.setState({dirty: false});
-        this.props.history.push('/changes');
+        this.context.router.push('/changes');
     };
 
   showTab(value) {
@@ -152,7 +160,7 @@ class ChangeDetail extends Component {
 
           <FileList
               className={this.state.FilesTab}
-              sourceId={this.props.routing.path.split('/')[2]}/>
+              sourceId={this.props.location.pathname.split('/')[2]}/>
 
       </div>
     );

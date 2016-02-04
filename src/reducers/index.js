@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routeReducer } from 'redux-simple-router';
+import { routeReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 import ChangesReducer from './changes';
 import ChangeReducer from './reducer_change';
@@ -9,7 +9,6 @@ import FilesReducer from './reducer_files';
 
 const rootReducer = combineReducers({
   form: formReducer,
-  routing: routeReducer,
   /* your reducers */
   changes : ChangesReducer,
   change : ChangeReducer,
