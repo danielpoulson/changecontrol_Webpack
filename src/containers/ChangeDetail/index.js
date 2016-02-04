@@ -49,15 +49,6 @@ class ChangeDetail extends Component {
     this.props.getProjectTasks(CC_No);
   }
 
-  // handleSubmit = (data) => {
-  //   data._id = this.props.change._id;
-  //   data.CC_No = this.props.change.CC_No;
-  //   data.CC_Stat = data.CC_Stat.id;
-  //   this.props.editChange(data);
-  //   toastr.success('Change has been saved','Change Detail', {timeOut: 1000});
-  //   this.props.history.push('/changes');
-  // };
-
   onApprove (){
     var _change = this.state.change;
     _change.CC_LOG.push({CC_Id : 1, CC_Action : "Approved to Implement", CC_ActDept : window.USER.dept, CC_ActBy : window.USER.fullname, CC_ActDate : new Date()});
