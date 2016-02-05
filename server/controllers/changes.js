@@ -5,6 +5,7 @@ var files = require('../controllers/files');
 exports.getChanges = function(req, res) {
     var status = req.params.status;
     Change.find({CC_Stat: {$lt:status}})
+        .select({ CC_No: 1, CC_Descpt: 1, CC_Champ: 1, CC_TDate: 1, CC_Stat: 1, CC_Prop: 1 })
         .sort({CC_TDate:1})
         .exec(function(err, collection) {
         res.send(collection);
@@ -53,10 +54,10 @@ exports.updateChangeComment = function(req, res) {
         'CC_LOG.$.CC_ActDate': req.body.CC_ActDate, 'CC_LOG.$.CC_Action' : req.body.CC_Action};
     var _updateP = {'CC_Id' : "4", 'CC_ActDept': req.body.CC_ActDept , 'CC_ActBy': req.body.CC_ActBy,
                 'CC_ActDate': req.body.CC_ActDate, 'CC_Action' : req.body.CC_Action};
-    
+
     Change.update(_query, {$set: _update }, function (err, data) {
       if (err) return handleError(err);
-      
+
       req.body._id = Math.floor(Math.random() * (9999999 - 1)) + 1;
 
       if(!data.nModified) {
@@ -68,7 +69,7 @@ exports.updateChangeComment = function(req, res) {
       } else {
         res.send(_log);
       }
-      
+
     });
 };
 
@@ -85,8 +86,8 @@ exports.dumpChanges = function(req, res) {
     var fileData = {};
     var newDate = new Date();
 
-    
-    
+
+
     fileData.fsAddedAt = newDate;
     fileData.fsAddedBy = req.body.fsAddedBy;
     fileData.fsFileName = 'changes' + int;
@@ -94,7 +95,7 @@ exports.dumpChanges = function(req, res) {
     fileData.fsSource = req.body.fsSource;
     fileData.fsFilePath = 'changes' + int + '.csv';
     fileData.fsBooked = 0;
-    
+
     files.addExportFile(fileData);
 
     Change.findAndStreamCsv({}, {CC_No:true, CC_Descpt:true, CC_Champ:true, CC_TDate:true, CC_CDate:true, CC_Comp:true, CC_Stat:true, _id: 0})
@@ -102,7 +103,7 @@ exports.dumpChanges = function(req, res) {
 
     console.log("Files have been created");
 
-    res.sendStatus(200);   
+    res.sendStatus(200);
 
 };
 

@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { routeReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 import ChangesReducer from './changes';
 import ChangeReducer from './reducer_change';

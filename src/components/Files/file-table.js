@@ -14,7 +14,7 @@ class FileTable extends React.Component {
 
                 if(Object.keys(_files).length > 0){
                     var files = _files.map((file, i) => <FileRow key={file._id} file={file}
-                    export={hidden}/>);
+                    export={hidden} createLog={this.props.createLog}/>);
                 }
 
 

@@ -22,7 +22,12 @@ class FileRow extends React.Component {
                       <DownloadButton fileLoad={fullFileName} fileId={file._id} export={this.props.export}/>
                     </td>
                     <td className={this.props.export}>
-                      <BookoutButton fileLoad={fullFileName} source={file.fsSource} fileId={file._id} fsBooked={file.fsBooked}/>
+                      <BookoutButton
+                        fileLoad={fullFileName}
+                        source={file.fsSource}
+                        fileId={file._id}
+                        fsBooked={file.fsBooked}
+                        createLog={this.props.createLog}/>
                     </td>
                 </tr>
 

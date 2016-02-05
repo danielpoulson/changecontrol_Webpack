@@ -7,19 +7,20 @@ import FileZone from 'components/Files/file-zone';
 /* actions */
 import { getFiles, addFile } from 'actions/actions_files';
 import { setFiletabCount } from 'actions/actions_main';
+import { createLog } from 'actions/actions_changes';
 
 class FileList extends Component {
 	constructor(props) {
     super(props);
     this.state = {};
 		this.onAddFile = this.onAddFile.bind(this);
+		this.onCreateLog = this.onCreateLog.bind(this);
 	}
 
 
 	componentWillMount() {
 		if (this.props.sourceId){
 			this.props.getFiles(this.props.sourceId);
-
 		}
 	}
 
@@ -29,6 +30,11 @@ class FileList extends Component {
 
 	onAddFile(file){
 		this.props.addFile(file);
+	}
+
+	onCreateLog(log){
+		this.props.createLog(log);
+		this.props.refreshChange();
 	}
 
 	render() {
@@ -43,7 +49,8 @@ class FileList extends Component {
                         <div style={tableStyle} className="col-sm-10">
                             <FileTable
                                 files={this.props.files}
-                                export={this.props.export}/>
+                                export={this.props.export}
+																createLog={this.onCreateLog}/>
                         </div>
                         <div className={this.props.export}>
                             <div className="col-sm-1">
@@ -64,7 +71,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ getFiles, setFiletabCount, addFile }, dispatch);
+  return bindActionCreators({ getFiles, setFiletabCount, addFile, createLog }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FileList);

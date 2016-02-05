@@ -25,7 +25,6 @@ export function getChange(data) {
     const url = `/api/change/${data}`;
     const request = axios.get(url);
 
-
   return {
     type: GET_CHANGE,
     payload: request
@@ -65,7 +64,7 @@ export function loadPage(data) {
 }
 
 export function createLog(data) {
-  const url = `/api/changelog/${data._id}`;
+  const url = `/api/changelog/${data.CC_No}`;
   const request = axios.put(url, data);
 
   return {

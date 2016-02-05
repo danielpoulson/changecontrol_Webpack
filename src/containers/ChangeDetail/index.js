@@ -8,7 +8,7 @@ import ChangeLog from 'components/Changes/change-log';
 import toastr from 'toastr';
 
 /* actions */
-import { addChange, editChange } from 'actions/actions_changes';
+import { addChange, editChange, getChange } from 'actions/actions_changes';
 import { getProjectTasks } from 'actions/actions_tasks';
 
 class ChangeDetail extends Component {
@@ -16,6 +16,7 @@ class ChangeDetail extends Component {
     super(props);
     this.state = {
                 changeTitle: 'Get the main title',
+                ccNo: '',
                 dirty: false,
                 DetailTab: 'show',
                 errors: {},
@@ -37,6 +38,7 @@ class ChangeDetail extends Component {
     this.onApprove = this.onApprove.bind(this);
     this.onFinal = this.onFinal.bind(this);
     this.onCancel = this.onCancel.bind(this);
+    this.onRefresh = this.onRefresh.bind(this);
   }
 
   static childContextTypes = {
@@ -55,6 +57,7 @@ class ChangeDetail extends Component {
   componentWillMount(){
     const CC_No = this.props.location.pathname.split('/')[2];
     this.props.getProjectTasks(CC_No);
+    this.setState({ccNo : CC_No});
   }
 
   onApprove (){
@@ -83,6 +86,10 @@ class ChangeDetail extends Component {
 
     toastr.error("Change Cancelled");
     this.setState({dirty: false});
+  }
+
+  onRefresh() {
+    this.props.getChange(this.state.ccNo);
   }
 
   saveChange = (data) => {
@@ -160,6 +167,7 @@ class ChangeDetail extends Component {
 
           <FileList
               className={this.state.FilesTab}
+              refreshChange={this.onRefresh}
               sourceId={this.props.location.pathname.split('/')[2]}/>
 
       </div>
@@ -177,7 +185,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addChange, editChange, getProjectTasks }, dispatch);
+  return bindActionCreators({ addChange, editChange, getChange, getProjectTasks }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangeDetail);

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Redirect, browserHistory } from 'react-router';
 import { createHashHistory } from 'history';
-// import { syncHistory } from 'react-router-redux';
 import configureStore from './store/configureStore';
 import routes from './routes';
 import 'react-widgets/lib/less/react-widgets.less';

@@ -8,6 +8,8 @@ export default function(state = [], action) {
   let offset = 0;
   let paged = [];
   let searchText = '';
+  let currIds = [];
+  let index = [];
 
   switch (action.type) {
 
@@ -20,8 +22,8 @@ export default function(state = [], action) {
 
     case EDIT_CHANGE:
       _data =  action.payload;
-      const currIds = state.alldata.map(function (c) { return c._id; });
-      const index = currIds.indexOf(_data._id);
+      currIds = state.alldata.map(function (c) { return c._id; });
+      index = currIds.indexOf(_data._id);
       alldata = [
         ...state.alldata.slice(0, index),
         // Copy the object before mutating
@@ -71,24 +73,42 @@ export default function(state = [], action) {
         };
 
         case CREATE_LOG:
-          _data =  action.payload;
-          const currIds = state.alldata.map(function (c) { return c._id; });
-          const index = currIds.indexOf(_data._id);
-          alldata = [
-            ...state.alldata.slice(0, index),
-            // Copy the object before mutating
-            Object.assign({}, state.alldata[index].CC_LOG.push(_data)),
-            ...state.alldata.slice(index + 1)
-          ];
-          return {
-            paged: paged,
-            alldata : alldata
-          };
+          return state;
+
+          // return {
+          //   ...state,
+          //   alldata : state.alldata.map(c =>
+          //   addLog(c, action))
+          // }
 
   }
 
   return state;
 }
+
+// const addLog = (state, action) => {
+//   switch (action.type) {
+//     case 'CREATE_LOG':
+//       if (state.CC_No !== action.payload.CC_No) {
+//         return state
+//       }
+//
+//       let _addLog = state.CC_LOG;
+//       let logObj = { CC_ActBy: action.payload.CC_ActBy,
+//           CC_ActDate: action.payload.CC_ActDate,
+//           CC_Action: action.payload.CC_Action
+//         };
+//
+//       _addLog.push(logObj);
+//
+//       return {
+//         ...state,
+//         CC_LOG : _addLog
+//       }
+//     default:
+//       return state
+//   }
+// }
 
 
 function searchData(data, searchText){
