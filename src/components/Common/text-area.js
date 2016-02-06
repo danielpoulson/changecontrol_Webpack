@@ -10,17 +10,19 @@ export default class TextArea extends React.Component {
     if (this.props.error && this.props.error.length > 0) {
       wrapperClass += " " + 'has-error';
     }
+    let labelClass = 'control-label' + " " + this.props.dpLabelCol;
+    
     return (
       <div className={wrapperClass}>
-        <label className="control-label" htmlFor={this.props.name}>{this.props.label}</label>
-        <div className="field">
+        <label className={labelClass} htmlFor={this.props.name}>{this.props.label}</label>
+        <div className={this.props.dpInputCol}>
           <textarea type="text"
             name={this.props.name}
             className={this.props.inputstyle}
             placeholder={this.props.placeholder}
             ref={this.props.name}
             value={this.props.value}
-                        rows={this.props.rows}
+            rows={this.props.rows}
             onChange={this.props.onChange} />
           <div className="input">{this.props.error}</div>
         </div>

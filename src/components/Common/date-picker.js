@@ -11,10 +11,13 @@ export default class DatePicker extends Component {
       wrapperClass += " " + 'has-error';
     }
 
+    let labelClass = 'control-label' + " " + this.props.dpLabelCol;
+
+
     return (
       <div className={wrapperClass}>
-        <label className="control-label" htmlFor={this.props.name}>{this.props.label}</label>
-        <div className="field">
+        <label className={labelClass} htmlFor={this.props.name}>{this.props.label}</label>
+        <div className={this.props.dpInputCol}>
           <DateTimePicker
             format="DD/MM/YY"
             name={this.props.name}

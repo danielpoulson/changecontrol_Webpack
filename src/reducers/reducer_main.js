@@ -1,8 +1,13 @@
-import { SET_MAIN, SET_FILETAB_COUNT } from 'actions/actions_main';
+import { SET_MAIN, SET_USER, SET_FILETAB_COUNT } from 'actions/actions_main';
 const initialState = {
     MainId : 'CC150023',
     MainTitle : 'Storm Rodenticide',
-    CurrentMode: 'change'
+    CurrentMode: 'change',
+    user : {
+      userName : '',
+      fullname : '',
+      role : 'user'
+    }
 }
 
 export default function (state, action) {
@@ -13,9 +18,16 @@ export default function (state, action) {
   switch (action.type) {
     case SET_MAIN:
       return {
+        ...state,
         MainId : action.data.MainId,
         MainTitle : action.data.MainTitle,
         CurrentMode: action.data.CurrentMode
+      }
+
+    case SET_USER:
+      return {
+        ...state,
+        user : action.user
       }
 
       case SET_FILETAB_COUNT:

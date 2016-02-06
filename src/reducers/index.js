@@ -4,6 +4,7 @@ import ChangesReducer from './changes';
 import ChangeReducer from './reducer_change';
 import MainReducer from './reducer_main';
 import TasksReducer from './reducer_tasks';
+import TaskReducer from './reducer_task';
 import FilesReducer from './reducer_files';
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   change : ChangeReducer,
   main: MainReducer,
   tasks: TasksReducer,
+  task: TaskReducer,
   files: FilesReducer,
 });
 

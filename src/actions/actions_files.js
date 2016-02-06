@@ -3,7 +3,7 @@ import axios from 'axios';
 export const GET_FILES = 'GET_FILES';
 // export const GET_CHANGE = 'GET_CHANGE';
 export const ADD_FILE = 'ADD_FILE';
-// export const EDIT_CHANGE = 'EDIT_CHANGE';
+export const BOOKOUT_FILE = 'BOOKOUT_FILE';
 // export const LOAD_PAGE_CHANGES = 'LOAD_PAGE_CHANGES';
 
 
@@ -40,16 +40,16 @@ export function addFile(data) {
 
 }
 //
-// export function editChange(data) {
-//   const url = `/api/change/${data._id}`;
-//   const request = axios.put(url, data);
-//
-//   return {
-//     type: EDIT_CHANGE,
-//     payload: data
-//   }
-//
-// }
+export function bookoutFile(id) {
+  const url = `/api/filebooked/${id}`;
+  const request = axios.put(url);
+
+  return {
+    type: BOOKOUT_FILE,
+    payload: id
+  }
+
+}
 //
 //
 // export function loadPage(data) {

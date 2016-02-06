@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {reduxForm} from 'redux-form';
-import Input from 'components/Common/text-input';
+import Input from 'components/Common/form-text-input';
 import TextArea from 'components/Common/text-area';
 import DateTimePicker from 'components/Common/date-picker';
 import ComboBox from 'components/Common/combo-box';
@@ -42,15 +42,12 @@ class ChangeDetail extends Component {
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-sm-12">
-            <div className="form-group">
-              <label className="control-label" htmlFor="Change">Change Title</label>
-              <div className="field">
-                <input type="text"
-                  className="form-control"
-                  placeholder="Title"
-                  {...CC_Descpt} />
-              </div>
-            </div>
+            <Input
+              name="CC_Descpt"
+              label="Change Title"
+              placeholder="Enter the title of your change request (Required)"
+              inputstyle="form-control"
+              {...CC_Descpt}/>
           </div>
           <div className="col-sm-6">
             <Input
@@ -106,16 +103,7 @@ class ChangeDetail extends Component {
           </div>
           <div className="col-sm-2">
             <DateTimePicker
-              label="Complete Date"          // this.setState({tasks:{}});
-          // var _change = {};
-          // _change.CC_Descpt = '';
-          // _change.CC_Code = '';
-          // //TODO: Auto fill drop down for champ names
-          // _change.CC_Champ = '';
-          // _change.CC_Comp = '';
-          // _change.CC_Pry = 'A';
-          //
-          // this.setState({change : _change});
+              label="Complete Date"
               onChange={this.handleStartDateChange}
               {...CC_CDate}
             />
@@ -136,7 +124,6 @@ class ChangeDetail extends Component {
             />
           </div>
         </div>
-
         <div className="row">
           <div className="col-sm-12">
             <TextArea

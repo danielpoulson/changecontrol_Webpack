@@ -26,9 +26,12 @@ class Changes extends Component {
   }
 
   componentWillMount() {
-    if (!this.props.changes.length > 0) {
+    if (!this.props.changes.alldata.length > 0) {
       this.props.getChanges(4);
     }
+    // TODO: Sticky options on the change list
+    // This section should remember you page and or serach options.
+    this.onChange();
   }
 
   newChange = () => {

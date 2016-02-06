@@ -1,21 +1,33 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import moment from 'moment';
 
-import TaskTable from './task-table'
+import TaskTable from './task-table';
+import { getTask } from 'actions/actions_tasks';
+import { getChange } from 'actions/actions_changes';
+
+@connect(null, { getTask, getChange })
 
 class TaskList extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
     handleClick = (i) => {
         if(this.props.type === "All"){
-            var _id = this.props.tasks.paged[i].SourceId;
-            this.props.setMain({MainId : _id, MainTitle: _Title, CurrentMode: 'change'});
-            this.props.history.push(`/change/${_id}`);
+            let ccNo = this.props.tasks.paged[i].SourceId;
+            this.props.setMain({MainId : ccNo, MainTitle: _Title, CurrentMode: 'change'});
+            this.props.getChange(ccNo);
+            this.context.router.push(`/change/${ccNo}`);
         } else {
-            this.props.history.push(`/task/${this.props.tasks.paged[i]._id}`);
+            const _id = this.props.tasks.paged[i]._id;
+            this.props.getTask(_id);
+            this.context.router.push(`/task/${_id}`);
         }
     };
 
     newTask = () => {
-        this.props.history.push(`/task/new`);
+        this.props.getTask();
+        this.context.router.push(`/task/new`);
     };
 
     render() {

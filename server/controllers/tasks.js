@@ -6,7 +6,7 @@ var login  = require('../config/login');
 //TODO: This all task fucntion is restricted to change control only should by dynamic
 exports.getTasks = function(req, res) {
     var status = req.params.status;
-    
+
     Task
         .where('TKStat').lte(status)
         .where('SourceId').in([/^CC.*$/])
@@ -68,7 +68,7 @@ exports.createTask = function(req, res, next) {
 };
 
 exports.getTaskById = function(req, res) {
-    Task.findOne({_id:req.params.id}).exec(function(err, task) {
+    Task.findById(req.params.id).exec(function(err, task) {
         res.send(task);
     });
 };
@@ -86,8 +86,8 @@ exports.dumpTasks = function(req, res) {
     var fileData = {};
     var newDate = new Date();
 
-    
-    
+
+
     fileData.fsAddedAt = newDate;
     fileData.fsAddedBy = req.body.fsAddedBy;
     fileData.fsFileName = 'tasks' + int;
@@ -95,7 +95,7 @@ exports.dumpTasks = function(req, res) {
     fileData.fsSource = req.body.fsSource;
     fileData.fsFilePath = 'tasks' + int + '.csv';
     fileData.fsBooked = 0;
-    
+
     files.addExportFile(fileData);
 
     Task.findAndStreamCsv({}, {SourceId:true, TKName:true, TKChamp:true, TKStart:true, TKTarg:true, TKStat:true, _id: 0})
@@ -105,7 +105,7 @@ exports.dumpTasks = function(req, res) {
 
     res.sendStatus(200);
 
-    
+
 
 };
 
@@ -129,6 +129,6 @@ function write_to_log (write_data) {
     });
 }
 
-
-
-
+function handleError(err){
+    console.log(err);
+};

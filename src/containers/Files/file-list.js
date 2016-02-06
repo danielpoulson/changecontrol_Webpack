@@ -5,7 +5,7 @@ import FileTable from 'components/Files/file-table';
 import FileZone from 'components/Files/file-zone';
 
 /* actions */
-import { getFiles, addFile } from 'actions/actions_files';
+import { getFiles, addFile, bookoutFile } from 'actions/actions_files';
 import { setFiletabCount } from 'actions/actions_main';
 import { createLog } from 'actions/actions_changes';
 
@@ -15,6 +15,7 @@ class FileList extends Component {
     this.state = {};
 		this.onAddFile = this.onAddFile.bind(this);
 		this.onCreateLog = this.onCreateLog.bind(this);
+		this.onBookoutFile = this.onBookoutFile.bind(this);
 	}
 
 
@@ -34,7 +35,11 @@ class FileList extends Component {
 
 	onCreateLog(log){
 		this.props.createLog(log);
-		this.props.refreshChange();
+		//this.props.refreshChange();
+	}
+
+	onBookoutFile(id){
+		this.props.bookoutFile(id);
 	}
 
 	render() {
@@ -44,21 +49,28 @@ class FileList extends Component {
             };
 
 		return (
-			    <div className={this.props.className}>
-                    <div className="row">
-                        <div style={tableStyle} className="col-sm-10">
-                            <FileTable
-                                files={this.props.files}
-                                export={this.props.export}
-																createLog={this.onCreateLog}/>
-                        </div>
-                        <div className={this.props.export}>
-                            <div className="col-sm-1">
-																<FileZone addFile={this.onAddFile} sourceId={this.props.sourceId} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+			<div className={this.props.className}>
+
+				<div className="row">
+
+					<div style={tableStyle} className="col-sm-10">
+
+						<FileTable
+							files={this.props.files}
+							export={this.props.export}
+							createLog={this.onCreateLog}
+							bookoutFile={this.onBookoutFile}/>
+					</div>
+					<div className={this.props.export}>
+						<div className="col-sm-1">
+
+							<FileZone
+								addFile={this.onAddFile}
+								sourceId={this.props.sourceId} />
+						</div>
+					</div>
+				</div>
+			</div>
 		)
 
 	}
@@ -71,7 +83,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ getFiles, setFiletabCount, addFile, createLog }, dispatch);
+  return bindActionCreators({ getFiles, setFiletabCount, addFile, createLog, bookoutFile }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FileList);

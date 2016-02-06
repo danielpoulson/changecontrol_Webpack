@@ -10,7 +10,7 @@ export const GET_PROJECT_TASKS = 'GET_PROJECT_TASKS';
 
 export function getTasks(data) {
   const url = `/api/tasks/${data}`;
-  const request = axios.get(url);
+  const request = axios.get(url);;
 
   return {
     type: GET_TASKS,
@@ -19,12 +19,10 @@ export function getTasks(data) {
 
 }
 
-// /api/project/tasks/:id
-
 export function getProjectTasks(data) {
   const url = `/api/project/tasks/${data}`;
   const request = axios.get(url);
-  
+
   return {
     type: GET_PROJECT_TASKS,
     payload: request
@@ -33,9 +31,12 @@ export function getProjectTasks(data) {
 }
 
 export function getTask(data) {
+  const url = `/api/task/${data}`;
+  let request = {};
 
-    const url = `/api/task/${data}`;
-    const request = axios.get(url);
+  if(data){
+    request = axios.get(url);
+  }
 
 
   return {
@@ -46,7 +47,7 @@ export function getTask(data) {
 }
 
 export function addTask(data) {
-  const url = `/api/tasks`;
+  const url = `/api/task`;
   const request = axios.post(url, data);
 
   return {
@@ -62,7 +63,7 @@ export function editTask(data) {
 
   return {
     type: EDIT_TASK,
-    payload: data
+    payload: request
   }
 
 }

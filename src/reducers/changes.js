@@ -1,6 +1,11 @@
-import { GET_CHANGES, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES, CREATE_LOG } from 'actions/actions_changes';
+import { GET_CHANGES, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES } from 'actions/actions_changes';
 
-export default function(state = [], action) {
+const initialState = {
+    alldata : [],
+    paged : []
+}
+
+export default function(state, action) {
   let alldata = [];
   let _data = {};
   let per_page = 10;
@@ -11,14 +16,22 @@ export default function(state = [], action) {
   let currIds = [];
   let index = [];
 
+  if (typeof state === 'undefined') {
+      return initialState
+  }
+
   switch (action.type) {
 
     case ADD_CHANGE:
-      _data =  action.payload;
-      return [
-        ...state,
+      _data =  action.payload.data;
+      alldata = [
+        ...state.alldata,
         _data
       ];
+      return {
+        ...state,
+        alldata
+      };
 
     case EDIT_CHANGE:
       _data =  action.payload;
@@ -71,44 +84,10 @@ export default function(state = [], action) {
           paged: paged,
           alldata : alldata
         };
-
-        case CREATE_LOG:
-          return state;
-
-          // return {
-          //   ...state,
-          //   alldata : state.alldata.map(c =>
-          //   addLog(c, action))
-          // }
-
   }
 
   return state;
 }
-
-// const addLog = (state, action) => {
-//   switch (action.type) {
-//     case 'CREATE_LOG':
-//       if (state.CC_No !== action.payload.CC_No) {
-//         return state
-//       }
-//
-//       let _addLog = state.CC_LOG;
-//       let logObj = { CC_ActBy: action.payload.CC_ActBy,
-//           CC_ActDate: action.payload.CC_ActDate,
-//           CC_Action: action.payload.CC_Action
-//         };
-//
-//       _addLog.push(logObj);
-//
-//       return {
-//         ...state,
-//         CC_LOG : _addLog
-//       }
-//     default:
-//       return state
-//   }
-// }
 
 
 function searchData(data, searchText){

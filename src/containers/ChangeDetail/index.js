@@ -8,7 +8,7 @@ import ChangeLog from 'components/Changes/change-log';
 import toastr from 'toastr';
 
 /* actions */
-import { addChange, editChange, getChange } from 'actions/actions_changes';
+import { addChange, createLog, editChange, getChange } from 'actions/actions_changes';
 import { getProjectTasks } from 'actions/actions_tasks';
 
 class ChangeDetail extends Component {
@@ -60,13 +60,23 @@ class ChangeDetail extends Component {
     this.setState({ccNo : CC_No});
   }
 
-  onApprove (){
-    var _change = this.state.change;
-    _change.CC_LOG.push({CC_Id : 1, CC_Action : "Approved to Implement", CC_ActDept : window.USER.dept, CC_ActBy : window.USER.fullname, CC_ActDate : new Date()});
-    actions.updateChange(_change);
+  logMessage(message){
+    const _log = {
+      CC_No: this.props.change.CC_No,
+      CC_Id : 1,
+      CC_Action : message,
+      CC_ActDept : window.USER.dept,
+      CC_ActBy : window.USER.fullname,
+      CC_ActDate : new Date()
+    };
 
-    toastr.success("Approved to Implement");
-    this.setState({dirty: false});
+    this.props.createLog(_log);
+    toastr.success(message);
+
+  }
+
+  onApprove (){
+    this.logMessage("Approved to Implement");
   }
 
   onFinal (){
@@ -79,7 +89,6 @@ class ChangeDetail extends Component {
   }
 
   onCancel(){
-    event.preventDefault();
     var _change = this.state.change;
     _change.CC_LOG.push({CC_Id : 3, CC_Action : "Canelled and Withdrawn", CC_ActDept : window.USER.dept, CC_ActBy : window.USER.fullname, CC_ActDate : new Date()});
     actions.updateChange(_change);
@@ -185,7 +194,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addChange, editChange, getChange, getProjectTasks }, dispatch);
+  return bindActionCreators({ addChange, createLog, editChange, getChange, getProjectTasks }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangeDetail);

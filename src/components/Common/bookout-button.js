@@ -42,15 +42,14 @@ export default class BookoutButton extends React.Component{
             var _log = {CC_No: this.props.source, CC_Id : 4, CC_Action : `File booked out - ${this.props.fileLoad}`,
                     CC_ActDept : window.USER.dept, CC_ActBy : window.USER.fullname, CC_ActDate : new Date()};
 
-            //window.location.href = '/server/upload/' + this.props.fileLoad;
+            window.location.href = '/server/upload/' + this.props.fileLoad;
 
             this.props.createLog(_log);
-            //this.props.bookoutFile(this.props.fileId);
-
+            this.props.bookoutFile(this.props.fileId);
 
         }
     };
-
+    // TODO: Implement delete functionality to remove files
     deleteFile = () => {
         //actions.deleteFile(this.props.fileId);
     };
