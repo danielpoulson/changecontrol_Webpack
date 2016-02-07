@@ -152,7 +152,7 @@ class ChangeDetail extends Component {
           </div>
 
           <TaskList
-            tasks = {this.props.tasks}
+            tasklist = {this.props.tasklist}
             className={this.state.TasksTab}
             title={this.state.changeTitle}
           />
@@ -178,7 +178,7 @@ function mapStateToProps(state) {
   return {
     change : state.change,
     main: state.main,
-    tasks: state.tasks.ctlist,
+    tasklist: state.tasks.ctlist,
     ctTotal : state.tasks.ctTotal
   };
 }

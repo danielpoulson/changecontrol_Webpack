@@ -5,7 +5,7 @@ import Toastr from 'toastr';
 
 import TaskList from 'components/Tasks/task-list';
 import Pagination from 'components/Common/pagination';
-import Input from 'components/common/form-text-input';
+import Input from 'components/Common/form-text-input';
 
 /* actions */
 import { loadPageTask } from 'actions/actions_tasks';

@@ -8,7 +8,7 @@ class TaskTable extends Component {
 //	},
 
 	render() {
-    var _tasks = this.props.tasks;
+    var _tasks = this.props.tasklist;
 
 		if(_tasks !== undefined ){
         var tasks = _tasks.map((task, i) => <TaskRow key={task._id} task={task}

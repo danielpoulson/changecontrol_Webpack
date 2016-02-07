@@ -58,7 +58,7 @@ class TaskList extends React.Component {
             <div className="row">
                     <div style={tableStyle} className="row">
                         <TaskTable
-                            tasks = {this.props.tasks}
+                            tasklist = {this.props.tasklist}
                             handleClick = {this.handleClick}/>
                     </div>
                 </div>
