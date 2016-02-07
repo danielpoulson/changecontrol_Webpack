@@ -80,21 +80,11 @@ class ChangeDetail extends Component {
   }
 
   onFinal (){
-    var _change = this.state.change;
-    _change.CC_LOG.push({CC_Id : 2, CC_Action : "Closed and all actions completed", CC_ActDept : window.USER.dept, CC_ActBy : window.USER.fullname, CC_ActDate : new Date()});
-    actions.updateChange(_change);
-
-    toastr.success("Change Closed");
-    this.setState({dirty: false});
+    this.logMessage("Change Closed");
   }
 
   onCancel(){
-    var _change = this.state.change;
-    _change.CC_LOG.push({CC_Id : 3, CC_Action : "Canelled and Withdrawn", CC_ActDept : window.USER.dept, CC_ActBy : window.USER.fullname, CC_ActDate : new Date()});
-    actions.updateChange(_change);
-
-    toastr.error("Change Cancelled");
-    this.setState({dirty: false});
+    this.logMessage("Change Cancelled");
   }
 
   onRefresh() {
@@ -143,7 +133,7 @@ class ChangeDetail extends Component {
               <a onClick={this.showTab.bind(this, "DetailTab")} data-toggle="tab">Detail</a>
             </li>
             <li className={this.state.TasksTab == 'show' ? "active" : "" }>
-              <a onClick={this.showTab.bind(this, "TasksTab")} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.tasks.total} </span></a>
+              <a onClick={this.showTab.bind(this, "TasksTab")} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
             </li>
             <li className={this.state.FilesTab == 'show' ? "active" : "" }>
               <a onClick={this.showTab.bind(this, "FilesTab")} data-toggle="tab">Files <span className="badge"> {this.props.main.fileTabCount} </span></a>
@@ -188,8 +178,8 @@ function mapStateToProps(state) {
   return {
     change : state.change,
     main: state.main,
-    tasks: state.tasks,
-    routing: state.routing
+    tasks: state.tasks.ctlist,
+    ctTotal : state.tasks.ctTotal
   };
 }
 

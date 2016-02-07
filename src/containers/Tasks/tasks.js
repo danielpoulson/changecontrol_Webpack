@@ -3,8 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Toastr from 'toastr';
 
-import TaskList from './TaskList.jsx';
-import Input from '../common/textInline.jsx';
+import TaskList from 'components/Tasks/task-list';
+import Pagination from 'components/Common/pagination';
+import Input from 'components/common/form-text-input';
+
+/* actions */
+import { loadPageTask } from 'actions/actions_tasks';
 
 
 let start = 0;
@@ -19,16 +23,22 @@ class Tasks extends Component{
     };
 
     componentWillMount(){
-        this.onChange();
+      if (!this.props.tasks.alldata.length > 0) {
+        this.props.getAllTasks();
+      }
+      // TODO: Sticky options on the change list
+      // This section should remember you page and or serach options.
+      this.onChange();
     }
 
     onChange = (page_num, searchText) => {
-        var page_num = page_num || 1;
-        var search = searchText || this.state.txtSearch;
-        var page_obj = AllTasksStore.search(page_num, this.state.numPage, search);
-        this.setState({paged: page_obj.data});
-        this.setState({count: page_obj.total});
-    }
+      let action = {};
+      action.page_num = page_num || 1;
+      action.search = searchText || this.state.txtSearch;
+      action.numPage = this.state.numPage;
+      // TODO: Write a function for call pages
+      this.props.loadPageTask(action);
+    };
 
 
     linkClick = (i) => {
@@ -36,14 +46,14 @@ class Tasks extends Component{
         this.onChange(i + 1, this.state.txtSearch);
         this.setState({activePage: i});
 
-    }
+    };
 
     loadPage(activePage, searchText){
         var perPage = this.state.numPage;
         start = activePage * perPage;
         var paged = [start, start + perPage, searchText];
         actions.searchTask(paged);
-    }
+    };
 
 
     searchText = (event) => {
@@ -52,13 +62,13 @@ class Tasks extends Component{
         this.setState({activePage: 0});
         this.setState({txtSearch: value});
         this.onChange(0, value);
-    }
+    };
 
     exportTask = (event) => {
         event.preventDefault();
         var info = {fsSource : 'exp', fsAddedBy : window.USER.username, fsType : 'tasks'};
         actions.exportList(info);
-    }
+    };
 
     render() {
 
@@ -117,7 +127,7 @@ class Tasks extends Component{
 
 function mapStateToProps(state) {
   return {
-    tasks : state.tasks,
+    tasks : state.tasks.paged,
     main: state.main
   };
 }

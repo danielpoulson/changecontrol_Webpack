@@ -34,19 +34,13 @@ export default function(state = [], action) {
       };
 
     case GET_PROJECT_TASKS:
-      alldata = action.payload.data;
-      per_page = 15;
-      page = 1;
-      offset = (page - 1) * per_page;
-      paged = alldata.slice(offset, offset + per_page);
+      const ctlist = action.payload.data;
+      const ctTotal = ctlist.length;
 
       return {
-        page: page,
-        per_page: per_page,
-        total: alldata.length,
-        total_pages: Math.ceil(alldata.length / per_page),
-        paged: paged,
-        alldata : alldata
+        ...state,
+        ctlist : ctlist,
+        ctTotal : ctTotal
       };
 
     case GET_TASKS:
@@ -76,7 +70,6 @@ export default function(state = [], action) {
         let searcheddata = searchData(state.alldata, searchText);
         paged = searcheddata.slice(offset, offset + per_page);
 
-        console.log(searchText);
         return {
           page: page,
           per_page: per_page,

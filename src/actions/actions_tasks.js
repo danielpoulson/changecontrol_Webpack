@@ -6,6 +6,7 @@ export const ADD_TASK = 'ADD_TASK';
 export const EDIT_TASK = 'EDIT_TASK';
 export const LOAD_PAGE_TASKS = 'LOAD_PAGE_TASKS';
 export const GET_PROJECT_TASKS = 'GET_PROJECT_TASKS';
+export const GET_ALL_TASKS = 'GET_ALL_TASKS';
 
 
 export function getTasks(data) {
@@ -14,6 +15,18 @@ export function getTasks(data) {
 
   return {
     type: GET_TASKS,
+    payload: request
+  }
+
+}
+
+export function getAllTasks() {
+  //TODO: Remove the hardwire status input 4 = "active tasks"
+  const url = `/api/alltasks/4`;
+  const request = axios.get(url);
+
+  return {
+    type: GET_ALL_TASKS,
     payload: request
   }
 
