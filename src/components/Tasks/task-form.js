@@ -4,6 +4,7 @@ import TextArea from 'components/Common/text-area';
 import { TextInputTask } from 'components/Common/text-input-task';
 import DateTimePicker from 'components/Common/date-picker';
 import ComboBox from 'components/Common/combo-box';
+export const fields = ['TKName', 'TKStart', 'TKTarg', 'TKStat', 'TKChamp', 'TKComment'];
 
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
   TKStat: 1,
@@ -11,9 +12,21 @@ const newdata = {  // used to populate "account" reducer when "Load" is clicked
   TKStart: new Date()
 };
 
+const validate = values => {
+  const errors = {};
+  if (!values.TKName) {
+    errors.TKName = 'Required';
+  } else if (values.TKName.length < 10) {
+    errors.TKName = 'Must be 10 characters or less';
+  }
+  return errors;
+};
+
 @reduxForm({
-  form: 'task',
-  fields: ['TKName', 'TKStart', 'TKTarg', 'TKStat', 'TKChamp', 'TKComment']},
+    form: 'task',
+    fields,
+    validate
+  },
   state => ({
   initialValues: state.task ? state.task : newdata // will pull state into form's initialValues
   })
@@ -59,6 +72,7 @@ export default class TaskForm extends React.Component {
                   dpInputCol="col-sm-9"
                   dpLabelCol="col-sm-2"
                   {...TKName}/>
+                {TKName.touched && TKName.error && <div>{TKName.error}</div>}
 
                 <DateTimePicker
                   dpInputCol="col-sm-3"
