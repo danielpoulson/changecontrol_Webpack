@@ -20,11 +20,15 @@ export default function(state, action) {
 
   switch (action.type) {
     case ADD_TASK:
-      _data =  action.payload;
-      return [
-        ...state,
+      _data =  action.payload.data;
+      alldata = [
+        ...state.alldata,
         _data
       ];
+      return {
+        ...state,
+        alldata
+      };
 
     case EDIT_TASK:
       _data =  action.payload;
@@ -39,7 +43,6 @@ export default function(state, action) {
       console.log(alldata);
       return {
         ...state,
-        paged: paged,
         alldata : alldata
       };
 

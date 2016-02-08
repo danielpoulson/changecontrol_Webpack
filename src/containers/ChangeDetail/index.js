@@ -93,12 +93,14 @@ class ChangeDetail extends Component {
   }
 
   saveChange = (data) => {
-        if (this.props.main.MainId !== 'new') {
+        if (this.state.ccNo !== 'new') {
+          console.log("Not New");
             data._id = this.props.change._id;
             data.CC_Stat = data.CC_Stat.id;
             data.CC_No = this.props.change.CC_No;
             this.props.editChange(data);
         } else {
+          console.log("IS New");
             var created = [];
             created.push({CC_Id : 0, CC_Action: "Created", CC_ActBy : window.USER.fullname, CC_ActDept : window.USER.dept, CC_ActDate : new Date()});
             data.CC_LOG = created;
@@ -110,6 +112,9 @@ class ChangeDetail extends Component {
         this.setState({dirty: false});
         this.context.router.push('/changes');
     };
+
+    // TODO: Hide change detail tabs when creating a new change request
+    //When a new change is being created the file, log and task tabs are still visable.
 
   showTab(value) {
       this.setState({DetailTab: 'hidden'});

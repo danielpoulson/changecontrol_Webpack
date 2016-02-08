@@ -46,6 +46,9 @@ export default class Changes extends Component {
       //actions.exportList(info);
   };
 
+  // TODO: Show all button reverts to "Show all"
+  //The button should be "Show Current" but reverts back when returning from the details page.
+
   allChanges = () => {
       let _showAll = this.state.showAll;
       _showAll = !_showAll;

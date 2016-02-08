@@ -3,7 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 
 /* containers */
 import { App } from 'containers/App';
-import Home from 'containers/Home';
+import { Home } from 'containers/Home';
 import Changes from 'containers/Changes';
 import ChangeDetail from 'containers/ChangeDetail';
 import TaskDetail from 'containers/Tasks/task-details';

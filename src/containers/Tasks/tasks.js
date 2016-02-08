@@ -27,7 +27,7 @@ export default class Tasks extends Component{
       if (!this.props.tasks.alldata.length > 0) {
         this.props.getAllTasks();
       }
-      // TODO: Sticky options on the change list
+      // TODO: Sticky options on the task list
       // This section should remember you page and or serach options.
       this.onChange();
     }
