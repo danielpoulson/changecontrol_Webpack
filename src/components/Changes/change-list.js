@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
 import ChangeRow from './change-row';
+
+import { setMain } from 'actions/actions_main';
+
+@connect(null, { setMain })
 
 export default class ChangeList extends Component {
 
@@ -8,16 +13,16 @@ export default class ChangeList extends Component {
   };
 
   handleClick = (i) => {
-    const _id = this.props.changes.paged[i].CC_No;
-    const _Title = this.props.changes.paged[i].CC_Descpt;
-    this.props.setMain({MainId : _id, MainTitle: _Title, CurrentMode: 'change'});
+    const _id = this.props.changelist[i].CC_No;
+    this.props.setMain({MainId : _id, CurrentMode: 'change'});
     this.props.getChange(_id);
     this.context.router.push(`/change/${_id}`);
+
   };
 
     render () {
 
-        var _changes = this.props.changes.paged;
+        var _changes = this.props.changelist;
 
         if(_changes !== undefined){
 

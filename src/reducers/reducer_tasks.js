@@ -1,6 +1,11 @@
 import { ADD_TASK, EDIT_TASK, GET_TASKS, LOAD_PAGE_TASKS, GET_PROJECT_TASKS } from 'actions/actions_tasks';
 
-export default function(state = [], action) {
+const initialState = {
+    alldata : [],
+    paged : []
+};
+
+export default function(state, action) {
   let alldata = [];
   let _data = {};
   let per_page = 10;
@@ -9,8 +14,11 @@ export default function(state = [], action) {
   let paged = [];
   let searchText = '';
 
-  switch (action.type) {
+  if (typeof state === 'undefined') {
+      return initialState
+  }
 
+  switch (action.type) {
     case ADD_TASK:
       _data =  action.payload;
       return [
@@ -28,7 +36,9 @@ export default function(state = [], action) {
         Object.assign({}, _data),
         ...state.alldata.slice(index + 1)
       ];
+      console.log(alldata);
       return {
+        ...state,
         paged: paged,
         alldata : alldata
       };
@@ -52,6 +62,7 @@ export default function(state = [], action) {
       paged = alldata.slice(offset, offset + per_page);
 
       return {
+        ...state,
         page: page,
         per_page: per_page,
         total: alldata.length,
@@ -67,10 +78,11 @@ export default function(state = [], action) {
         page = action.data.page_num || 1;
         offset = (page - 1) * per_page;
         searchText = action.data.search;
-        let searcheddata = searchData(state.alldata, searchText);
+        let searcheddata = searchData(alldata, searchText);
         paged = searcheddata.slice(offset, offset + per_page);
 
         return {
+          ...state,
           page: page,
           per_page: per_page,
           total: searcheddata.length,
@@ -93,7 +105,7 @@ function searchData(data, searchText){
         var reg1 = new RegExp(searchText + ".*", "i")
 
 
-        if(item.CC_No.match(reg1) || item.CC_Descpt.match(reg1) || item.CC_Champ.match(reg1)){
+        if(item.SourceId.match(reg1) || item.TKChamp.match(reg1) || item.TKName.match(reg1)){
           return true
         } else {
           return false

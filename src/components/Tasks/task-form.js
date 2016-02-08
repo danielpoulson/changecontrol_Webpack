@@ -1,7 +1,7 @@
 import React from 'react';
 import {reduxForm} from 'redux-form';
 import TextArea from 'components/Common/text-area';
-import { TextInputTask } from 'components/common/text-input-task';
+import { TextInputTask } from 'components/Common/text-input-task';
 import DateTimePicker from 'components/Common/date-picker';
 import ComboBox from 'components/Common/combo-box';
 

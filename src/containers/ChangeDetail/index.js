@@ -10,6 +10,7 @@ import toastr from 'toastr';
 /* actions */
 import { addChange, createLog, editChange, getChange } from 'actions/actions_changes';
 import { getProjectTasks } from 'actions/actions_tasks';
+import { setMain } from 'actions/actions_main';
 
 class ChangeDetail extends Component {
   constructor(props) {
@@ -121,11 +122,13 @@ class ChangeDetail extends Component {
 
   render() {
 
+    const _title = this.props.change !== null ? `${this.props.change.CC_No} - ${this.props.change.CC_Descpt}` : 'New - Change Control';
+
     return (
     <div>
           <div className="row">
             <div className="section-header">
-              <p className="section-header-text-sub">{this.props.main.MainTitle}</p>
+              <p className="section-header-text-sub">{_title}</p>
             </div>
           </div>
           <ul className="nav nav-tabs dpHand">
@@ -184,7 +187,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addChange, createLog, editChange, getChange, getProjectTasks }, dispatch);
+  return bindActionCreators({ addChange, createLog, editChange, getChange, getProjectTasks, setMain }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangeDetail);

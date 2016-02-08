@@ -5,8 +5,9 @@ import moment from 'moment';
 import TaskTable from './task-table';
 import { getTask } from 'actions/actions_tasks';
 import { getChange } from 'actions/actions_changes';
+import { setMain } from 'actions/actions_main';
 
-@connect(null, { getTask, getChange })
+@connect(null, { getTask, getChange, setMain })
 
 class TaskList extends React.Component {
   static contextTypes = {
@@ -14,12 +15,12 @@ class TaskList extends React.Component {
   };
     handleClick = (i) => {
         if(this.props.type === "All"){
-            let ccNo = this.props.tasks.paged[i].SourceId;
-            this.props.setMain({MainId : ccNo, MainTitle: _Title, CurrentMode: 'change'});
+            let ccNo = this.props.tasklist[i].SourceId;
+            this.props.setMain({MainId : ccNo, CurrentMode: 'change'});
             this.props.getChange(ccNo);
             this.context.router.push(`/change/${ccNo}`);
         } else {
-            const _id = this.props.tasks.paged[i]._id;
+            const _id = this.props.tasklist[i]._id;
             this.props.getTask(_id);
             this.context.router.push(`/task/${_id}`);
         }

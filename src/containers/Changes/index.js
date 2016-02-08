@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Toastr from 'toastr';
 
@@ -10,8 +9,9 @@ import Pagination from 'components/Common/pagination'
 import { getChange, getChanges, addChange, loadPage } from 'actions/actions_changes';
 import { setMain } from 'actions/actions_main';
 
+@connect(state=>({ changes : state.changes }),{ getChange, getChanges, setMain, loadPage })
 
-class Changes extends Component {
+export default class Changes extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,8 +35,6 @@ class Changes extends Component {
   }
 
   newChange = () => {
-    // TODO: Add in the fucntionality for a new change
-    this.props.setMain({MainId : 'new', MainTitle: 'New Change Control', CurrentMode: 'change'});
     this.props.getChange(null);
     this.props.history.push('/change/new');
   };
@@ -128,7 +126,7 @@ class Changes extends Component {
         </div>
 
         <div className="row">
-          <ChangeList { ...this.props } />
+          <ChangeList changelist={this.props.changes.paged} getChange={this.props.getChange}/>
         </div>
         <div className="col-sm-6">
           <button
@@ -159,16 +157,3 @@ class Changes extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    changes : state.changes,
-    main: state.main
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ getChange, getChanges, setMain, loadPage }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Changes);

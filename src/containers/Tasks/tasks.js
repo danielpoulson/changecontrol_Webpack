@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Toastr from 'toastr';
 
@@ -8,12 +7,14 @@ import Pagination from 'components/Common/pagination';
 import Input from 'components/Common/form-text-input';
 
 /* actions */
-import { loadPageTask } from 'actions/actions_tasks';
+import { getAllTasks, loadPageTask } from 'actions/actions_tasks';
 
-
+// TODO: Changes and Task share the same search text box function which should be made as a common component
 let start = 0;
 
-class Tasks extends Component{
+@connect(state=>({tasks : state.tasks}), { getAllTasks, loadPageTask })
+
+export default class Tasks extends Component{
     state = {
             activePage: 0,
             paged: {},
@@ -36,7 +37,6 @@ class Tasks extends Component{
       action.page_num = page_num || 1;
       action.search = searchText || this.state.txtSearch;
       action.numPage = this.state.numPage;
-      // TODO: Write a function for call pages
       this.props.loadPageTask(action);
     };
 
@@ -48,20 +48,20 @@ class Tasks extends Component{
 
     };
 
-    loadPage(activePage, searchText){
-        var perPage = this.state.numPage;
-        start = activePage * perPage;
-        var paged = [start, start + perPage, searchText];
-        actions.searchTask(paged);
-    };
+    // loadPage(activePage, searchText){
+    //     var perPage = this.state.numPage;
+    //     start = activePage * perPage;
+    //     var paged = [start, start + perPage, searchText];
+    //     actions.searchTask(paged);
+    // };
 
 
     searchText = (event) => {
-        var field = event.target.name;
-        var value = event.target.value;
-        this.setState({activePage: 0});
-        this.setState({txtSearch: value});
-        this.onChange(0, value);
+      let value = event.target.value;
+      let field = event.target.name;
+      this.setState({activePage: 0});
+      this.setState({txtSearch: value});
+      this.onChange(0, value);
     };
 
     exportTask = (event) => {
@@ -81,7 +81,8 @@ class Tasks extends Component{
             var divStyle = { paddingRight: 15};
 
             return (
-                <div>
+
+            <div>
                     <div className="row">
                        <div className="section-header">
                             <div className="col-sm-6 pull-left">
@@ -103,7 +104,7 @@ class Tasks extends Component{
 
 
                     <TaskList
-                        tasks = {this.state.paged}
+                        tasklist = {this.props.tasks.paged}
                         type = "All"/>
 
 
@@ -113,10 +114,10 @@ class Tasks extends Component{
 
                     <div className="col-sm-6">
                         <Pagination
-                            activePage = {this.state.activePage}
-                            numPage = {this.state.numPage}
-                            count = {this.state.count}
-                            getPage = {this.linkClick}/>
+                          activePage = {this.state.activePage}
+                          numPage = {this.props.tasks.per_page}
+                          count = {this.props.tasks.total}
+                          getPage = {this.linkClick.bind(this)}/>
                     </div>
 
 
@@ -124,16 +125,3 @@ class Tasks extends Component{
                 )
     }
 };
-
-function mapStateToProps(state) {
-  return {
-    tasks : state.tasks.paged,
-    main: state.main
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Tasks);

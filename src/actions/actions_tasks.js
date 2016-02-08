@@ -26,7 +26,7 @@ export function getAllTasks() {
   const request = axios.get(url);
 
   return {
-    type: GET_ALL_TASKS,
+    type: GET_TASKS,
     payload: request
   }
 
@@ -50,7 +50,6 @@ export function getTask(data) {
   if(data){
     request = axios.get(url);
   }
-
 
   return {
     type: GET_TASK,
@@ -76,13 +75,13 @@ export function editTask(data) {
 
   return {
     type: EDIT_TASK,
-    payload: request
+    payload: data
   }
 
 }
 
 
-export function loadPage(data) {
+export function loadPageTask(data) {
   return {
 
     type: LOAD_PAGE_TASKS,

@@ -1,7 +1,6 @@
 import { SET_MAIN, SET_USER, SET_FILETAB_COUNT } from 'actions/actions_main';
 const initialState = {
-    MainId : 'CC150023',
-    MainTitle : 'Storm Rodenticide',
+    MainId : '',
     CurrentMode: 'change',
     user : {
       userName : '',
@@ -20,7 +19,6 @@ export default function (state, action) {
       return {
         ...state,
         MainId : action.data.MainId,
-        MainTitle : action.data.MainTitle,
         CurrentMode: action.data.CurrentMode
       }
 
