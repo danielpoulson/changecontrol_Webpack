@@ -5,6 +5,7 @@ export default class DatePicker extends Component {
 
 
   render() {
+    const spanStyle = { color: "red" };
 
     let wrapperClass = 'form-group';
     if (this.props.error && this.props.error.length > 0) {
@@ -24,7 +25,7 @@ export default class DatePicker extends Component {
             time={false}
             onChange={this.props.onChange}
             value={!this.props.value ? null : new Date(this.props.value)}/>
-          <div className="input">{this.props.error}</div>
+          <div style={spanStyle} className="input">{this.props.error}</div>
         </div>
       </div>
     );

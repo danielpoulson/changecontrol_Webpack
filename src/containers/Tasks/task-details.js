@@ -4,9 +4,9 @@ import TaskForm from 'components/Tasks/task-form';
 import toastr from 'toastr';
 import moment from 'moment';
 
-import { addTask, editTask } from 'actions/actions_tasks';
+import { addTask, editTask, deleteTask } from 'actions/actions_tasks';
 
-@connect( state => ({ main : state.main }), { addTask, editTask })
+@connect( state => ({ main : state.main }), { addTask, editTask, deleteTask })
 
 class TaskDetail extends React.Component {
   static childContextTypes = {
@@ -20,8 +20,9 @@ class TaskDetail extends React.Component {
   state = {
       dirty: false,
       errors: {},
+      hideDelete: null,
       newTask: false,
-      taskId : null,
+      taskId : '',
       status: [
               { "id": 1 , "name": "Task - Not Started (New)" },
               { "id": 2 , "name": 'Task - On Track' },
@@ -31,26 +32,26 @@ class TaskDetail extends React.Component {
           ]
   };
 
-  componentWillMount() {
-      const taskId = this.props.location.pathname.split('/')[2];
-      this.setState({taskId : taskId});
-  }
+  componentDidMount() {
+      const _taskId = this.props.location.pathname.split('/')[2];
+      // TODO: Remove direct access with the window.USER object instead use Main state
+      const _hideDelete = window.USER.role !== 'admin' || this.props.newTask === true ? "hidden" : "btn btn-danger";
+      this.setState({taskId : _taskId});
+      this.setState({hideDelete : _hideDelete});
+    }
 
     cancelTask = (event) => {
       event.preventDefault();
       this.taskNav(this.props.main.MainId);
     };
 
-    // TODO: Implement the delete task function 
-    deleteTask(event){
+    deleteTask = (event) => {
+        event.preventDefault();
         const _id = this.state.taskId;
-        // event.preventDefault();
-        // actions.deleteTask(this.state.task._id);
-        // toastr.error("Task has been deleted",'Task Detail', {timeOut: 1000});
-        // this.setState({dirty: false});
-        // this.taskNav(_id);
-
-    }
+        this.props.deleteTask(_id);
+        toastr.error("Task has been deleted",'Task Detail', {timeOut: 1000});
+        this.taskNav(_id);
+    };
 
     saveTask = (data) => {
         let _SourceId = this.props.main.MainId;
@@ -101,7 +102,12 @@ class TaskDetail extends React.Component {
               </div>
 
               <div className="row" style={formStyle}>
-                <TaskForm onSubmit={this.saveTask} status={this.state.status} deleteTask={this.deleteTask} onCancel={this.cancelTask}/>
+                <TaskForm
+                  onSubmit={this.saveTask}
+                  status={this.state.status}
+                  deleteTask={this.deleteTask}
+                  hideDelete={this.state.hideDelete}
+                  onCancel={this.cancelTask}/>
                 </div>
             </div>
 

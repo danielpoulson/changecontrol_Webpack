@@ -15,10 +15,23 @@ const newdata = {  // used to populate "account" reducer when "Load" is clicked
 const validate = values => {
   const errors = {};
   if (!values.TKName) {
-    errors.TKName = 'Required';
-  } else if (values.TKName.length < 10) {
-    errors.TKName = 'Must be 10 characters or less';
+    errors.TKName = 'This field is required';
+  } else if (values.TKName.length < 20) {
+    errors.TKName = 'Must more than 20 characters';
   }
+
+  if (!values.TKChamp) {
+    errors.TKChamp = 'This field is required';
+  } else if (values.TKChamp.length < 10) {
+    errors.TKChamp = 'Must more than 10 characters';
+  }
+
+  if (!values.TKTarg) {
+    errors.TKTarg = 'This field is required';
+  } else if (values.TKTarg === null) {
+    errors.TKTarg = 'This field is required';
+  }
+
   return errors;
 };
 
@@ -45,11 +58,11 @@ export default class TaskForm extends React.Component {
       handleSubmit,
       onCancel,
       deleteTask,
+      hideDelete,
       submitting,
       status
       } = this.props;
 
-        var hideDelete = window.USER.role !== 'admin' || this.props.newTask === true ? "hidden" : "btn btn-danger pull-right";
         var wrapperClassSD = '';
         var wrapperClassTD = '';
 
@@ -71,8 +84,9 @@ export default class TaskForm extends React.Component {
                   placeholder="Enter Task Name (Required)"
                   dpInputCol="col-sm-9"
                   dpLabelCol="col-sm-2"
+                  error={TKName.error}
+                  touched={TKName.touched}
                   {...TKName}/>
-                {TKName.touched && TKName.error && <div>{TKName.error}</div>}
 
                 <DateTimePicker
                   dpInputCol="col-sm-3"
@@ -102,6 +116,8 @@ export default class TaskForm extends React.Component {
                   label="Owner:"
                   dpInputCol="col-sm-4"
                   dpLabelCol="col-sm-2"
+                  error={TKChamp.error}
+                  touched={TKChamp.touched}
                   placeholder="Enter Taks Owner (Required)"
                   {...TKChamp}/>
 

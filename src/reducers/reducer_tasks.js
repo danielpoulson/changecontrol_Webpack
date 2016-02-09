@@ -1,18 +1,21 @@
-import { ADD_TASK, EDIT_TASK, GET_TASKS, LOAD_PAGE_TASKS, GET_PROJECT_TASKS } from 'actions/actions_tasks';
+import { ADD_TASK, EDIT_TASK, DELETE_TASK, GET_TASKS, LOAD_PAGE_TASKS, GET_PROJECT_TASKS } from 'actions/actions_tasks';
 
 const initialState = {
     alldata : [],
     paged : []
 };
 
+let index = null;
+
 export default function(state, action) {
   let alldata = [];
   let _data = {};
-  let per_page = 10;
+  let per_page = 15;
   let page = 1;
   let offset = 0;
   let paged = [];
   let searchText = '';
+  let currIds = [];
 
   if (typeof state === 'undefined') {
       return initialState
@@ -32,19 +35,33 @@ export default function(state, action) {
 
     case EDIT_TASK:
       _data =  action.payload;
-      const currIds = state.alldata.map(function (c) { return c._id; });
-      const index = currIds.indexOf(_data._id);
+      currIds = state.alldata.map(function (c) { return c._id; });
+      index = currIds.indexOf(_data._id);
+
+      if (index > -1) {
+        this._data.splice(index, 1);
+      }
       alldata = [
         ...state.alldata.slice(0, index),
         // Copy the object before mutating
         Object.assign({}, _data),
         ...state.alldata.slice(index + 1)
       ];
-      console.log(alldata);
       return {
         ...state,
         alldata : alldata
       };
+
+      case DELETE_TASK:
+        _data =  action.payload;
+        currIds = state.alldata.map(function (c) { return c._id; });
+        index = currIds.indexOf(_data._id);
+        alldata = searchIndex(state.alldata, index);
+        console.log(alldata);
+        return {
+          ...state,
+          alldata : alldata
+        };
 
     case GET_PROJECT_TASKS:
       const ctlist = action.payload.data;
@@ -97,6 +114,15 @@ export default function(state, action) {
   }
 
   return state;
+}
+function searchIndex(data, index){
+  function isNotIndex(value) {
+    console.log(`Value : ${value} and index : ${index}`);
+    return value !== index;
+  }
+
+  return data.filter(_search);
+
 }
 
 

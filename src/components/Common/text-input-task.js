@@ -2,8 +2,14 @@ import React from'react';
 
 export const TextInputTask = (props) => {
 
-		let wrapperClass = 'form-group';
-		let labelClass = 'control-label' + " " + props.dpLabelCol;
+	var spanStyle = { color: "red" };
+
+	let wrapperClass = 'form-group';
+	if (props.error && props.error.length > 0) {
+		wrapperClass += " " + 'has-error';
+	}
+
+	let labelClass = 'control-label' + " " + props.dpLabelCol;
 
 		return (
 			//Styled for bootstrap
@@ -17,7 +23,13 @@ export const TextInputTask = (props) => {
 					 	value={props.value}
 					 	onChange={props.onChange} />
 				</div>
-			</div>
+				{props.touched && props.error &&
+					<div>
+						<div className={labelClass}></div>
+						<div style={spanStyle} className={props.dpInputCol}>{props.error}</div>
+					</div>}
+				</div>
+
 		);
 
 };

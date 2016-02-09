@@ -19,7 +19,7 @@ export default class Tasks extends Component{
             activePage: 0,
             paged: {},
             count: 0,
-            numPage: 10,
+            numPage: 15,
             txtSearch: null
     };
 

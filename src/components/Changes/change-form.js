@@ -8,26 +8,66 @@ import Moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(Moment);
 export const fields = ['CC_Descpt', 'CC_Code', 'CC_Multi', 'CC_ASS', 'CC_Champ', 'CC_Comp', 'CC_TDate', 'CC_CDate', 'CC_Pry', 'CC_Stat', 'CC_Curt', 'CC_Prop', 'CC_Rat'];
+
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
   CC_Pry: 'A',
   CC_Stat: 1,
   CC_Champ: 'Daniel Poulson',
   CC_TDate: new Date()
 };
-class ChangeDetail extends Component {
+
+const validate = values => {
+  const errors = {};
+
+  if (!values.CC_Descpt) {
+    errors.CC_Descpt = 'This field is required';
+  } else if (values.CC_Descpt.length < 20) {
+    errors.CC_Descpt = 'Must more than 20 characters';
+  }
+
+  if (!values.CC_Champ) {
+    errors.CC_Champ = 'This field is required';
+  } else if (values.CC_Champ.length < 10) {
+    errors.CC_Champ = 'Must more than 10 characters';
+  }
+
+  if (!values.CC_Comp) {
+    errors.CC_Comp = 'This field is required';
+  } else if (values.CC_Comp.length < 3) {
+    errors.CC_Comp = 'Must be atleast 3 characters';
+  }
+
+  if (!values.CC_Code) {
+    errors.CC_Code = 'This field is required';
+  } else if (values.CC_Code.length < 3) {
+    errors.CC_Code = 'Must be atleast 3 characters';
+  }
+
+  if (!values.CC_TDate) {
+    errors.CC_TDate = 'This field is required';
+  } else if (values.CC_TDate === null) {
+    errors.CC_TDate = 'This field is required';
+  }
+
+  return errors;
+};
+
+@reduxForm({
+    form: 'change',
+    fields,
+    validate
+  },
+  state => ({
+  initialValues: state.change ? state.change : newdata // will pull state into form's initialValues
+  })
+)
+
+export default class ChangeDetail extends Component {
   static propTypes = {
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     resetForm: PropTypes.func.isRequired,
     submitting: PropTypes.bool.isRequired
-  };
-
-  componentDidMount(){
-
-  }
-
-  handleStartDateChange = (startDate) => {
-
   };
 
   render() {
@@ -170,13 +210,3 @@ class ChangeDetail extends Component {
     );
   }
 }
-
-export default reduxForm({
-  form: 'change',
-  fields,
-  touchOnChange: true
-  },
-  state => ({
-  initialValues: state.change ? state.change : newdata // will pull state into form's initialValues
-  })
-)(ChangeDetail);

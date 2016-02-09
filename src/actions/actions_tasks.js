@@ -4,6 +4,7 @@ export const GET_TASKS = 'GET_TASKS';
 export const GET_TASK = 'GET_TASK';
 export const ADD_TASK = 'ADD_TASK';
 export const EDIT_TASK = 'EDIT_TASK';
+export const DELETE_TASK = 'DELETE_TASK';
 export const LOAD_PAGE_TASKS = 'LOAD_PAGE_TASKS';
 export const GET_PROJECT_TASKS = 'GET_PROJECT_TASKS';
 export const GET_ALL_TASKS = 'GET_ALL_TASKS';
@@ -75,6 +76,17 @@ export function editTask(data) {
 
   return {
     type: EDIT_TASK,
+    payload: data
+  }
+
+}
+
+export function deleteTask(data) {
+  const url = `/api/task/${data}`;
+  const request = axios.delete(url);
+
+  return {
+    type: DELETE_TASK,
     payload: data
   }
 

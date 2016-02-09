@@ -3,6 +3,8 @@ import React, { PropTypes } from 'react'
 class TextInput extends React.Component {
   render () {
 
+    const spanStyle = { color: "red" };
+
     let wrapperClass = 'form-group';
     if (this.props.error && this.props.error.length > 0) {
       wrapperClass += " " + 'has-error';
@@ -19,7 +21,7 @@ class TextInput extends React.Component {
             ref={this.props.name}
             value={this.props.value}
             onChange={this.props.onChange} />
-          <div className="input">{this.props.error}</div>
+          {this.props.touched && this.props.error && <div style={spanStyle} className="input">{this.props.error}</div> }
         </div>
       </div>
     )
