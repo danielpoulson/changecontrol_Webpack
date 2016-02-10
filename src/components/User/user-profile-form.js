@@ -10,11 +10,6 @@ const newdata = {  // used to populate "account" reducer when "Load" is clicked
 
 const validate = values => {
   const errors = {};
-  if (!values.fullname) {
-    errors.fullname = 'This field is required';
-  } else if (values.fullname.length < 7) {
-    errors.fullname = 'Must more than 7 characters';
-  }
 
   if (!values.username) {
     errors.username = 'This field is required';
@@ -40,10 +35,15 @@ export default class UserProfileForm extends React.Component {
 		errors : React.PropTypes.object
 	};
 
+  onChange = (event) => {
+    console.log("event");
+  };
+
 	render() {
     const {
       fields: {fullname, username, dept, role, password},
       handleSubmit,
+      getUser,
       submitting,
       onCancel,
       deleteUser,
@@ -52,6 +52,10 @@ export default class UserProfileForm extends React.Component {
 
         var wrapperClassSD = '';
         var wrapperClassTD = '';
+
+        var fnStyle = {
+          marginLeft: 15
+        }
 
         if (this.props.errors.TKStart && this.props.errors.TKStart.length > 0) {
             wrapperClassSD += " " + 'has-date-error';
@@ -65,17 +69,30 @@ export default class UserProfileForm extends React.Component {
             <div>
               <form onSubmit={handleSubmit} className="form form-horizontal" >
 
-                <ComboBox
-                  label="Full Name"
-                  data={users}
-                  dpInputCol="col-sm-4"
-                  dpLabelCol="col-sm-2"
-                  {...fullname}
-                />
+                <div className="col-sm-12">
+                  <div style={fnStyle} className="col-sm-6">
+                    <ComboBox
+                      label="Full Name"
+                      data={users}
+                      defaultValue={users[0]}
+                      onChange={this.onChange}
+                      dpInputCol="col-sm-9"
+                      dpLabelCol="col-sm-3"
+                      {...fullname}
+                    />
+                    </div>
+                  <div className="col-sm-4">
+                    <button className="btn btn-success pull-left" onClick={getUser}>
+                      Get User
+                    </button>
+                  </div>
+                </div>
+
+
 
                 <TextInputTask
                   name="username"
-                  label="Full Name"
+                  label="User Name"
                   placeholder="Enter Users Full Name (Required)"
                   dpInputCol="col-sm-9"
                   dpLabelCol="col-sm-2"

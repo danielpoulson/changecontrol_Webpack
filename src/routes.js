@@ -16,7 +16,7 @@ export default (
     <Route path='change/:id' component={ChangeDetail} />
     <Route path='task/:id' component={TaskDetail} />
     <Route path='tasks' component={Tasks} />
-    <Route path='user/:id' component={User} />
+    <Route path='user' component={User} />
      <IndexRoute component={Home} />
     <Route status={404} path="*" component={Home} />
   </Route>

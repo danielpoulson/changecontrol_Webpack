@@ -9,6 +9,9 @@ class UserProfile extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+
+    };
     this.saveUser = this.saveUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
     this.cancelUser = this.cancelUser.bind(this);
@@ -23,9 +26,12 @@ class UserProfile extends Component {
   };
 
   componentWillMount() {
-    const _userId = this.props.location.pathname.split('/')[2];
     // TODO: Load the currect user requested -> Call the actions -> api -> reducer -> user setState
-    console.log(_userId);
+
+  }
+
+  searchText() {
+
   }
 
   saveUser(){
@@ -40,7 +46,18 @@ class UserProfile extends Component {
 
   }
 
+  onChange(value) {
+    console.log("value");
+    console.log(value);
+  }
+
   render () {
+    var spanStyle = {
+        background: "#71ABFF",
+        color: "#FFFFFF",
+        border: "1px solid #71ABFF"
+    };
+
     var formStyle = {
         backgroundColor : '#fcfffc',
         border : "solid 1px",
@@ -49,18 +66,24 @@ class UserProfile extends Component {
         padding: 15,
 
     };
+
+    var divStyle = { paddingRight: 15};
+
     return (
 
       <div>
         <div className="row">
           <div className="section-header">
-            <p className="section-header-text-sub">User Profile</p>
+            <div className="col-sm-6 pull-left">
+              <p className="section-header-text-main">User Profiles </p>
+            </div>
           </div>
         </div>
 
         <div className="row" style={formStyle}>
           <UserProfileForm
             onSubmit={this.saveUser}
+            onChange={this.onChange}
             users={this.props.users}
             deleteUser={this.deleteUser}
             onCancel={this.cancelUser}/>
