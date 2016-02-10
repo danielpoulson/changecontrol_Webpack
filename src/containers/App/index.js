@@ -9,6 +9,7 @@ import 'scss/styles.scss';
 
 import { getAllTasks } from 'actions/actions_tasks';
 import { setUser } from 'actions/actions_main';
+import { getUsers } from 'actions/actions_users';
 
 
 /* application components */
@@ -16,7 +17,7 @@ import { Header } from 'layouts/Header';
 import { Footer } from 'layouts/Footer';
 import { Navigation } from 'layouts/Navigation';
 
-@connect(null, { getAllTasks, setUser })
+@connect(null, { getAllTasks, setUser, getUsers })
 
 export class App extends Component {
   static propTypes = {
@@ -25,6 +26,7 @@ export class App extends Component {
 
   componentWillMount() {
     this.props.getAllTasks();
+    this.props.getUsers();
     setTimeout(() => {
       const user = window.USER;
       this.props.setUser(user);

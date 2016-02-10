@@ -7,7 +7,7 @@ import moment from 'moment';
 import { addTask, editTask, deleteTask } from 'actions/actions_tasks';
 import { setLoading } from 'actions/actions_main';
 
-@connect( state => ({ main : state.main }), { addTask, editTask, deleteTask, setLoading })
+@connect( state => ({ main : state.main, users : state.users }), { addTask, editTask, deleteTask, setLoading })
 
 class TaskDetail extends React.Component {
   static childContextTypes = {
@@ -61,7 +61,7 @@ class TaskDetail extends React.Component {
 
         if (this.state.taskId !== 'new') {
             data._id = this.state.taskId;
-            data.TKStat = data.TKStat.id;
+            data.TKStat = typeof data.TKStat === 'object' ? data.TKStat.id : data.TKStat;
             data.SourceId = _SourceId
             this.props.editTask(data);
         } else {
@@ -108,6 +108,7 @@ class TaskDetail extends React.Component {
                 <TaskForm
                   onSubmit={this.saveTask}
                   status={this.state.status}
+                  users={this.props.users}
                   deleteTask={this.deleteTask}
                   hideDelete={this.state.hideDelete}
                   onCancel={this.cancelTask}/>

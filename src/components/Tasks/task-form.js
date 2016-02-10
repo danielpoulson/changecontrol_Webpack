@@ -8,7 +8,7 @@ export const fields = ['TKName', 'TKStart', 'TKTarg', 'TKStat', 'TKChamp', 'TKCo
 
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
   TKStat: 1,
-  TKChamp: 'Daniel Poulson',
+  TKChamp: "Owner",
   TKStart: new Date()
 };
 
@@ -22,8 +22,8 @@ const validate = values => {
 
   if (!values.TKChamp) {
     errors.TKChamp = 'This field is required';
-  } else if (values.TKChamp.length < 10) {
-    errors.TKChamp = 'Must more than 10 characters';
+  } else if (values.TKChamp.length < 7) {
+    errors.TKChamp = 'Must more than 7 characters';
   }
 
   if (!values.TKTarg) {
@@ -60,7 +60,8 @@ export default class TaskForm extends React.Component {
       deleteTask,
       hideDelete,
       submitting,
-      status
+      status,
+      users
       } = this.props;
 
         var wrapperClassSD = '';
@@ -103,23 +104,21 @@ export default class TaskForm extends React.Component {
                   {...TKTarg}/>
 
                 <ComboBox
-                  label="Complete Date"
+                  label="Status"
                   onChange={this.handleStartDateChange}
-                  status={status}
+                  data={status}
                   dpInputCol="col-sm-4"
                   dpLabelCol="col-sm-2"
                   {...TKStat}
                 />
 
-                <TextInputTask
-                  name="TKChamp"
-                  label="Owner:"
+                <ComboBox
+                  label="Owner"
+                  data={users}
                   dpInputCol="col-sm-4"
                   dpLabelCol="col-sm-2"
-                  error={TKChamp.error}
-                  touched={TKChamp.touched}
-                  placeholder="Enter Taks Owner (Required)"
-                  {...TKChamp}/>
+                  {...TKChamp}
+                />
 
                 <TextArea
                   name="TKComment"

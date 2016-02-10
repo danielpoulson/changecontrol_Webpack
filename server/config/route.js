@@ -4,6 +4,7 @@ var changes = require('../controllers/changes');
 var projects = require('../controllers/projects');
 var tasks = require('../controllers/tasks');
 var files = require('../controllers/files');
+var users = require('../controllers/users');
 var multer = require('multer');
 
 var storage = multer.diskStorage({
@@ -76,7 +77,9 @@ router.route('/api/projectList/:status')
   router.get('/api/files/:files', files.getFiles);
   router.get('/api/filecount/:id', files.getFileCount);
   router.put('/api/filebooked/:id', files.updateFileBook);
-
+//**********User Routes ***************
+   router.get('/api/allusers', users.getAllUsers);
+//**********User Routes ***************
     //**********File function ***************
  router.get('/server/upload/:file', files.downloadFile);
  router.get('/server/upload/:file', files.downloadFile);

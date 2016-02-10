@@ -40,9 +40,6 @@ export default function(state, action) {
       currIds = state.alldata.map(function (c) { return c._id; });
       index = currIds.indexOf(_data._id);
 
-      if (index > -1) {
-        this._data.splice(index, 1);
-      }
       alldata = [
         ...state.alldata.slice(0, index),
         // Copy the object before mutating

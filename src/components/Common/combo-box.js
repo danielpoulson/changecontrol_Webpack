@@ -20,7 +20,7 @@ export default class ComboBox extends Component {
           <Combobox
             valueField='id'
             textField='name'
-            data={this.props.status}
+            data={this.props.data}
             value={this.props.value}
             defaultValue={1}
             onChange={this.props.onChange}/>

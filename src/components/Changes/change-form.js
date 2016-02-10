@@ -27,8 +27,6 @@ const validate = values => {
 
   if (!values.CC_Champ) {
     errors.CC_Champ = 'This field is required';
-  } else if (values.CC_Champ.length < 10) {
-    errors.CC_Champ = 'Must more than 10 characters';
   }
 
   if (!values.CC_Comp) {
@@ -76,7 +74,8 @@ export default class ChangeDetail extends Component {
       handleSubmit,
       resetForm,
       submitting,
-      status
+      status,
+      users
       } = this.props;
     return (
       <form onSubmit={handleSubmit}>
@@ -117,12 +116,11 @@ export default class ChangeDetail extends Component {
               {...CC_ASS}/>
           </div>
           <div className="col-sm-4">
-            <Input
-              name="CC_Champ"
-              label="Responsible"
-              placeholder="Change Owner (Required)"
-              inputstyle="form-control"
-              {...CC_Champ}/>
+            <ComboBox
+              label="Champion"
+              data={users}
+              {...CC_Champ}
+            />
           </div>
           <div className="col-sm-4">
             <Input
@@ -159,7 +157,7 @@ export default class ChangeDetail extends Component {
             <ComboBox
               label="Complete Date"
               onChange={this.handleStartDateChange}
-              status={status}
+              data={status}
               {...CC_Stat}
             />
           </div>

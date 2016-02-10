@@ -11,7 +11,6 @@ exports.getProjects = function(req, res) {
 
 exports.getProjectList = function(req, res) {
     var status = req.params.status;
-    console.log('The status is : ' + status);
     Project.find({Status: {$lt:status}}, {ProjNo:true, Title:true, Champion:true, Site:true, PROJCD:true, PROJTD:true, Status:true })
         .sort({ProjNo:1})
         .exec(function(err, collection) {

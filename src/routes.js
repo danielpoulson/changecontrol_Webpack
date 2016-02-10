@@ -8,6 +8,7 @@ import Changes from 'containers/Changes';
 import ChangeDetail from 'containers/ChangeDetail';
 import TaskDetail from 'containers/Tasks/task-details';
 import Tasks from 'containers/Tasks/tasks';
+import User from 'containers/User/user-profile';
 
 export default (
   <Route path="/" component={App}>
@@ -15,6 +16,7 @@ export default (
     <Route path='change/:id' component={ChangeDetail} />
     <Route path='task/:id' component={TaskDetail} />
     <Route path='tasks' component={Tasks} />
+    <Route path='user/:id' component={User} />
      <IndexRoute component={Home} />
     <Route status={404} path="*" component={Home} />
   </Route>

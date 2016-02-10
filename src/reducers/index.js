@@ -6,6 +6,7 @@ import MainReducer from './reducer_main';
 import TasksReducer from './reducer_tasks';
 import TaskReducer from './reducer_task';
 import FilesReducer from './reducer_files';
+import UsersReducer from './reducer_users';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   tasks: TasksReducer,
   task: TaskReducer,
   files: FilesReducer,
+  users: UsersReducer,
 });
 
 export default rootReducer;

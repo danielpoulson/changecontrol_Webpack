@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ChangeForm from 'components/Changes/change-form';
 import TaskList from 'components/Tasks/task-list';
@@ -11,8 +10,19 @@ import toastr from 'toastr';
 import { addChange, createLog, editChange, getChange } from 'actions/actions_changes';
 import { getProjectTasks } from 'actions/actions_tasks';
 import { setMain } from 'actions/actions_main';
+import { getUsers } from 'actions/actions_users';
 
-class ChangeDetail extends Component {
+@connect(state => ({
+  change : state.change,
+  main: state.main,
+  tasklist: state.tasks.ctlist,
+  ctTotal : state.tasks.ctTotal,
+  users: state.users
+}), {
+  addChange, createLog, editChange, getChange, getProjectTasks, setMain
+})
+
+export default class ChangeDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,7 +69,7 @@ class ChangeDetail extends Component {
     const CC_No = this.props.location.pathname.split('/')[2];
     if(this.props.main.loading === true){
       this.props.getProjectTasks(CC_No);
-    }    
+    }
     this.setState({ccNo : CC_No});
   }
 
@@ -96,13 +106,11 @@ class ChangeDetail extends Component {
 
   saveChange = (data) => {
         if (this.state.ccNo !== 'new') {
-          console.log("Not New");
             data._id = this.props.change._id;
-            data.CC_Stat = data.CC_Stat.id;
+            data.CC_Stat = typeof data.CC_Stat === 'object' ? data.CC_Stat.id : data.CC_Stat;
             data.CC_No = this.props.change.CC_No;
             this.props.editChange(data);
         } else {
-          console.log("IS New");
             var created = [];
             created.push({CC_Id : 0, CC_Action: "Created", CC_ActBy : window.USER.fullname, CC_ActDept : window.USER.dept, CC_ActDate : new Date()});
             data.CC_LOG = created;
@@ -156,7 +164,7 @@ class ChangeDetail extends Component {
           <div className={this.state.DetailTab}>
             <div className="panel panel-default">
               <div className="panel-body">
-                <ChangeForm onSubmit={this.saveChange} status={this.state.status} onCancel={this.cancelChange}/>
+                <ChangeForm onSubmit={this.saveChange} status={this.state.status} users={this.props.users} onCancel={this.cancelChange}/>
               </div>
             </div>
           </div>
@@ -183,18 +191,3 @@ class ChangeDetail extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    change : state.change,
-    main: state.main,
-    tasklist: state.tasks.ctlist,
-    ctTotal : state.tasks.ctTotal
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addChange, createLog, editChange, getChange, getProjectTasks, setMain }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChangeDetail);
