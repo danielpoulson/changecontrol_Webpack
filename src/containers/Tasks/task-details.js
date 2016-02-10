@@ -5,8 +5,9 @@ import toastr from 'toastr';
 import moment from 'moment';
 
 import { addTask, editTask, deleteTask } from 'actions/actions_tasks';
+import { setLoading } from 'actions/actions_main';
 
-@connect( state => ({ main : state.main }), { addTask, editTask, deleteTask })
+@connect( state => ({ main : state.main }), { addTask, editTask, deleteTask, setLoading })
 
 class TaskDetail extends React.Component {
   static childContextTypes = {
@@ -42,15 +43,17 @@ class TaskDetail extends React.Component {
 
     cancelTask = (event) => {
       event.preventDefault();
+      this.props.setLoading({loading: false});
       this.taskNav(this.props.main.MainId);
     };
 
     deleteTask = (event) => {
         event.preventDefault();
+        this.props.setLoading({loading: false});
         const _id = this.state.taskId;
         this.props.deleteTask(_id);
         toastr.error("Task has been deleted",'Task Detail', {timeOut: 1000});
-        this.taskNav(_id);
+        this.taskNav(this.props.main.MainId);
     };
 
     saveTask = (data) => {

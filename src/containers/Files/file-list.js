@@ -5,17 +5,20 @@ import FileTable from 'components/Files/file-table';
 import FileZone from 'components/Files/file-zone';
 
 /* actions */
-import { getFiles, addFile, bookoutFile } from 'actions/actions_files';
+import { getFiles, addFile, bookoutFile, deleteFile } from 'actions/actions_files';
 import { setFiletabCount } from 'actions/actions_main';
 import { createLog } from 'actions/actions_changes';
 
-class FileList extends Component {
+@connect(state => ({files : state.files}), {getFiles, addFile, bookoutFile, deleteFile, setFiletabCount, createLog})
+
+export default class FileList extends Component {
 	constructor(props) {
     super(props);
     this.state = {};
 		this.onAddFile = this.onAddFile.bind(this);
 		this.onCreateLog = this.onCreateLog.bind(this);
 		this.onBookoutFile = this.onBookoutFile.bind(this);
+		this.onDeleteFile = this.onDeleteFile.bind(this);
 	}
 
 
@@ -36,6 +39,10 @@ class FileList extends Component {
 	onCreateLog(log){
 		this.props.createLog(log);
 		//this.props.refreshChange();
+	}
+
+	onDeleteFile(id){
+		this.props.deleteFile(id);
 	}
 
 	onBookoutFile(id){
@@ -59,6 +66,7 @@ class FileList extends Component {
 							files={this.props.files}
 							export={this.props.export}
 							createLog={this.onCreateLog}
+							deleteFile={this.onDeleteFile}
 							bookoutFile={this.onBookoutFile}/>
 					</div>
 					<div className={this.props.export}>
@@ -75,15 +83,3 @@ class FileList extends Component {
 
 	}
 };
-
-function mapStateToProps(state) {
-  return {
-    files : state.files
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ getFiles, setFiletabCount, addFile, createLog, bookoutFile }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(FileList);

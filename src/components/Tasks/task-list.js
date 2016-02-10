@@ -27,7 +27,7 @@ class TaskList extends React.Component {
     };
 
     newTask = () => {
-        this.props.getTask();
+        this.props.getTask('new');
         this.context.router.push(`/task/new`);
     };
 

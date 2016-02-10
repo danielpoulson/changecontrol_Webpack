@@ -17,7 +17,7 @@ exports.downloadFile = function (req, res) {
     } else {
         file = '.././uploaded/' + filename;
     }
-    
+
     res.download(file, filename, function(err){
       if (err) {
         console.log(err);
@@ -30,7 +30,7 @@ exports.downloadFile = function (req, res) {
                 });
             }
       }
-    
+
     });
 
 
@@ -42,7 +42,7 @@ exports.uploadFile = function (req, res) {
     var docName = req.body.docName;
 
     const myRe = /C{2}\d{6}\s[-]\s/;
-    var myArray = myRe.exec(docName); 
+    var myArray = myRe.exec(docName);
 
     //TODO : When a file is booked in remove the log entry that shows it was booked out.
     //TODO : Functionally only works for changes.
@@ -55,7 +55,7 @@ exports.uploadFile = function (req, res) {
 
     fileData.fsAddedAt = new Date();
     fileData.fsAddedBy = req.body.dpUser;
-    
+
     fileData.fsFileExt = docName.split('.').pop();
     fileData.fsSource = req.body.sourceId;
     fileData.fsFilePath = req.files[0].filename;
@@ -67,23 +67,23 @@ exports.uploadFile = function (req, res) {
             res.status(200);
             console.log(err.toString());
         }
-        
+
         File.findOne({fsFileName : fileData.fsFileName}, function(err, file){
             fileData._id = file._id;
             res.status(200).send(fileData);
         });
-        
+
     });
 
 
 };
 
 function addExportFile(fileData){
-    
+
     File.create(fileData, function (err, small) {
       if (err) return console.log(err);
     });
-    
+
 };
 
 exports.getFiles = function (req, res) {
@@ -98,23 +98,23 @@ exports.deletefile = function (req, res) {
     var id = req.params.id;
 
     fileDeletion(id);
-    res.status(200).send(req.params.id);
+    res.status(200);
 
 };
 
 function fileDeletion(id) {
-        
+
         File.findById(id, function (err, doc){
-        
+
             fs.unlink('.././uploaded/' + doc.fsFilePath, function (err) {
                 if (err) throw err;
                 console.log('successfully deleted /uploaded/' + doc.fsFilePath);
             });
-        
+
             File.remove({_id: id}, function (err) {
                 if (err) return handleError(err);
             });
-        
+
     });
 }
 
@@ -131,7 +131,7 @@ exports.updateFileBook = function(req,res){
         doc.fsBooked = 1;
         doc.save();
     });
-    
+
     res.status(200).send(id);
 };
 

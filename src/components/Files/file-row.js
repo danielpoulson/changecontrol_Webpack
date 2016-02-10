@@ -28,6 +28,7 @@ class FileRow extends React.Component {
                         fileId={file._id}
                         fsBooked={file.fsBooked}
                         createLog={this.props.createLog}
+                        deleteFile={this.props.deleteFile}
                         bookoutFile={this.props.bookoutFile}/>
                     </td>
                 </tr>

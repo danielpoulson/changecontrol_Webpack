@@ -26,7 +26,7 @@ router.route('/api/changes/:status')
 router.post('/api/changes', changes.createChange);
 router.put('/api/changelog/:id', changes.updateChangeComment);
 
-// TODO: Get files and tasks that are associated with a change when download a change
+// TODO: MAJOR - Get files and tasks that are associated with a change when download a change
 // A change requires the associated tasks and files to be downloaded at the same time however
 // currently these are all downloaded with seperate calls. At the application level the state of a change
 // should be associated with the task and the files so changes to state are managed together.

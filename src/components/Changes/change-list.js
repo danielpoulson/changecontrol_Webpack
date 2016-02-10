@@ -14,7 +14,7 @@ export default class ChangeList extends Component {
 
   handleClick = (i) => {
     const _id = this.props.changelist[i].CC_No;
-    this.props.setMain({MainId : _id, CurrentMode: 'change'});
+    this.props.setMain({MainId : _id, CurrentMode: 'change', loading : true});
     this.props.getChange(_id);
     this.context.router.push(`/change/${_id}`);
 

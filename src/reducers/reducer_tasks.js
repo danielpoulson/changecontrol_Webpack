@@ -16,6 +16,8 @@ export default function(state, action) {
   let paged = [];
   let searchText = '';
   let currIds = [];
+  let ctTotal = 0;
+  let ctlist = [];
 
   if (typeof state === 'undefined') {
       return initialState
@@ -53,19 +55,20 @@ export default function(state, action) {
       };
 
       case DELETE_TASK:
-        _data =  action.payload;
-        currIds = state.alldata.map(function (c) { return c._id; });
-        index = currIds.indexOf(_data._id);
-        alldata = searchIndex(state.alldata, index);
-        console.log(alldata);
+        const _id =  action.payload;
+        alldata = searchIndex(state.alldata, _id);
+        ctlist = searchIndex(state.ctlist, _id);
+        ctTotal = ctlist.length;
         return {
           ...state,
-          alldata : alldata
+          alldata : alldata,
+          ctlist : ctlist,
+          ctTotal : ctTotal
         };
 
     case GET_PROJECT_TASKS:
-      const ctlist = action.payload.data;
-      const ctTotal = ctlist.length;
+      ctlist = action.payload.data;
+      ctTotal = ctlist.length;
 
       return {
         ...state,
@@ -115,16 +118,11 @@ export default function(state, action) {
 
   return state;
 }
+
+
 function searchIndex(data, index){
-  function isNotIndex(value) {
-    console.log(`Value : ${value} and index : ${index}`);
-    return value !== index;
-  }
-
-  return data.filter(_search);
-
+  return data.filter((item) => item._id !== index);
 }
-
 
 function searchData(data, searchText){
     var searched = [];

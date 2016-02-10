@@ -57,7 +57,9 @@ class ChangeDetail extends Component {
 
   componentWillMount(){
     const CC_No = this.props.location.pathname.split('/')[2];
-    this.props.getProjectTasks(CC_No);
+    if(this.props.main.loading === true){
+      this.props.getProjectTasks(CC_No);
+    }    
     this.setState({ccNo : CC_No});
   }
 

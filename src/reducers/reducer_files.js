@@ -1,4 +1,4 @@
-import { GET_FILES, ADD_FILE, BOOKOUT_FILE } from 'actions/actions_files';
+import { GET_FILES, ADD_FILE, BOOKOUT_FILE, DELETE_FILE } from 'actions/actions_files';
 
 export default function (state=[], action) {
   let _data = [];
@@ -23,6 +23,11 @@ export default function (state=[], action) {
 
     case BOOKOUT_FILE:
         return state.map(f => toggleBooked( f, action));
+
+    case DELETE_FILE:
+      const _id =  action.payload;
+      state = searchIndex(state, _id);
+      return state;
   }
   return state
 }
@@ -41,4 +46,8 @@ const toggleBooked = (state, action) => {
     default:
       return state
   }
+}
+
+function searchIndex(data, index){
+  return data.filter((item) => item._id !== index);
 }

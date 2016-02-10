@@ -74,7 +74,6 @@ export default class Changes extends Component {
     action.page_num = page_num || 1;
     action.search = searchText || this.state.txtSearch;
     action.numPage = this.state.numPage;
-    // TODO: Write a function for call pages
     this.props.loadPage(action);
   };
 

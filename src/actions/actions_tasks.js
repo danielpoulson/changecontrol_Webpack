@@ -45,10 +45,10 @@ export function getProjectTasks(data) {
 }
 
 export function getTask(data) {
-  const url = `/api/task/${data}`;
   let request = {};
 
-  if(data){
+  if(data !== 'new'){
+    const url = `/api/task/${data}`;
     request = axios.get(url);
   }
 
@@ -82,7 +82,7 @@ export function editTask(data) {
 }
 
 export function deleteTask(data) {
-  const url = `/api/task/${data}`;
+  const url = `/api/tasks/${data}`;
   const request = axios.delete(url);
 
   return {
