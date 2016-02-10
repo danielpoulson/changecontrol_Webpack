@@ -5,10 +5,13 @@ exports.getAllUsers = function(req, res) {
 
     User
         .find({})
-        .select({fullname : 1, "_id" : 0})
+        .select({fullname : 1, username : 1,  "_id" : 0})
         .sort({TKTarg : 1})
         .exec(function(err, collection) {
-          var users = collection.map(user => user.fullname);
+          var users = collection.map(function(user) {
+            let userObj = { value: user.username, label: user.fullname}
+            return userObj;
+          });
         res.send(users);
     });
 };

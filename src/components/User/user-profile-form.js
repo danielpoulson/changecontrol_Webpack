@@ -1,7 +1,7 @@
 import React from 'react';
 import {reduxForm} from 'redux-form';
 import { TextInputTask } from 'components/Common/text-input-task';
-import ComboBox from 'components/Common/combo-box';
+import SelectBox from 'components/Common/select-box';
 export const fields = ['fullname', 'username', 'dept', 'role', 'password'];
 
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
@@ -35,27 +35,17 @@ export default class UserProfileForm extends React.Component {
 		errors : React.PropTypes.object
 	};
 
-  onChange = (event) => {
-    console.log("event");
-  };
-
 	render() {
     const {
       fields: {fullname, username, dept, role, password},
       handleSubmit,
-      getUser,
       submitting,
       onCancel,
-      deleteUser,
-      users
+      deleteUser
       } = this.props;
 
         var wrapperClassSD = '';
         var wrapperClassTD = '';
-
-        var fnStyle = {
-          marginLeft: 15
-        }
 
         if (this.props.errors.TKStart && this.props.errors.TKStart.length > 0) {
             wrapperClassSD += " " + 'has-date-error';
@@ -68,28 +58,6 @@ export default class UserProfileForm extends React.Component {
 		return (
             <div>
               <form onSubmit={handleSubmit} className="form form-horizontal" >
-
-                <div className="col-sm-12">
-                  <div style={fnStyle} className="col-sm-6">
-                    <ComboBox
-                      label="Full Name"
-                      data={users}
-                      defaultValue={users[0]}
-                      onChange={this.onChange}
-                      dpInputCol="col-sm-9"
-                      dpLabelCol="col-sm-3"
-                      {...fullname}
-                    />
-                    </div>
-                  <div className="col-sm-4">
-                    <button className="btn btn-success pull-left" onClick={getUser}>
-                      Get User
-                    </button>
-                  </div>
-                </div>
-
-
-
                 <TextInputTask
                   name="username"
                   label="User Name"

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import 'scss/bootstrap/css/bootstrap.min.css';
 import 'scss/font-awesome-4.5.0/css/font-awesome.min.css';
+import 'scss/react-select.css';
 import 'scss/toastr.scss';
 import 'scss/styles.scss';
 

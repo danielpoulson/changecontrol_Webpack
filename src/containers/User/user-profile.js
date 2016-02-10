@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import UserProfileForm from 'components/User/user-profile-form';
+import UserSelect from 'components/User/user-select';
 import { TextInputTask } from 'components/Common/text-input-task';
 
 @connect(state=>({users: state.users}))
@@ -80,11 +81,12 @@ class UserProfile extends Component {
           </div>
         </div>
 
+          <UserSelect users={this.props.users} />
+
         <div className="row" style={formStyle}>
           <UserProfileForm
             onSubmit={this.saveUser}
             onChange={this.onChange}
-            users={this.props.users}
             deleteUser={this.deleteUser}
             onCancel={this.cancelUser}/>
           </div>
