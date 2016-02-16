@@ -1,25 +1,34 @@
 'use strict';
 import React from 'react';
-import SelectBox from 'components/Common/select-box';
+import Combobox from 'components/Common/combo-box';
 
 export default class UserSelect extends React.Component{
 
   render() {
     const fnStyle = {
-      marginLeft: 15
+      marginLeft: 30,
+      paddingTop: 20,
+      paddingBottom: 10
     }
+
+    const butStyle = {
+      paddingTop: 20
+    }
+
     return (
       <div className="col-sm-12">
         <div style={fnStyle} className="col-sm-6">
-          <SelectBox
+          <Combobox
+            name="Full Name"
             label="Full Name"
             data={this.props.users}
             dpInputCol="col-sm-9"
             dpLabelCol="col-sm-3"
-            value={}
+            onChange={this.props.onChange}
+            defaultValue={this.props.users[0]}
           />
           </div>
-        <div className="col-sm-4">
+        <div style={butStyle} className="col-sm-4">
           <button className="btn btn-success pull-left" onClick={this.getUser}>
             Get User
           </button>

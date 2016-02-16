@@ -44,8 +44,7 @@ exports.uploadFile = function (req, res) {
     const myRe = /C{2}\d{6}\s[-]\s/;
     var myArray = myRe.exec(docName);
 
-    //TODO : When a file is booked in remove the log entry that shows it was booked out.
-    //TODO : Functionally only works for changes.
+    //TODO : LOW FUNC : Functionally only works for changes.
 
     if(myArray) {
         fileData.fsFileName = docName.split('.').shift().substr(11);

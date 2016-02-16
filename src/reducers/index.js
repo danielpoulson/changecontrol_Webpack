@@ -7,6 +7,7 @@ import TasksReducer from './reducer_tasks';
 import TaskReducer from './reducer_task';
 import FilesReducer from './reducer_files';
 import UsersReducer from './reducer_users';
+import UserReducer from './reducer_user';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   task: TaskReducer,
   files: FilesReducer,
   users: UsersReducer,
+  user: UserReducer,
 });
 
 export default rootReducer;

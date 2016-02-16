@@ -12,7 +12,6 @@ export const fields = ['CC_Descpt', 'CC_Code', 'CC_Multi', 'CC_ASS', 'CC_Champ',
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
   CC_Pry: 'A',
   CC_Stat: 1,
-  CC_Champ: 'Daniel Poulson',
   CC_TDate: new Date()
 };
 
@@ -60,7 +59,7 @@ const validate = values => {
   })
 )
 
-export default class ChangeDetail extends Component {
+export default class ChangeForm extends Component {
   static propTypes = {
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
@@ -119,6 +118,7 @@ export default class ChangeDetail extends Component {
             <ComboBox
               label="Champion"
               data={users}
+              defaultValue={users[0]}
               {...CC_Champ}
             />
           </div>

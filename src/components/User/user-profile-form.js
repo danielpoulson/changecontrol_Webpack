@@ -13,7 +13,7 @@ const validate = values => {
 
   if (!values.username) {
     errors.username = 'This field is required';
-  } else if (values.username.length < 7) {
+  } else if (values.username.length < 5) {
     errors.username = 'Must more than 7 characters';
   }
 
@@ -26,7 +26,7 @@ const validate = values => {
     validate
   },
   state => ({
-  initialValues: state.user ? state.user : newdata // will pull state into form's initialValues
+  initialValues: state.user
   })
 )
 
@@ -38,10 +38,10 @@ export default class UserProfileForm extends React.Component {
 	render() {
     const {
       fields: {fullname, username, dept, role, password},
-      handleSubmit,
-      submitting,
-      onCancel,
-      deleteUser
+        handleSubmit,
+        submitting,
+        onCancel,
+        deleteUser
       } = this.props;
 
         var wrapperClassSD = '';

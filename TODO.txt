@@ -1,16 +1,20 @@
-Change Control
+//TODO: ************ Change Control  ******************
 
-Key = MF: Major Function, FUC: Minor Function, BUG: Bug Fix, RF: Refinement, CE: Critical Error
 
-*************  CHANGES  ******************
+//TODO: Key = MF: Major Function, FUC: Minor Function, BUG: Bug Fix, RF: Refinement, CE: Critical Error
+
+//TODO: *************  CHANGES  ******************
 //TODO: C_FUC (M) Delete / archive / cancel a change??
 //TODO: C_BUG (M) No tabs should be displayed when creating a new change
 
-*************  TASK  ******************
+//TODO:*************  TASK  ******************
 //TODO: T_FUC Add a drop down selector for the name field Task Default
 
-*************  FILES  ******************
+//TODO:*************  FILES  ******************
 
-*************  USERS  ******************
+//TODO:*************  USERS  ******************
 //TODO: U_MF User management section - Add, Edit, delete
 //TODO: U_BUG The log in user is always taken from the DOM need to retrieve once and store in a variable
+
+
+//TODO: ************ End  ******************

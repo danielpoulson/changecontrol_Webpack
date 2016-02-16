@@ -35,8 +35,7 @@ class TaskDetail extends React.Component {
 
   componentDidMount() {
       const _taskId = this.props.location.pathname.split('/')[2];
-      // TODO: Remove direct access with the window.USER object instead use Main state
-      const _hideDelete = window.USER.role !== 'admin' || this.props.newTask === true ? "hidden" : "btn btn-danger";
+      const _hideDelete = this.props.main.user.role !== 'admin' || this.props.newTask === true ? "hidden" : "btn btn-danger";
       this.setState({taskId : _taskId});
       this.setState({hideDelete : _hideDelete});
     }

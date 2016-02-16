@@ -4,18 +4,23 @@ import UserProfileForm from 'components/User/user-profile-form';
 import UserSelect from 'components/User/user-select';
 import { TextInputTask } from 'components/Common/text-input-task';
 
-@connect(state=>({users: state.users}))
+import { getUser, saveUser } from 'actions/actions_users';
+
+@connect(state=>({users: state.users}), { getUser, saveUser })
 
 class UserProfile extends Component {
 
   constructor(props) {
     super(props);
+    
     this.state = {
 
     };
+
     this.saveUser = this.saveUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
     this.cancelUser = this.cancelUser.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   static childContextTypes = {
@@ -31,11 +36,9 @@ class UserProfile extends Component {
 
   }
 
-  searchText() {
-
-  }
-
-  saveUser(){
+  saveUser(data){
+    this.props.saveUser(data);
+    console.log('saveUser');
 
   }
 
@@ -48,7 +51,7 @@ class UserProfile extends Component {
   }
 
   onChange(value) {
-    console.log("value");
+    this.props.getUser(value);
     console.log(value);
   }
 
@@ -81,12 +84,11 @@ class UserProfile extends Component {
           </div>
         </div>
 
-          <UserSelect users={this.props.users} />
+          <UserSelect users={this.props.users} onChange={this.onChange} />
 
         <div className="row" style={formStyle}>
           <UserProfileForm
             onSubmit={this.saveUser}
-            onChange={this.onChange}
             deleteUser={this.deleteUser}
             onCancel={this.cancelUser}/>
           </div>

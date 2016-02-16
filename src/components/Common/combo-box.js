@@ -22,7 +22,8 @@ export default class ComboBox extends Component {
             textField='name'
             data={this.props.data}
             value={this.props.value}
-            defaultValue={1}/>
+            onChange={this.props.onChange}
+            defaultValue={this.props.defaultValue}/>
           <div className="input">{this.props.error}</div>
         </div>
       </div>

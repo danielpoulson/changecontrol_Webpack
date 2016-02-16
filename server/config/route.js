@@ -79,6 +79,7 @@ router.route('/api/projectList/:status')
   router.put('/api/filebooked/:id', files.updateFileBook);
 //**********User Routes ***************
    router.get('/api/allusers', users.getAllUsers);
+   router.get('/api/user/:id', users.getUser);
 //**********User Routes ***************
     //**********File function ***************
  router.get('/server/upload/:file', files.downloadFile);

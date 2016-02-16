@@ -91,6 +91,32 @@ router.post('/signup', function (req, res, next) {
 
 });
 
+// TODO (DP): This update user function only changes the users password.
+// Need to extend to allow for editing of role, email etc
+   
+router.put('/api/updateuser/:username', function (req, res, next) {
+    const password = req.body.password;
+
+    User.count({username: req.body.username }, function(err, count){
+        if (err){console.log(err);}
+        if (count === 1 && password) {
+            const userData = {
+                    username: req.body.username,
+                    passwordHash: hash(password)
+                };
+             
+             console.log("UserData");   
+            
+          User.update({username : req.body.username}, {$set: userData}, function (err) {
+            if (err){console.log(err); res.sendStatus(500);}
+            res.sendStatus(200);
+          });
+
+
+        }
+    });
+});
+
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login'
