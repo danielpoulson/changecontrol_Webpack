@@ -7,6 +7,7 @@ export const EDIT_CHANGE = 'EDIT_CHANGE';
 export const LOAD_PAGE_CHANGES = 'LOAD_PAGE_CHANGES';
 export const CREATE_LOG = 'CREATE_LOG';
 export const BOOKOUT_FILE = 'BOOKOUT_FILE';
+export const SORT_BY_CHANGES = 'SORT_BY_CHANGES';
 
 
 export function getChanges(data) {
@@ -59,6 +60,16 @@ export function loadPage(data) {
 
     type: LOAD_PAGE_CHANGES,
     data
+  }
+
+}
+
+
+export function sortByChanges(col) {
+  return {
+
+    type: SORT_BY_CHANGES,
+    col
   }
 
 }

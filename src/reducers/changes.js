@@ -1,4 +1,5 @@
-import { GET_CHANGES, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES } from 'actions/actions_changes';
+import { GET_CHANGES, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES, SORT_BY_CHANGES } from 'actions/actions_changes';
+import _ from 'lodash';
 
 const initialState = {
     alldata : [],
@@ -65,6 +66,20 @@ export default function(state, action) {
         alldata : alldata
       };
 
+      case SORT_BY_CHANGES:
+
+        alldata = dataSort(state.alldata, action.col);
+        page = 1;
+        offset = (page - 1) * state.per_page;
+        paged = alldata.slice(offset, offset + state.per_page);
+
+        return {
+          ...state,
+          alldata,
+          paged,
+          page
+        }
+
       case LOAD_PAGE_CHANGES:
       // this.props.loadPage(page_num, this.state.numPage, search);
         alldata = state.alldata;
@@ -75,7 +90,6 @@ export default function(state, action) {
         let searcheddata = searchData(state.alldata, searchText);
         paged = searcheddata.slice(offset, offset + per_page);
 
-        console.log(searchText);
         return {
           page: page,
           per_page: per_page,
@@ -87,6 +101,11 @@ export default function(state, action) {
   }
 
   return state;
+}
+
+
+function dataSort(data, sortColumn){  
+  return _.sortBy(data, sortColumn);
 }
 
 

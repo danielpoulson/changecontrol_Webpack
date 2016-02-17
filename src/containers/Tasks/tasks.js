@@ -8,7 +8,8 @@ import Input from 'components/Common/form-text-input';
 /* actions */
 import { getAllTasks, loadPageTask } from 'actions/actions_tasks';
 
-// TODO: Changes and Task share the same search text box function which should be made as a common component
+// TODO: HIGH (FUNC Refactor) - Make a common component search box Changes and Task List
+// Changes and Task share the same search text box function which should be made as a common component
 let start = 0;
 
 @connect(state=>({tasks : state.tasks}), { getAllTasks, loadPageTask })
@@ -26,7 +27,7 @@ export default class Tasks extends Component{
       if (!this.props.tasks.alldata.length > 0) {
         this.props.getAllTasks();
       }
-      // TODO: Sticky options on the task list
+      // TODO: HIGH (FUNC) Sticky options on the task list
       // This section should remember you page and or serach options.
       this.onChange();
     }
@@ -41,18 +42,11 @@ export default class Tasks extends Component{
 
 
     linkClick = (i) => {
-        //TODO: BUG (L) Pagination Adding 1 to the page mumber as it uses the base of 0
+        //TODO: LOW (BUG) Pagination Adding 1 to the page mumber as it uses the base of 0
         this.onChange(i + 1, this.state.txtSearch);
         this.setState({activePage: i});
 
     };
-
-    // loadPage(activePage, searchText){
-    //     var perPage = this.state.numPage;
-    //     start = activePage * perPage;
-    //     var paged = [start, start + perPage, searchText];
-    //     actions.searchTask(paged);
-    // };
 
 
     searchText = (event) => {

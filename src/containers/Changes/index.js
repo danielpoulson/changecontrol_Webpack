@@ -6,16 +6,17 @@ import  ChangeList from 'components/Changes/change-list';
 import Pagination from 'components/Common/pagination'
 
 /* actions */
-import { getChange, getChanges, addChange, loadPage } from 'actions/actions_changes';
+import { getChange, getChanges, addChange, sortByChanges, loadPage } from 'actions/actions_changes';
 import { setMain } from 'actions/actions_main';
 
-@connect(state=>({ changes : state.changes }),{ getChange, getChanges, setMain, loadPage })
+@connect(state=>({ changes : state.changes }),{ getChange, getChanges, sortByChanges, setMain, loadPage })
 
 export default class Changes extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activePage: 0,
+      colSelected : null,
       paged: {},
       count: 0,
       numPage: 15,
@@ -23,6 +24,7 @@ export default class Changes extends Component {
       showAll: false
     };
     this.searchText= this.searchText.bind(this);
+    this.onSortByClick = this.onSortByClick.bind(this);
   }
 
   componentWillMount() {
@@ -77,6 +79,12 @@ export default class Changes extends Component {
     this.props.loadPage(action);
   };
 
+  onSortByClick(column) {
+    this.setState({activePage: 0});
+    this.setState({colSelected : column})
+    this.props.sortByChanges(column);
+  }
+
   searchText(event){
     let value = event.target.value;
     let field = event.target.name;
@@ -128,7 +136,11 @@ export default class Changes extends Component {
         </div>
 
         <div className="row">
-          <ChangeList changelist={this.props.changes.paged} getChange={this.props.getChange}/>
+          <ChangeList 
+            changelist={this.props.changes.paged} 
+            getChange={this.props.getChange}
+            sortByClick = {this.onSortByClick}
+            colSelected = {this.state.colSelected}/>
         </div>
         <div className="col-sm-6">
           <button

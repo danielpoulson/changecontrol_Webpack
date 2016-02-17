@@ -3,7 +3,8 @@ var fs = require('fs');
 var files = require('../controllers/files');
 var login  = require('../config/login');
 
-//TODO: This all task fucntion is restricted to change control only should by dynamic
+//TODO: LOW FUNC This all task get function only for change control only should by dynamic
+// When add project functionality the get task function would need to be used for both.
 exports.getTasks = function(req, res) {
     var status = req.params.status;
 
