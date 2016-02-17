@@ -6,10 +6,10 @@ import  ChangeList from 'components/Changes/change-list';
 import Pagination from 'components/Common/pagination'
 
 /* actions */
-import { getChange, getChanges, addChange, sortByChanges, loadPage } from 'actions/actions_changes';
+import { getChange, getChanges, addChange, sortByChanges, loadPage, exportChanges } from 'actions/actions_changes';
 import { setMain } from 'actions/actions_main';
 
-@connect(state=>({ changes : state.changes }),{ getChange, getChanges, sortByChanges, setMain, loadPage })
+@connect(state=>({ changes : state.changes }),{ getChange, getChanges, sortByChanges, setMain, loadPage, exportChanges })
 
 export default class Changes extends Component {
   constructor(props) {
@@ -43,9 +43,15 @@ export default class Changes extends Component {
 
   exportChange = () => {
       //TODO: The export function should export the displayed list, current exports all
-      const info = {fsSource : 'exp', fsAddedBy : window.USER.username, fsType : 'changes'};
+      const info = {
+        fsSource : 'exp',
+        fsAddedBy : window.USER.username,
+        fsType : 'changes',
+        search : this.state.txtsearch,
+        showAll : this.state.showAll
+      };
       // TODO: export function to create a changes list
-      //actions.exportList(info);
+      this.props.exportChanges(info);
   };
 
   // TODO: Show all button reverts to "Show all"

@@ -99,6 +99,7 @@ exports.dumpChanges = function(req, res) {
     files.addExportFile(fileData);
 
     Change.findAndStreamCsv({}, {CC_No:true, CC_Descpt:true, CC_Champ:true, CC_TDate:true, CC_CDate:true, CC_Comp:true, CC_Stat:true, _id: 0})
+        .where()
         .pipe(fs.createWriteStream(file));
 
     console.log("Files have been created");

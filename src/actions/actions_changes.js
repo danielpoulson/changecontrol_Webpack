@@ -95,3 +95,12 @@ export function bookoutFile(data) {
   }
 
 }
+
+export function exportChanges(search) {
+  const url = `/export/changes`;
+  axios.post(url, search);
+
+  return {
+    type: "EXPORT_CHANGES"
+  }
+}
