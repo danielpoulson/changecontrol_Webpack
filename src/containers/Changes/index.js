@@ -47,11 +47,11 @@ export default class Changes extends Component {
         fsSource : 'exp',
         fsAddedBy : window.USER.username,
         fsType : 'changes',
-        search : this.state.txtsearch,
+        search : this.state.txtSearch,
         showAll : this.state.showAll
       };
       // TODO: export function to create a changes list
-      this.props.exportChanges(info);
+      this.props.exportChanges(info); 
   };
 
   // TODO: Show all button reverts to "Show all"
