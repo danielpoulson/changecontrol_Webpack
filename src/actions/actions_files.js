@@ -1,11 +1,10 @@
 import axios from 'axios';
 
 export const GET_FILES = 'GET_FILES';
-// export const GET_CHANGE = 'GET_CHANGE';
 export const ADD_FILE = 'ADD_FILE';
 export const BOOKOUT_FILE = 'BOOKOUT_FILE';
 export const DELETE_FILE = 'DELETE_FILE';
-// export const LOAD_PAGE_CHANGES = 'LOAD_PAGE_CHANGES';
+export const REMOVE_FILE = 'REMOVE_FILE';
 
 
 export function getFiles(data) {
@@ -19,19 +18,6 @@ export function getFiles(data) {
 
 }
 
-// export function getChange(data) {
-//
-//     const url = `/api/change/${data}`;
-//     const request = axios.get(url);
-//
-//
-//   return {
-//     type: GET_CHANGE,
-//     payload: request
-//   }
-//
-// }
-//
 export function addFile(data) {
 
   return {
@@ -51,6 +37,15 @@ export function deleteFile(id) {
   }
 
 }
+
+export function removeFile(id) {
+
+  return {
+    type: DELETE_FILE,
+    payload: id
+  }
+
+}
 //
 export function bookoutFile(id) {
   const url = `/api/filebooked/${id}`;
@@ -62,13 +57,3 @@ export function bookoutFile(id) {
   }
 
 }
-//
-//
-// export function loadPage(data) {
-//   return {
-//
-//     type: LOAD_PAGE_CHANGES,
-//     data
-//   }
-//
-// }

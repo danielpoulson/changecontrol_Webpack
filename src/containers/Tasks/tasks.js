@@ -6,13 +6,13 @@ import TaskList from 'components/Tasks/task-list';
 import Pagination from 'components/Common/pagination';
 import Input from 'components/Common/form-text-input';
 /* actions */
-import { getAllTasks, loadPageTask } from 'actions/actions_tasks';
+import { getAllTasks, loadPageTask, exportTasks } from 'actions/actions_tasks';
 
 // TODO: HIGH (FUNC Refactor) - Make a common component search box Changes and Task List
 // Changes and Task share the same search text box function which should be made as a common component
 let start = 0;
 
-@connect(state=>({tasks : state.tasks}), { getAllTasks, loadPageTask })
+@connect(state=>({tasks : state.tasks}), { getAllTasks, loadPageTask, exportTasks })
 
 export default class Tasks extends Component{
     state = {
@@ -57,10 +57,16 @@ export default class Tasks extends Component{
       this.onChange(0, value);
     };
 
-    exportTask = (event) => {
-        event.preventDefault();
-        var info = {fsSource : 'exp', fsAddedBy : window.USER.username, fsType : 'tasks'};
-        actions.exportList(info);
+    exportTask = () => {
+      // TODO: LOW window.USER.username,
+      const info = {
+        fsSource : 'exp',
+        fsAddedBy : window.USER.username,
+        fsType : 'tasks',
+        search : this.state.txtSearch
+      };
+
+      this.props.exportTasks(info); 
     };
 
     render() {
@@ -79,7 +85,7 @@ export default class Tasks extends Component{
                     <div className="row">
                        <div className="section-header">
                             <div className="col-sm-6 pull-left">
-                                    <p className="section-header-text-main">Task List</p>
+                                    <p className="section-header-text-main">Active Task List</p>
                             </div>
 
                             <div className="col-sm-6 pull-right input-group " style={divStyle}>

@@ -5,7 +5,6 @@
 
 //TODO: *************  CHANGES  ******************
 //TODO: C_FUC (M) Delete / archive / cancel a change??
-//TODO: C_BUG (M) No tabs should be displayed when creating a new change
 
 //TODO:*************  TASK  ******************
 //TODO: T_FUC Add a drop down selector for the name field Task Default

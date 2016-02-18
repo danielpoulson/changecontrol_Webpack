@@ -4,6 +4,7 @@ export const GET_TASKS = 'GET_TASKS';
 export const GET_TASK = 'GET_TASK';
 export const ADD_TASK = 'ADD_TASK';
 export const EDIT_TASK = 'EDIT_TASK';
+export const EXPORT_TASKS = 'EXPORT_TASKS';
 export const DELETE_TASK = 'DELETE_TASK';
 export const LOAD_PAGE_TASKS = 'LOAD_PAGE_TASKS';
 export const GET_PROJECT_TASKS = 'GET_PROJECT_TASKS';
@@ -101,3 +102,13 @@ export function loadPageTask(data) {
   }
 
 }
+
+export function exportTasks(search) {
+  const url = `/export/tasks`;
+  axios.post(url, search);
+
+  return {
+    type: "EXPORT_TASKS"
+  }
+}
+

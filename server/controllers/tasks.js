@@ -81,7 +81,6 @@ exports.getTaskCount = function(req,res){
 };
 
 exports.dumpTasks = function(req, res) {
-    //var status = 2;
     var int = parseInt((Math.random()*1000000000),10);
     var file = '.././uploaded/tasks' + int + '.csv';
     var fileData = {};
@@ -99,10 +98,16 @@ exports.dumpTasks = function(req, res) {
 
     files.addExportFile(fileData);
 
-    Task.findAndStreamCsv({}, {SourceId:true, TKName:true, TKChamp:true, TKStart:true, TKTarg:true, TKStat:true, _id: 0})
-        .pipe(fs.createWriteStream(file));
+    const _search = !req.body.search ? "." : req.body.search;
+    const regExSearch = new RegExp(_search + ".*", "i");
+    const _status = 4;
 
-    console.log("Files have been created");
+    Task.find({TKStat: {$lt:_status}})
+        .select({SourceId:true, TKName:true, TKChamp:true, TKStart:true, TKTarg:true, TKStat:true, _id: 0})
+        .where({$or: [{TKChamp : regExSearch }, {SourceId : regExSearch}, {TKName : regExSearch}]})
+        .stream()
+        .pipe(Task.csvTransformStream())
+        .pipe(fs.createWriteStream(file));
 
     res.sendStatus(200);
 

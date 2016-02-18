@@ -28,11 +28,6 @@ export default class UserSelect extends React.Component{
             defaultValue={this.props.users[0]}
           />
           </div>
-        <div style={butStyle} className="col-sm-4">
-          <button className="btn btn-success pull-left" onClick={this.getUser}>
-            Get User
-          </button>
-        </div>
       </div>
     );
   }

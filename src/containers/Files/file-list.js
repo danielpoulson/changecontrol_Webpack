@@ -5,11 +5,20 @@ import FileTable from 'components/Files/file-table';
 import FileZone from 'components/Files/file-zone';
 
 /* actions */
-import { getFiles, addFile, bookoutFile, deleteFile } from 'actions/actions_files';
+import { getFiles, addFile, bookoutFile, deleteFile, removeFile } from 'actions/actions_files';
 import { setFiletabCount } from 'actions/actions_main';
 import { createLog } from 'actions/actions_changes';
 
-@connect(state => ({files : state.files}), {getFiles, addFile, bookoutFile, deleteFile, setFiletabCount, createLog})
+@connect(state => ({files : state.files}),
+ {
+ 	getFiles,
+  	addFile,
+  	bookoutFile,
+  	deleteFile,
+  	removeFile,
+  	setFiletabCount,
+  	createLog
+})
 
 export default class FileList extends Component {
 	constructor(props) {
@@ -19,6 +28,7 @@ export default class FileList extends Component {
 		this.onCreateLog = this.onCreateLog.bind(this);
 		this.onBookoutFile = this.onBookoutFile.bind(this);
 		this.onDeleteFile = this.onDeleteFile.bind(this);
+		this.onRemoveFile = this.onRemoveFile.bind(this);
 	}
 
 
@@ -38,11 +48,14 @@ export default class FileList extends Component {
 
 	onCreateLog(log){
 		this.props.createLog(log);
-		//this.props.refreshChange();
 	}
 
 	onDeleteFile(id){
 		this.props.deleteFile(id);
+	}
+
+	onRemoveFile(id){
+		this.props.removeFile(id);
 	}
 
 	onBookoutFile(id){
@@ -67,6 +80,7 @@ export default class FileList extends Component {
 							export={this.props.export}
 							createLog={this.onCreateLog}
 							deleteFile={this.onDeleteFile}
+							removeFile={this.onRemoveFile}
 							bookoutFile={this.onBookoutFile}/>
 					</div>
 					<div className={this.props.export}>

@@ -24,7 +24,8 @@ var changeSchema = new Schema({
         CC_ActDate: Date,
         CC_Action: String,
         CC_ActDept: String
-    }]
+    }],
+    Linking   : [{type: Schema.Types.ObjectId, ref: 'Task' }]
 });
 
 changeSchema.plugin(mongooseToCsv, {

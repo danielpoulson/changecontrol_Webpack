@@ -2,24 +2,32 @@ import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import Router from 'react-router';
 import { Route, Link } from 'react-router';
-// import UserStore from '../stores/users';
-// import ProjectStore from '../stores/projects';
-// import API from '../utils/api';
-// import MainStore from '../stores/main';
+
+import { getFiles } from 'actions/actions_files';
+
 @connect(
-  state => ({username: state.main.user.userName})
+  state => ({username: state.main.user.userName}),
+  {getFiles}
 )
 
 export class Navigation extends React.Component {
-
-    getFileList() {
-        // API.getFiles('exp');
-        // MainStore.updateMainId('new');
-        // MainStore.updateMainTitle('new');
-        // MainStore.updateCurrentMode('change');
-        // history.push(null, '/export');
-
+    constructor(props) {
+        super(props);
     }
+
+  static childContextTypes = {
+  location: React.PropTypes.object
+  };
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
+    getFileList = () => {
+        this.props.getFiles('exp');
+        this.context.router.push('/export');
+
+    };
 
     render() {
         return (

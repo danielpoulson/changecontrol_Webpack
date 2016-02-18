@@ -9,6 +9,7 @@ import ChangeDetail from 'containers/ChangeDetail';
 import TaskDetail from 'containers/Tasks/task-details';
 import Tasks from 'containers/Tasks/tasks';
 import User from 'containers/User/user-profile';
+import Export from 'components/Files/file-export';
 
 export default (
   <Route path="/" component={App}>
@@ -17,6 +18,7 @@ export default (
     <Route path='task/:id' component={TaskDetail} />
     <Route path='tasks' component={Tasks} />
     <Route path='user' component={User} />
+    <Route path='export' component={Export} />
      <IndexRoute component={Home} />
     <Route status={404} path="*" component={Home} />
   </Route>

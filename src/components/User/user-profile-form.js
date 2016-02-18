@@ -82,10 +82,10 @@ export default class UserProfileForm extends React.Component {
                   <button className="btn btn-success pull-left" disabled={submitting} onClick={handleSubmit}>
                     {submitting ? <i/> : <i/>} Submit
                   </button>
-                  <button className="btn btn-info dp-margin-10-LR" disabled={submitting} onClick={onCancel}>
+                  <button className="btn btn-info dp-margin-10-LR hidden" disabled={submitting} onClick={onCancel}>
                   Cancel
                   </button>
-                  <button className="btn btn-danger" disabled={submitting} onClick={deleteUser}>
+                  <button className="btn btn-danger hidden" disabled={submitting} onClick={deleteUser}>
                     Delete
                   </button>
                 </div>

@@ -42,6 +42,8 @@ class UserProfile extends Component {
 
   }
 
+  // TODO LOW: FUNC Write functions for creating and deleting a user.
+
   deleteUser(){
 
   }

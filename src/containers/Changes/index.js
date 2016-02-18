@@ -27,6 +27,14 @@ export default class Changes extends Component {
     this.onSortByClick = this.onSortByClick.bind(this);
   }
 
+  static childContextTypes = {
+  location: React.PropTypes.object
+  };
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
   componentWillMount() {
     if (!this.props.changes.alldata.length > 0) {
       this.props.getChanges(4);
@@ -38,11 +46,12 @@ export default class Changes extends Component {
 
   newChange = () => {
     this.props.getChange(null);
-    this.props.history.push('/change/new');
+    this.props.setMain({MainId : 'new', CurrentMode: 'change', loading : false});
+    this.context.router.push('/change/new');
   };
 
   exportChange = () => {
-      //TODO: The export function should export the displayed list, current exports all
+
       const info = {
         fsSource : 'exp',
         fsAddedBy : window.USER.username,
@@ -50,7 +59,7 @@ export default class Changes extends Component {
         search : this.state.txtSearch,
         showAll : this.state.showAll
       };
-      // TODO: export function to create a changes list
+
       this.props.exportChanges(info); 
   };
 

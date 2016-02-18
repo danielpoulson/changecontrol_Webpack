@@ -16,7 +16,7 @@ class TaskList extends React.Component {
     handleClick = (i) => {
         if(this.props.type === "All"){
             let ccNo = this.props.tasklist[i].SourceId;
-            this.props.setMain({MainId : ccNo, CurrentMode: 'change'});
+            this.props.setMain({MainId : ccNo, CurrentMode: 'change', loading: true});
             this.props.getChange(ccNo);
             this.context.router.push(`/change/${ccNo}`);
         } else {

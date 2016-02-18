@@ -4,6 +4,7 @@ import ChangeForm from 'components/Changes/change-form';
 import TaskList from 'components/Tasks/task-list';
 import FileList from 'containers/Files/file-list';
 import ChangeLog from 'components/Changes/change-log';
+import classNames from 'classnames';
 import toastr from 'toastr';
 
 /* actions */
@@ -123,9 +124,6 @@ export default class ChangeDetail extends Component {
         this.context.router.push('/changes');
     };
 
-    // TODO: Hide change detail tabs when creating a new change request
-    //When a new change is being created the file, log and task tabs are still visable.
-
   showTab(value) {
       this.setState({DetailTab: 'hidden'});
       this.setState({TasksTab: 'hidden'});
@@ -139,6 +137,25 @@ export default class ChangeDetail extends Component {
 
     const _title = this.props.change !== null ? `${this.props.change.CC_No} - ${this.props.change.CC_Descpt}` : 'New - Change Control';
 
+    let detailTabClass = classNames({
+      'active' : this.state.DetailTab == 'show'
+    });
+
+    let tasksTabClass = classNames({
+      'active' : this.state.TaskTab == 'show',
+      'hidden' : this.props.main.MainId === 'new'
+    });
+
+    let fileTabClass = classNames({
+      'active' : this.state.FilesTab == 'show',
+      'hidden' : this.props.main.MainId === 'new'
+    });
+
+    let logTabClass = classNames({
+      'active' : this.state.LogTab == 'show',
+      'hidden' : this.props.main.MainId === 'new'
+    });
+
     return (
     <div>
           <div className="row">
@@ -147,16 +164,16 @@ export default class ChangeDetail extends Component {
             </div>
           </div>
           <ul className="nav nav-tabs dpHand">
-            <li className={this.state.DetailTab == 'show' ? "active" : "" }>
+            <li className={detailTabClass}>
               <a onClick={this.showTab.bind(this, "DetailTab")} data-toggle="tab">Detail</a>
             </li>
-            <li className={this.state.TasksTab == 'show' ? "active" : "" }>
+            <li className={tasksTabClass}>
               <a onClick={this.showTab.bind(this, "TasksTab")} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
             </li>
-            <li className={this.state.FilesTab == 'show' ? "active" : "" }>
+            <li className={fileTabClass}>
               <a onClick={this.showTab.bind(this, "FilesTab")} data-toggle="tab">Files <span className="badge"> {this.props.main.fileTabCount} </span></a>
             </li>
-            <li className={this.state.LogTab == 'show' ? "active" : "" }>
+            <li className={logTabClass}>
               <a onClick={this.showTab.bind(this, "LogTab")} data-toggle="tab">Log</a>
             </li>
           </ul>

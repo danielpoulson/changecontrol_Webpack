@@ -8,7 +8,10 @@ const FileTable = (props) => {
 
   if(Object.keys(_files).length > 0){
       var files = _files.map((file, i) => <FileRow key={file._id} file={file}
-      export={hidden} createLog={props.createLog} deleteFile={props.deleteFile} bookoutFile={props.bookoutFile}/>);
+      export={hidden} createLog={props.createLog} 
+      deleteFile={props.deleteFile}
+      removeFile={props.removeFile}
+      bookoutFile={props.bookoutFile}/>);
   }
 
 

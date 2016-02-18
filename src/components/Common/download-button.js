@@ -24,7 +24,7 @@ export default class DownloadButton extends React.Component {
         window.location.href = '/server/upload/' + this.props.fileLoad;
 
         if(this.props.export == 'hidden'){
-            //actions.removedFile(this.props.fileId);
+            this.props.removeFile(this.props.fileId);
         }
     }
   };

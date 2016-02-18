@@ -99,15 +99,14 @@ exports.dumpChanges = function(req, res) {
     files.addExportFile(fileData);
 
     const _search = !req.body.search ? "." : req.body.search;
-    // const _search = !req.body.search ? "." : req.body.search;
-    const regExSearch = new RegExp(_search);
+    const regExSearch = new RegExp(_search + ".*", "i");
     const _status = req.body.showAll ? 5 : 4;
 
-    console.log(`Search : ${_search} and Status : ${_status}`);
 
     Change.find({CC_Stat: {$lt:_status}})
         .select({CC_No:true, CC_Descpt:true, CC_Champ:true, CC_TDate:true, CC_CDate:true, CC_Comp:true, CC_Stat:true, _id: 0})
-        .where({$and: [{CC_Champ : regExSearch }, {CC_No : regExSearch}, {CC_Descpt : regExSearch}]})
+        .where({$or: [{CC_Champ : regExSearch }, {CC_No : regExSearch}, {CC_Descpt : regExSearch}]})
+        // .where({CC_Champ : regExSearch })
         .stream()
         .pipe(Change.csvTransformStream())
         .pipe(fs.createWriteStream(file));
