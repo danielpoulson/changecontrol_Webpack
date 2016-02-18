@@ -2,7 +2,6 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var User = require('mongoose').model('User');
 var crypto = require('crypto');
-var logger = require('morgan');
 
 function hash (password) {
     return crypto.createHash('sha512').update(password).digest('hex');
@@ -35,7 +34,6 @@ passport.deserializeUser(function(id, done) {
 var router = require('express').Router();
 var bodyParser = require('body-parser');
 
-router.use(logger('dev'));
 router.use(bodyParser.urlencoded({ extended: true })); // Login Page
 router.use(bodyParser.json()); // API
 router.use(require('cookie-parser')());
