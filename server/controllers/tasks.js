@@ -1,7 +1,11 @@
 var Task = require('mongoose').model('Task');
+var Change = require('mongoose').model('Change');
 var fs = require('fs');
 var files = require('../controllers/files');
 var login  = require('../config/login');
+var json2csv = require('json2csv');
+var moment = require('moment');
+var momentLocalizer = require('react-widgets/lib/localizers/moment');
 
 //TODO: LOW FUNC This all task get function only for change control only should by dynamic
 // When add project functionality the get task function would need to be used for both.
@@ -81,12 +85,9 @@ exports.getTaskCount = function(req,res){
 };
 
 exports.dumpTasks = function(req, res) {
-    var int = parseInt((Math.random()*1000000000),10);
-    var file = '.././uploaded/tasks' + int + '.csv';
     var fileData = {};
     var newDate = new Date();
-
-
+    var int = parseInt((Math.random()*1000000000),10);
 
     fileData.fsAddedAt = newDate;
     fileData.fsAddedBy = req.body.fsAddedBy;
@@ -102,17 +103,84 @@ exports.dumpTasks = function(req, res) {
     const regExSearch = new RegExp(_search + ".*", "i");
     const _status = 4;
 
-    Task.find({TKStat: {$lt:_status}})
-        .select({SourceId:true, TKName:true, TKChamp:true, TKStart:true, TKTarg:true, TKStat:true, _id: 0})
-        .where({$or: [{TKChamp : regExSearch }, {SourceId : regExSearch}, {TKName : regExSearch}]})
-        .stream()
-        .pipe(Task.csvTransformStream())
-        .pipe(fs.createWriteStream(file));
+    // Task.find({TKStat: {$lt:_status}})
+    //     .select({SourceId:true, TKName:true, TKChamp:true, TKStart:true, TKTarg:true, TKStat:true, _id: 0})
+    //     .where({$or: [{TKChamp : regExSearch }, {SourceId : regExSearch}, {TKName : regExSearch}]})
+    //     .stream()
+    //     .pipe(Task.csvTransformStream())
+    //     .pipe(fs.createWriteStream(file));
 
+    getChangesList(int)
     res.sendStatus(200);
+};
 
 
+function getChangesList(int) {
+    var status = 4;
+    var file = '.././uploaded/tasks' + int + '.csv';
+    var fields = ['SourceId', '_name', 'TKName', 'TKTarg', 'TKStart', 'TKChamp', 'TKStat'];
 
+    Change.find({CC_Stat: {$lt:status}})
+        .select({ CC_No: 1, CC_Descpt: 1, _id:0 })
+        .sort({CC_TDate:1})
+        .exec(function(err, collection) {
+            
+            Task
+                .where('TKStat').lte(4)
+                .select({SourceId:1, TKName:1, TKTarg:1, TKStart:1, TKChamp:1, TKStat:1})
+                .sort({TKTarg : 1})
+                .exec(function(err, coll) {
+
+                    var reformattedArray = coll.map(function(obj){
+
+                        const TKName = obj.TKName;
+                        const TKTarg = moment(obj.TKTarg).format("L");
+                        const TKStart = moment(obj.TKStart).format("L");
+                        const TKChamp = obj.TKChamp;
+                        let TKStat = null;
+                        const SourceId = obj.SourceId;
+
+                        switch (obj.TKStat) {
+                            case 1 :
+                                TKStat = "Not Started (New)";
+                                break;
+                            case 2 : 
+                                TKStat = 'On Track';
+                                break;
+                            case 3 : 
+                                TKStat = 'In Concern';
+                                break;
+                            case 4 : 
+                                TKStat = 'Behind Schedule';
+                                break;
+                            case 5 :
+                                TKStat = 'Completed';
+                                break;
+                            default :
+                                TKStat = "Not Set";
+                                break;
+                        }
+
+                        const _tasks = collection.find(change => change.CC_No === obj.SourceId);
+                        
+                        if (typeof _tasks === 'object') {
+                            const _name = _tasks.CC_Descpt;
+                            return {TKName, _name, TKTarg, TKStart, TKChamp, TKStat, SourceId};
+                        };
+
+                       
+                    });
+
+                    json2csv({ data: reformattedArray, fields: fields }, function(err, csv) {
+                      if (err) console.log(err);
+                      fs.writeFile(file, csv, function(err) {
+                        if (err) throw err;
+                        console.log('file saved');
+                      });
+                    });
+
+            });
+    })
 };
 
 function write_to_log (write_data) {
