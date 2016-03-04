@@ -4,11 +4,11 @@ import TextArea from 'components/Common/text-area';
 import { TextInputTask } from 'components/Common/text-input-task';
 import DateTimePicker from 'components/Common/date-picker';
 import ComboBox from 'components/Common/combo-box';
-export const fields = ['TKName', 'TKStart', 'TKTarg', 'TKStat', 'TKChamp', 'TKComment'];
+export const fields = ['TKName', 'TKStart', 'TKTarg', 'TKStat', 'TKChamp', 'TKComment', 'TKChampNew'];
 
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
   TKStat: 1,
-  TKChamp: "Owner",
+  TKChamp: null,
   TKStart: new Date()
 };
 
@@ -54,7 +54,7 @@ export default class TaskForm extends React.Component {
 
 	render() {
     const {
-      fields: {TKName, TKStart, TKTarg, TKStat, TKChamp, TKComment},
+      fields: {TKName, TKStart, TKTarg, TKStat, TKChamp, TKComment, TKChampNew},
       handleSubmit,
       onCancel,
       deleteTask,
@@ -63,6 +63,10 @@ export default class TaskForm extends React.Component {
       status,
       users
       } = this.props;
+
+      if(typeof TKChamp.value !== 'undefined' && TKChamp.defaultValue !== TKChamp.value){
+        this.props.ownerChanged(true);
+      }
 
         var wrapperClassSD = '';
         var wrapperClassTD = '';
@@ -77,7 +81,7 @@ export default class TaskForm extends React.Component {
 
 		return (
             <div>
-              <form onSubmit={handleSubmit} className="form form-horizontal" >
+              <form onChange={this._onChange} onSubmit={handleSubmit} className="form form-horizontal" >
 
                 <TextInputTask
                   name="TKName"
@@ -114,6 +118,7 @@ export default class TaskForm extends React.Component {
 
                 <ComboBox
                   label="Owner"
+                  onChange={this.changeOwner}
                   data={users}
                   dpInputCol="col-sm-4"
                   dpLabelCol="col-sm-2"
@@ -132,7 +137,7 @@ export default class TaskForm extends React.Component {
 
                 <div className="col-sm-9 col-md-offset-2">
                   <button className="btn btn-success pull-left" disabled={submitting} onClick={handleSubmit}>
-                    {submitting ? <i/> : <i/>} Submit
+                    {submitting ? <i/> : <i/>} Save Task
                   </button>
                   <button className="btn btn-info dp-margin-10-LR" disabled={submitting} onClick={onCancel}>
                   Cancel

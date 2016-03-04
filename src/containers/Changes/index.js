@@ -60,7 +60,7 @@ export default class Changes extends Component {
         showAll : this.state.showAll
       };
 
-      this.props.exportChanges(info); 
+      this.props.exportChanges(info);
   };
 
   // TODO: Show all button reverts to "Show all"
@@ -151,8 +151,8 @@ export default class Changes extends Component {
         </div>
 
         <div className="row">
-          <ChangeList 
-            changelist={this.props.changes.paged} 
+          <ChangeList
+            changelist={this.props.changes.paged}
             getChange={this.props.getChange}
             sortByClick = {this.onSortByClick}
             colSelected = {this.state.colSelected}/>

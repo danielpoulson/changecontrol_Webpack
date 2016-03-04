@@ -2,8 +2,10 @@ var Task = require('mongoose').model('Task');
 var Change = require('mongoose').model('Change');
 var fs = require('fs');
 var files = require('../controllers/files');
+var Users = require('../controllers/users');
 var login  = require('../config/login');
 var json2csv = require('json2csv');
+var mailer = require('../config/mailer.js');
 var moment = require('moment');
 var momentLocalizer = require('react-widgets/lib/localizers/moment');
 
@@ -30,9 +32,16 @@ exports.getProjectTaskList = function(req, res) {
 
 exports.updateTask = function(req, res) {
     var query = {_id: req.params.id};
+    var newOwner = req.body.TKChampNew;
+    req.body.TKChampNew = false;
+
     Task.findOneAndUpdate(query, req.body, function (err) {
         if (err) return handleError(err);
         res.send(200);
+
+        if(newOwner){
+          createEmail(req.body);
+        }
     });
 };
 
@@ -69,7 +78,27 @@ exports.createTask = function(req, res, next) {
             return res.send({reason:err.toString()});
         }
         res.status(200).send(task);
+        createEmail(req.body);
     });
+};
+
+
+function createEmail(body){
+    var _targetDate = moment(body.TKTarg).format('DD/MM/YYYY');
+    var emailType = "Change Control - Task";
+    var emailActivity = '<b>Associated Change Control - </b><em>' + body.SourceId + '</em></br><b>Task to Complete: </b><i>'
+     + body.TKName + '<b>  Date Due </b>' + _targetDate + '</i>';
+// TODO: Not the worlds nicest Promise using a timeout need to rework and improve.
+    var p = new Promise(function(resolve, reject) {
+        var toEmail = Users.getUserEmail(body.TKChamp);
+       setTimeout(() => resolve(toEmail), 2000);
+    }).then(function(res){
+        var _toEmail = res[0].email;
+        mailer.sendMail(_toEmail, emailType, emailActivity);
+    }).catch(function (err) {
+      console.log(err);
+    });
+
 };
 
 exports.getTaskById = function(req, res) {
@@ -124,7 +153,7 @@ function getChangesList(int) {
         .select({ CC_No: 1, CC_Descpt: 1, _id:0 })
         .sort({CC_TDate:1})
         .exec(function(err, collection) {
-            
+
             Task
                 .where('TKStat').lte(4)
                 .select({SourceId:1, TKName:1, TKTarg:1, TKStart:1, TKChamp:1, TKStat:1})
@@ -144,13 +173,13 @@ function getChangesList(int) {
                             case 1 :
                                 TKStat = "Not Started (New)";
                                 break;
-                            case 2 : 
+                            case 2 :
                                 TKStat = 'On Track';
                                 break;
-                            case 3 : 
+                            case 3 :
                                 TKStat = 'In Concern';
                                 break;
-                            case 4 : 
+                            case 4 :
                                 TKStat = 'Behind Schedule';
                                 break;
                             case 5 :
@@ -162,13 +191,13 @@ function getChangesList(int) {
                         }
 
                         const _tasks = collection.find(change => change.CC_No === obj.SourceId);
-                        
+
                         if (typeof _tasks === 'object') {
                             const _name = _tasks.CC_Descpt;
                             return {TKName, _name, TKTarg, TKStart, TKChamp, TKStat, SourceId};
                         };
 
-                       
+
                     });
 
                     json2csv({ data: reformattedArray, fields: fields }, function(err, csv) {

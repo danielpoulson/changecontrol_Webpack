@@ -23,6 +23,7 @@ class TaskDetail extends React.Component {
       errors: {},
       hideDelete: null,
       newTask: false,
+      ownerNew: false,
       taskId : '',
       status: [
               { "id": 1 , "name": "Task - Not Started (New)" },
@@ -55,10 +56,15 @@ class TaskDetail extends React.Component {
         this.taskNav(this.props.main.MainId);
     };
 
+    ownerChanged = (status) => {
+      this.setState({ownerNew: status});
+    };
+
     saveTask = (data) => {
         let _SourceId = this.props.main.MainId;
 
         if (this.state.taskId !== 'new') {
+            data.TKChampNew = this.state.ownerNew;
             data._id = this.state.taskId;
             data.TKStat = typeof data.TKStat === 'object' ? data.TKStat.id : data.TKStat;
             data.SourceId = _SourceId
@@ -108,6 +114,7 @@ class TaskDetail extends React.Component {
                   onSubmit={this.saveTask}
                   status={this.state.status}
                   users={this.props.users}
+                  ownerChanged={this.ownerChanged}
                   deleteTask={this.deleteTask}
                   hideDelete={this.state.hideDelete}
                   onCancel={this.cancelTask}/>

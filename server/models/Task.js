@@ -10,7 +10,8 @@ var taskSchema = new Schema({
     TKChamp: {type: String, required: '{PATH} is required!'},
     TKStat: {type: Number, required: '{PATH} is required!'},
     SourceId: {type: String, required: '{PATH} is required!'},
-    TKComment: String
+    TKComment: String,
+    TKChampNew: {type: Boolean, default: false}
 });
 
 taskSchema.plugin(mongooseToCsv, {
@@ -42,7 +43,7 @@ taskSchema.plugin(mongooseToCsv, {
             return _date;
         }
     }
-    
+
 });
 
 var Task = mongoose.model('Task', taskSchema);

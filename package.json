@@ -7,7 +7,7 @@
     "build": "webpack --progress --verbose --colors --display-error-details --config webpack/common.config.js",
     "build:production": "npm run clean && npm run build",
     "lint": "eslint src",
-    "start": "node bin/server.js",
+    "start": "NODE_ENV=development node bin/server.js",
     "test": "karma start"
   },
   "repository": {
@@ -108,6 +108,7 @@
     "mongoose": "^4.2.9",
     "mongoose-to-csv": "^0.1.0",
     "multer": "^1.1.0",
+    "nodemailer": "^2.3.0",
     "passport": "^0.3.0",
     "passport-local": "^1.0.0",
     "react": "^0.14.2",

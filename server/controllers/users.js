@@ -30,6 +30,11 @@ exports.getUser = function(req, res) {
     });
 };
 
+exports.getUserEmail = function(user) {
+  return User.find({fullname : user},{email:1, "_id" : 0});
+
+};
+
 // exports.getAllUsers = function(req, res) {
 //     var status = req.params.status;
 //

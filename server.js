@@ -1,5 +1,5 @@
 var express = require('express');
-var env = process.env.NODE_ENV || 'dev';
+var env = process.env.NODE_ENV || 'development';
 var port = process.env.PORT || 9005;
 require('./server/config/mongoose')();
 var login = require('./server/config/login');
@@ -42,7 +42,7 @@ app.get('*', login.required, function (req, res) {
 
 app.listen(port, function() {
     console.log('Express server listening on port ' + port);
-    console.log('env = ' + env +
+    console.log('env = ' + process.env.NODE_ENV +
                 '\n__dirname = ' + __dirname +
                 '\nprocess.cwd = ' + process.cwd());
 });

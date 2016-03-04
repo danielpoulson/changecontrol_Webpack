@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import reduxPromise from 'redux-promise';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
@@ -13,6 +14,8 @@ const createStoreWithMiddleware = applyMiddleware(
   reduxPromise,
   logger
 )(createStore);
+
+
 
 export default function configureStore(initialState) {
   const store = createStoreWithMiddleware(rootReducer, initialState);
