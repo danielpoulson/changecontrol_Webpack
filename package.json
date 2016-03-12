@@ -12,10 +12,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anorudes/redux-easy-boilerplate.git"
+    "url": "https://github.com/danielpoulson/changecontrol.git"
   },
-  "homepage": "http://anorudes.github.io/redux-easy-boilerplate/",
-  "bugs": "https://github.com/anorudes/redux-easy-boilerplate/issues",
   "keywords": [
     "react",
     "reactjs",
@@ -30,13 +28,6 @@
     "webpack"
   ],
   "license": "MIT",
-  "authors": [
-    "Max Anoru (https://github.com/anorudes)",
-    "Andrey Keske (https://github.com/keske)"
-  ],
-  "contributors": [
-    "Ollipekka Jalonen (https://github.com/inertum)"
-  ],
   "devDependencies": {
     "autoprefixer": "6.2.3",
     "babel-core": "^6.3.26",

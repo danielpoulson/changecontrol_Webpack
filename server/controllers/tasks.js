@@ -1,3 +1,4 @@
+"use strict"
 var Task = require('mongoose').model('Task');
 var Change = require('mongoose').model('Change');
 var fs = require('fs');
@@ -128,9 +129,9 @@ exports.dumpTasks = function(req, res) {
 
     files.addExportFile(fileData);
 
-    const _search = !req.body.search ? "." : req.body.search;
-    const regExSearch = new RegExp(_search + ".*", "i");
-    const _status = 4;
+    var _search = !req.body.search ? "." : req.body.search;
+    var regExSearch = new RegExp(_search + ".*", "i");
+    var _status = 4;
 
     // Task.find({TKStat: {$lt:_status}})
     //     .select({SourceId:true, TKName:true, TKChamp:true, TKStart:true, TKTarg:true, TKStat:true, _id: 0})
@@ -162,12 +163,12 @@ function getChangesList(int) {
 
                     var reformattedArray = coll.map(function(obj){
 
-                        const TKName = obj.TKName;
-                        const TKTarg = moment(obj.TKTarg).format("L");
-                        const TKStart = moment(obj.TKStart).format("L");
-                        const TKChamp = obj.TKChamp;
+                        var TKName = obj.TKName;
+                        var TKTarg = moment(obj.TKTarg).format("L");
+                        var TKStart = moment(obj.TKStart).format("L");
+                        var TKChamp = obj.TKChamp;
                         let TKStat = null;
-                        const SourceId = obj.SourceId;
+                        var SourceId = obj.SourceId;
 
                         switch (obj.TKStat) {
                             case 1 :
@@ -190,10 +191,10 @@ function getChangesList(int) {
                                 break;
                         }
 
-                        const _tasks = collection.find(change => change.CC_No === obj.SourceId);
+                        var _tasks = collection.find(change => change.CC_No === obj.SourceId);
 
                         if (typeof _tasks === 'object') {
-                            const _name = _tasks.CC_Descpt;
+                            var _name = _tasks.CC_Descpt;
                             return {TKName, _name, TKTarg, TKStart, TKChamp, TKStat, SourceId};
                         };
 
