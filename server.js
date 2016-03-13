@@ -41,7 +41,7 @@ app.get('*', login.required, function (req, res) {
 });
 
 app.listen(port, function() {
-    console.log('Express server listening on port ' + port);
+    console.log('Express server 🌎 listening on port ' + port);
     console.log('env = ' + process.env.NODE_ENV +
                 '\n__dirname = ' + __dirname +
                 '\nprocess.cwd = ' + process.cwd());
