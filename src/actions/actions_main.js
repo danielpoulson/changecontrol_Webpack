@@ -1,7 +1,10 @@
+import axios from 'axios';
+
 export const SET_MAIN = 'SET_MAIN';
 export const SET_USER = 'SET_USER';
 export const SET_FILETAB_COUNT = 'SET_FILETAB_COUNT';
 export const SET_LOADING = 'SET_LOADING';
+
 
 export function setMain(data) {
 
@@ -27,15 +30,26 @@ export function setLoading(data) {
   }
 }
 
-export function setUser(data) {
-  const user = {
-    userName : data.username,
-    fullname : data.fullname,
-    role : data.role
-  }
+export function setUser() {
+  const url = `/api/loggeduser`;
+  const request = axios.get(url);
 
   return {
     type: SET_USER,
-    user
+    payload : request
   }
+
 }
+
+// export function setUser() {
+//   const user = {
+//     userName : data.username,
+//     fullname : data.fullname,
+//     role : data.role
+//   }
+//
+//   return {
+//     type: SET_USER,
+//     user
+//   }
+// }

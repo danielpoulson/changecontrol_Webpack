@@ -9,7 +9,7 @@ import { getFiles, addFile, bookoutFile, deleteFile, removeFile } from 'actions/
 import { setFiletabCount } from 'actions/actions_main';
 import { createLog } from 'actions/actions_changes';
 
-@connect(state => ({files : state.files}),
+@connect(state => ({files : state.files, user: state.main.user}),
  {
  	getFiles,
   	addFile,
@@ -35,12 +35,12 @@ export default class FileList extends Component {
 	componentWillMount() {
 		if (this.props.sourceId){
 			this.props.getFiles(this.props.sourceId);
-		}
+    }
 	}
 
-	componentDidUpdate(){
-		this.props.setFiletabCount(this.props.files.length);
-	}
+  componentDidUpdate(){
+    this.props.setFiletabCount(this.props.files.length);
+  }
 
 	onAddFile(file){
 		this.props.addFile(file);
@@ -77,6 +77,7 @@ export default class FileList extends Component {
 
 						<FileTable
 							files={this.props.files}
+							user={this.props.user}
 							export={this.props.export}
 							createLog={this.onCreateLog}
 							deleteFile={this.onDeleteFile}
@@ -88,6 +89,7 @@ export default class FileList extends Component {
 
 							<FileZone
 								addFile={this.onAddFile}
+                user={this.props.user}
 								sourceId={this.props.sourceId} />
 						</div>
 					</div>

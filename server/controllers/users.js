@@ -18,6 +18,16 @@ exports.getAllUsers = function(req, res) {
     });
 };
 
+
+exports.getLoggedUser = function(req, res) {
+  const user = {};
+  user.fullname = req.user.fullname;
+  user.userName = req.user.username;
+  user.role = req.user.role;
+
+  res.send(user);
+};
+
 exports.getUser = function(req, res) {
     var _id = req.params.id;
 

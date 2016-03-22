@@ -1,6 +1,6 @@
 var nodemailer = require('nodemailer');
 var mg = require('nodemailer-mailgun-transport');
-var connection = require('./connection');
+var connection = require('./config');
 var path = require('path');
 var rootPath = path.normalize(__dirname);
 var fs = require('fs');

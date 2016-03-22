@@ -8,7 +8,7 @@ function hash (password) {
 }
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {  
+  function(username, password, done) {
     User.findOne({ username: username, passwordHash: hash(password) }, function (err, user) {
                 if (user) {
                     done(null, user);
@@ -46,11 +46,11 @@ router.use(passport.initialize());
 router.use(passport.session());
 
 router.get('/login', function (req, res) {
-    res.render('login');
+    res.render('login.html');
 });
 
 router.post('/signup', function (req, res, next) {
-    
+
     User.count({username: req.body.username }, function(err, count){
         if (err){console.log(err);}
         if (count === 0) {
@@ -61,7 +61,7 @@ router.post('/signup', function (req, res, next) {
                 passwordHash: hash(req.body.password),
                 role: 'user'
             };
-            
+
           User.create(userData, function(err, user) {
             if(err) {
                  res.redirect('/login');
@@ -85,13 +85,13 @@ router.post('/signup', function (req, res, next) {
             res.redirect('/login');
         }
     });
-    
+
 
 });
 
 // TODO (DP): This update user function only changes the users password.
 // Need to extend to allow for editing of role, email etc
-   
+
 router.put('/api/updateuser/:username', function (req, res, next) {
     const password = req.body.password;
 
@@ -102,9 +102,9 @@ router.put('/api/updateuser/:username', function (req, res, next) {
                     username: req.body.username,
                     passwordHash: hash(password)
                 };
-             
-             console.log("UserData");   
-            
+
+             console.log("UserData");
+
           User.update({username : req.body.username}, {$set: userData}, function (err) {
             if (err){console.log(err); res.sendStatus(500);}
             res.sendStatus(200);
@@ -117,7 +117,8 @@ router.put('/api/updateuser/:username', function (req, res, next) {
 
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/login'
+    failureRedirect: '/login',
+    failureFlash: true
 }));
 
 router.get('/logout', function (req, res) {
@@ -127,7 +128,7 @@ router.get('/logout', function (req, res) {
 
 function loginRequired (req, res, next) {
     if (req.isAuthenticated()) {
-        next(); 
+        next();
     } else {
         res.redirect('/login');
     }
@@ -148,15 +149,15 @@ router.get('/api/users', function (req, res) {
     User.find({}).exec(function(err, collection) {
         res.json(collection.map(makeUserSafe));
     });
-    
+
 });
 
 router.post('/api/follow/:id', function (req, res) {
     var id = req.params.id;
-    
+
     if (req.user.following.indexOf(id) < 0) {
         req.user.following.push(id);
-        
+
         User.findByIdAndUpdate({_id : req.user._id}, {$set: req.user}, function (err) {
             if (err) return handleError(err);
             res.json(makeUserSafe(req.user));
@@ -171,7 +172,7 @@ router.post('/api/unfollow/:id', function (req, res) {
 
     if (pos > -1) {
         req.user.following.splice(pos, 1);
-        
+
         User.findByIdAndUpdate({_id : req.user._id}, {$set: req.user}, function (err) {
             if (err) return handleError(err);
             res.json(makeUserSafe(req.user));

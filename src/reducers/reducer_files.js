@@ -19,6 +19,7 @@ export default function (state=[], action) {
       if(!action.payload.data){
         return state=[];
       }
+      
       return action.payload.data;
 
     case BOOKOUT_FILE:

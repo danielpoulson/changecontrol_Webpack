@@ -1,3 +1,0 @@
-//auth0.com/blog/2016/01/04/secure-your-react-and-redux-app-with-jwt-authentication/
-https://github.com/auth0/nodejs-jwt-authentication-sample
-https://jwt.io/introduction/

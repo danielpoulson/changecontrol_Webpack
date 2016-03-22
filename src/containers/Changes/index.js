@@ -9,7 +9,7 @@ import Pagination from 'components/Common/pagination'
 import { getChange, getChanges, addChange, sortByChanges, loadPage, exportChanges } from 'actions/actions_changes';
 import { setMain } from 'actions/actions_main';
 
-@connect(state=>({ changes : state.changes }),{ getChange, getChanges, sortByChanges, setMain, loadPage, exportChanges })
+@connect(state=>({ changes : state.changes, user: state.main.user }),{ getChange, getChanges, sortByChanges, setMain, loadPage, exportChanges })
 
 export default class Changes extends Component {
   constructor(props) {
@@ -54,7 +54,7 @@ export default class Changes extends Component {
 
       const info = {
         fsSource : 'exp',
-        fsAddedBy : window.USER.username,
+        fsAddedBy : this.props.user.username,
         fsType : 'changes',
         search : this.state.txtSearch,
         showAll : this.state.showAll

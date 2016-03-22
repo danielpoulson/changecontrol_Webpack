@@ -28,10 +28,7 @@ export class App extends Component {
   componentWillMount() {
     this.props.getAllTasks();
     this.props.getUsers();
-    setTimeout(() => {
-      const user = window.USER;
-      this.props.setUser(user);
-    }, 500);
+    this.props.setUser();
   }
 
   render() {

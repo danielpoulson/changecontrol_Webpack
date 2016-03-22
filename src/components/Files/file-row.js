@@ -19,14 +19,15 @@ class FileRow extends React.Component {
                     <td>{file.fsAddedBy}</td>
                     <td>{moment(new Date(file.fsAddedAt)).format('DD/MM/YYYY')}</td>
                     <td>
-                      <DownloadButton 
+                      <DownloadButton
                         removeFile={this.props.removeFile}
-                        fileLoad={fullFileName} 
-                        fileId={file._id} 
+                        fileLoad={fullFileName}
+                        fileId={file._id}
                         export={this.props.export}/>
                     </td>
                     <td className={this.props.export}>
                       <BookoutButton
+                        user={this.props.user}
                         fileLoad={fullFileName}
                         source={file.fsSource}
                         fileId={file._id}

@@ -73,14 +73,14 @@ export default class ChangeDetail extends Component {
     }
     this.setState({ccNo : CC_No});
   }
-
+// TODO: Remove CC_ActDept : this.props.main.user.dept,
   logMessage(message){
     const _log = {
       CC_No: this.props.change.CC_No,
       CC_Id : 1,
       CC_Action : message,
-      CC_ActDept : window.USER.dept,
-      CC_ActBy : window.USER.fullname,
+      CC_ActDept : this.props.main.user.dept,
+      CC_ActBy : this.props.main.user.fullname,
       CC_ActDate : new Date()
     };
 
@@ -104,6 +104,7 @@ export default class ChangeDetail extends Component {
   onRefresh() {
     this.props.getChange(this.state.ccNo);
   }
+// TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
 
   saveChange = (data) => {
         if (this.state.ccNo !== 'new') {
@@ -113,7 +114,7 @@ export default class ChangeDetail extends Component {
             this.props.editChange(data);
         } else {
             var created = [];
-            created.push({CC_Id : 0, CC_Action: "Created", CC_ActBy : window.USER.fullname, CC_ActDept : window.USER.dept, CC_ActDate : new Date()});
+            created.push({CC_Id : 0, CC_Action: "Created", CC_ActBy : this.prop.main.user.fullname, CC_ActDept : this.prop.main.user.dept, CC_ActDate : new Date()});
             data.CC_LOG = created;
             data.CC_Stat = data.CC_Stat.id || 1;
             this.props.addChange(data);

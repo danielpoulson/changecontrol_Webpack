@@ -26,7 +26,7 @@ export default function (state, action) {
     case SET_USER:
       return {
         ...state,
-        user : action.user
+        user : action.payload.data
       }
 
       case SET_FILETAB_COUNT:

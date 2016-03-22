@@ -8,6 +8,7 @@
     "build:production": "npm run clean && npm run build",
     "lint": "eslint src",
     "start": "NODE_ENV=development node bin/server.js",
+    "startProduction": "NODE_ENV=production node bin/server.js",
     "test": "karma start"
   },
   "repository": {

@@ -5,10 +5,11 @@ require('./server/config/mongoose')();
 var login = require('./server/config/login');
 var logger = require('morgan');
 
+
 var app = express();
 
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
 
 app.use(logger('dev'));
 
@@ -35,9 +36,7 @@ if (app.get('env') === 'development') {
 }
 
 app.get('*', login.required, function (req, res) {
-    res.render('index', {
-        user: login.safe(req.user)
-    });
+    res.render('index.html');
 });
 
 app.listen(port, function() {

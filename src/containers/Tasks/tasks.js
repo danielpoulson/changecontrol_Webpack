@@ -12,7 +12,7 @@ import { getAllTasks, loadPageTask, exportTasks } from 'actions/actions_tasks';
 // Changes and Task share the same search text box function which should be made as a common component
 let start = 0;
 
-@connect(state=>({tasks : state.tasks}), { getAllTasks, loadPageTask, exportTasks })
+@connect(state=>({tasks : state.tasks, user: state.main.user}), { getAllTasks, loadPageTask, exportTasks })
 
 export default class Tasks extends Component{
     state = {
@@ -58,15 +58,14 @@ export default class Tasks extends Component{
     };
 
     exportTask = () => {
-      // TODO: LOW window.USER.username,
       const info = {
         fsSource : 'exp',
-        fsAddedBy : window.USER.username,
+        fsAddedBy : this.prop.user.username,
         fsType : 'tasks',
         search : this.state.txtSearch
       };
 
-      this.props.exportTasks(info); 
+      this.props.exportTasks(info);
     };
 
     render() {
