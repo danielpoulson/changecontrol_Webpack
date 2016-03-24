@@ -25,7 +25,7 @@ exports.getAllUsers = function(req, res) {
     });
 };
 
-// TODO (DP): This update user function only changes the users password.
+// TODO HIGH 3 This update user function only changes the users password.
 // Need to extend to allow for editing of role, email etc
 exports.updateUser = function (req, res, next) {
     const password = req.body.password;

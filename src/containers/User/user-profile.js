@@ -12,7 +12,7 @@ class UserProfile extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
 
     };
@@ -31,18 +31,13 @@ class UserProfile extends Component {
     router: React.PropTypes.object.isRequired
   };
 
-  componentWillMount() {
-    // TODO: Load the currect user requested -> Call the actions -> api -> reducer -> user setState
-
-  }
-
   saveUser(data){
     this.props.saveUser(data);
     console.log('saveUser');
 
   }
 
-  // TODO LOW: FUNC Write functions for creating and deleting a user.
+  // TODO MED 4 Write functions for creating and deleting a user.
 
   deleteUser(){
 

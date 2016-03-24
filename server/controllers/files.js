@@ -32,9 +32,6 @@ exports.downloadFile = function (req, res) {
       }
 
     });
-
-
-
 };
 
 exports.uploadFile = function (req, res) {
@@ -44,7 +41,7 @@ exports.uploadFile = function (req, res) {
     const myRe = /C{2}\d{6}\s[-]\s/;
     var myArray = myRe.exec(docName);
 
-    //TODO : LOW FUNC : Functionally only works for changes.
+    //TODO LOW Minor Functionally only works for changes.
 
     if(myArray) {
         fileData.fsFileName = docName.split('.').shift().substr(11);
@@ -59,8 +56,7 @@ exports.uploadFile = function (req, res) {
     fileData.fsSource = req.body.sourceId;
     fileData.fsFilePath = req.files[0].filename;
     fileData.fsBooked = 0;
-//
-//
+
     File.update({fsFileName: fileData.fsFileName}, fileData, {upsert: true}, function (err) {
         if (err) {
             res.status(200);

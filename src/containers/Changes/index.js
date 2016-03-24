@@ -39,7 +39,7 @@ export default class Changes extends Component {
     if (!this.props.changes.alldata.length > 0) {
       this.props.getChanges(4);
     }
-    // TODO: Sticky options on the change list
+    // TODO: MED 5 Sticky options on the change list
     // This section should remember you page and or serach options.
     this.onChange();
   }
@@ -63,7 +63,7 @@ export default class Changes extends Component {
       this.props.exportChanges(info);
   };
 
-  // TODO: Show all button reverts to "Show all"
+  // TODO: MED 2 Show all button reverts to "Show all"
   //The button should be "Show Current" but reverts back when returning from the details page.
 
   allChanges = () => {
@@ -81,7 +81,7 @@ export default class Changes extends Component {
   };
 
   linkClick(i){
-    //TODO: BUG (L) Pagination Adding 1 to the page mumber as it uses the base of 0
+    //TODO LOW 2 Pagination Adding 1 to the page mumber as it uses the base of 0
     this.onChange(i + 1, this.state.txtSearch);
     this.setState({activePage: i});
   }
@@ -130,7 +130,6 @@ export default class Changes extends Component {
 
     return (
       <section>
-
         <div className="row">
            <div className="section-header">
                 <div className="col-sm-6 pull-left">

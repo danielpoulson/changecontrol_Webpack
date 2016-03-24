@@ -35,7 +35,7 @@ export default class BookoutButton extends React.Component{
 // TODO: LOW Remove CC_ActDept : this.props.user.dept
 // Not sure if this is needed or not.
     onBookout = () => {
-        //TODO: If download does not complete donot delete from server.
+        //TODO HIGH 3 If download does not complete donot delete from server.
         if(window.ActiveXObject || "ActiveXObject" in window){
             // Always true if browser is Internet Explorer
             toastr.error('This function does not work with internet explorer. Please contact your administrator','Error - Internet Explorer', {timeOut: 5000});

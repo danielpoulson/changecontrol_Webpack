@@ -73,7 +73,10 @@ export default class ChangeDetail extends Component {
     }
     this.setState({ccNo : CC_No});
   }
-// TODO: Remove CC_ActDept : this.props.main.user.dept,
+// TODO: LOW 2 Remove the dept field from the user item
+//Remove CC_ActDept : this.props.main.user.dept
+// Not needed
+
   logMessage(message){
     const _log = {
       CC_No: this.props.change.CC_No,

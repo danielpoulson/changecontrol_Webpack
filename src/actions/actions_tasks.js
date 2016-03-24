@@ -23,7 +23,7 @@ export function getTasks(data) {
 }
 
 export function getAllTasks() {
-  //TODO: Remove the hardwire status input 4 = "active tasks"
+  //TODO: LOW 2 Remove the hardwire status input 4 = "active tasks"
   const url = `/api/alltasks/4`;
   const request = axios.get(url);
 
@@ -111,4 +111,3 @@ export function exportTasks(search) {
     type: "EXPORT_TASKS"
   }
 }
-

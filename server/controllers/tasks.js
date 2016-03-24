@@ -88,7 +88,7 @@ function createEmail(body){
     var emailType = "Change Control - Task";
     var emailActivity = '<b>Associated Change Control - </b><em>' + body.SourceId + '</em></br><b>Task to Complete: </b><i>'
      + body.TKName + '<b>  Date Due </b>' + _targetDate + '</i>';
-// TODO: Not the worlds nicest Promise using a timeout need to rework and improve.
+// TODO LOW 2 Not the worlds nicest Promise using a timeout need to rework and improve.
     var p = new Promise(function(resolve, reject) {
         var toEmail = Users.getUserEmail(body.TKChamp);
        setTimeout(() => resolve(toEmail), 2000);
