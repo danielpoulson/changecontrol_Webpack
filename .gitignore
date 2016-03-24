@@ -1,6 +1,6 @@
 #Ignore My Files #
 ####################
-config/config.js
+config.js
 
 # Ignore Visual Studio  Project #
 ###################
