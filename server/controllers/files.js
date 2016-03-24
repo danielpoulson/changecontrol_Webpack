@@ -105,6 +105,7 @@ function fileDeletion(id) {
 
         File.findById(id, function (err, doc){
 
+          if(doc){
             fs.unlink('.././uploaded/' + doc.fsFilePath, function (err) {
                 if (err) throw err;
                 console.log('successfully deleted /uploaded/' + doc.fsFilePath);
@@ -113,7 +114,7 @@ function fileDeletion(id) {
             File.remove({_id: id}, function (err) {
                 if (err) return handleError(err);
             });
-
+          }
     });
 }
 

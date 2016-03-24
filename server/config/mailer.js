@@ -10,7 +10,7 @@ exports.sendMail = function(toEmail, emailType, emailActivity) {
   // This is your API key that you retrieve from www.mailgun.com/cp (free up to 10K monthly emails)
 
   var auth = {
-    auth: connection.mailgun()
+    auth: connection.mailgun
   }
 
   var nodemailerMailgun = nodemailer.createTransport(mg(auth));

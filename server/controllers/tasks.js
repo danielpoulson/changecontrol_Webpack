@@ -4,7 +4,6 @@ var Change = require('mongoose').model('Change');
 var fs = require('fs');
 var files = require('../controllers/files');
 var Users = require('../controllers/users');
-var login  = require('../config/login');
 var json2csv = require('json2csv');
 var mailer = require('../config/mailer.js');
 var moment = require('moment');

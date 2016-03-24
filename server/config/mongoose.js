@@ -5,9 +5,8 @@ var projectModel = require('../models/Project');
 var taskModel = require('../models/Task');
 var filesModel = require('../models/File');
 
-module.exports = function() {
-	// mongoose.connect('mongodb://au01a112/techservices');
-	mongoose.connect('mongodb://localhost/techservices');
+module.exports = function(config) {
+	mongoose.connect(config.db);
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error...'));
   db.once('open', function callback() {

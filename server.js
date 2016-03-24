@@ -1,46 +1,22 @@
-var express = require('express');
-var env = process.env.NODE_ENV || 'development';
-var port = process.env.PORT || 9005;
-require('./server/config/mongoose')();
-var login = require('./server/config/login');
-var logger = require('morgan');
+const express = require('express');
+const env = process.env.NODE_ENV || 'development';
+const auth = require('./server/config/auth');
 
+const app = express();
 
-var app = express();
+var config = require('./server/config/config')[env];
 
-app.set('views', __dirname + '/views');
-app.engine('html', require('ejs').renderFile);
-
-app.use(logger('dev'));
-
-app.use(express.static(__dirname + '/'));
-
-app.use(login.routes);
-
+require('./server/config/express')(app, config);
+require('./server/config/mongoose')(config);
+require('./server/config/passport')();
 app.use(require('./server/config/route'));
 
-// Only load this middleware in dev mode (important).
-if (app.get('env') === 'development') {
-  const webpack = require('webpack');
-  const webpackConfig = require('./webpack/common.config');
-  const compiler = webpack(webpackConfig);
-
-  app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true, publicPath: webpackConfig.output.publicPath,
-  }));
-
-    app.use(require('webpack-hot-middleware')(compiler, {
-    log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000,
-  }));
-
-}
-
-app.get('*', login.required, function (req, res) {
+app.get('*', auth.required, function (req, res) {
     res.render('index.html');
 });
 
-app.listen(port, function() {
-    console.log('Express server 🌎 listening on port ' + port);
+app.listen(config.port, function() {
+    console.log('Express server 🌎  listening on port ' + config.port);
     console.log('env = ' + process.env.NODE_ENV +
                 '\n__dirname = ' + __dirname +
                 '\nprocess.cwd = ' + process.cwd());
