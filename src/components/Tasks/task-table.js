@@ -28,7 +28,7 @@ class TaskTable extends Component {
                       <th>Status</th>
                   </tr>
               </thead>
-              <tbody className="panel-body">{tasks}</tbody>
+              <tbody className="panel-body dpHand">{tasks}</tbody>
           </table>
       </div>
 

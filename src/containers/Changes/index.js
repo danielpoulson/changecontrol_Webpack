@@ -41,8 +41,6 @@ export default class Changes extends Component {
     if (!this.props.changes.alldata.length > 0) {
       this.props.getChanges(4);
     }
-    // TODO: MED 5 Sticky options on the change list
-    // This section should remember you page and or serach options.
     this.setState({txtSearch:search});
     this.onChange(1, search);
   }
@@ -79,14 +77,14 @@ export default class Changes extends Component {
       } else {
           this.props.getChanges(4);
       }
-
+      this.setState({txtSearch:null});
       Toastr.success('Only showing active changes - ' + this.state.showAll,'Change Detail', {timeOut: 1000});
   };
 
   linkClick(i){
     //TODO LOW 2 Pagination Adding 1 to the page mumber as it uses the base of 0
     this.onChange(i + 1, this.state.txtSearch);
-    this.setState({activePage: i});
+    this.setState({activePage: i });
   }
 
   onChange = (page_num, searchText) => {
@@ -126,17 +124,45 @@ export default class Changes extends Component {
     return (
       <section>
         <div className="row">
-           <div className="section-header">
-                <div className="col-sm-6 pull-left">
-                        <p className="section-header-text-main">Change Control - {_changeTitle} </p>
-                </div>
-
-                <SearchBox
-                  searchText={this.state.txtSearch}
-                  onChange={this.onSearchText}
-                  />
+          <div className="section-header">
+            <div className="col-sm-6 pull-left">
+              <p className="section-header-text-main">Change Control - {_changeTitle} </p>
             </div>
+
+            <SearchBox
+              searchText={this.state.txtSearch}
+              onChange={this.onSearchText}
+            />
+          </div>
         </div>
+        <div className="row">
+          <div className="col-sm-6">
+            <button
+              className="btn btn-success pull-left"
+              onClick={this.newChange} >
+              New Change
+            </button>
+            <button
+              className="btn btn-info dp-margin-10-LR"
+              onClick={this.exportChange} >
+              Export List
+            </button>
+            <button
+              className="btn btn-warning"
+              onClick={this.allChanges} >
+              {butText}
+            </button>
+          </div>
+
+          <div className="col-sm-6">
+            <Pagination
+              activePage = {this.state.activePage}
+              numPage = {this.props.changes.per_page}
+              count = {this.props.changes.total}
+              getPage = {this.linkClick.bind(this)}/>
+          </div>
+        </div>
+
 
         <div className="row">
           <ChangeList
@@ -145,31 +171,7 @@ export default class Changes extends Component {
             sortByClick = {this.onSortByClick}
             colSelected = {this.state.colSelected}/>
         </div>
-        <div className="col-sm-6">
-          <button
-            className="btn btn-success pull-left"
-            onClick={this.newChange} >
-            New Change
-          </button>
-          <button
-            className="btn btn-info dp-margin-10-LR"
-            onClick={this.exportChange} >
-            Export List
-          </button>
-          <button
-            className="btn btn-warning"
-            onClick={this.allChanges} >
-            {butText}
-          </button>
-        </div>
 
-        <div className="col-sm-6">
-          <Pagination
-            activePage = {this.state.activePage}
-            numPage = {this.props.changes.per_page}
-            count = {this.props.changes.total}
-            getPage = {this.linkClick.bind(this)}/>
-        </div>
       </section>
     );
   }

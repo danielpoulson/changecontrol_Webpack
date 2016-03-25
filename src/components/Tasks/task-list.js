@@ -33,7 +33,6 @@ class TaskList extends React.Component {
 
     render() {
         let tableStyle = {
-            marginTop : 20,
             marginLeft : 10
         };
 

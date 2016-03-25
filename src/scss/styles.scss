@@ -4,6 +4,7 @@ $tab-color: #ED1B2C;
 /* 2. Header */
 /* 3. Table */
 /* 4. Padding and margins */
+/* 5. Pagination Styles  */
 
 
 /* ------------  Bootstrap Overrides ---------*/
@@ -289,3 +290,14 @@ $tab-color: #ED1B2C;
 }
 
 /*---------------Table ------------------*/
+
+/*---------------Pagination Styles ------------------*/
+
+
+.dpPag {
+  border-radius: 10px;
+  border: 2px solid #71ABFF;
+    padding: 5px 20px;
+}
+
+/*---------------Pagination Styles ------------------*/

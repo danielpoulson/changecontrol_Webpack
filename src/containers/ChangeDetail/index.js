@@ -148,7 +148,7 @@ export default class ChangeDetail extends Component {
     });
 
     let tasksTabClass = classNames({
-      'active' : this.state.TaskTab == 'show',
+      'active' : this.state.TasksTab == 'show',
       'hidden' : this.props.main.MainId === 'new'
     });
 

@@ -58,16 +58,16 @@ export default class ChangeList extends Component {
                     <table className="table table-hover phange-table dp_point">
                         <thead className="print-table-head">
                             <tr className="dpHand">
-                                <th onClick={this.props.sortByClick.bind(null, "CC_No")}>
+                                <th className="col-sm-8" onClick={this.props.sortByClick.bind(null, "CC_No")}>
                                     Change Number and Title <span className={th1Class}></span>
                                 </th>
-                                <th onClick={this.props.sortByClick.bind(null, "CC_Champ")}>
+                                <th className="col-sm-2" onClick={this.props.sortByClick.bind(null, "CC_Champ")}>
                                     Owner  <span className={th2Class}></span>
                                 </th>
-                                <th onClick={this.props.sortByClick.bind(null, "CC_TDate")}>
-                                    Target Date  <span className={th3Class}></span>
+                                <th className="col-sm-1" onClick={this.props.sortByClick.bind(null, "CC_TDate")}>
+                                    Target  <span className={th3Class}></span>
                                 </th>
-                                <th onClick={this.props.sortByClick.bind(null, "CC_Stat")}>
+                                <th className="col-sm-1" onClick={this.props.sortByClick.bind(null, "CC_Stat")}>
                                     Status  <span className={th4Class}></span>
                                 </th>
                             </tr>

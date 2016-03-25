@@ -50,7 +50,6 @@ export default function(state, action) {
       };
 
     case GET_CHANGES:
-    // this.props.loadPage(page_num, this.state.numPage, search);
       alldata = action.payload.data;
       per_page = 15;
       page = 1;
@@ -58,6 +57,7 @@ export default function(state, action) {
       paged = alldata.slice(offset, offset + per_page);
 
       return {
+        searchText: null,
         page: page,
         per_page: per_page,
         total: alldata.length,

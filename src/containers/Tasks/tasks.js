@@ -5,6 +5,7 @@ import Toastr from 'toastr';
 import TaskList from 'components/Tasks/task-list';
 import Pagination from 'components/Common/pagination';
 import Input from 'components/Common/form-text-input';
+import SearchBox from 'components/Common/search-box';
 /* actions */
 import { getAllTasks, loadPageTask, exportTasks } from 'actions/actions_tasks';
 
@@ -49,7 +50,7 @@ export default class Tasks extends Component{
     };
 
 
-    searchText = (event) => {
+    onSearchText = (event) => {
       let value = event.target.value;
       let field = event.target.name;
       this.setState({activePage: 0});
@@ -70,56 +71,55 @@ export default class Tasks extends Component{
 
     render() {
 
-            var spanStyle = {
-                background: "#71ABFF",
-                color: "#FFFFFF",
-                border: "1px solid #71ABFF"
-            };
+      var spanStyle = {
+          background: "#71ABFF",
+          color: "#FFFFFF",
+          border: "1px solid #71ABFF"
+      };
 
-            var divStyle = { paddingRight: 15};
+      var divStyle = { paddingRight: 15};
 
-            return (
+      return (
 
-            <div>
-                    <div className="row">
-                       <div className="section-header">
-                            <div className="col-sm-6 pull-left">
-                                    <p className="section-header-text-main">Active Task List</p>
-                            </div>
+        <div>
+          <div className="row">
+            <div className="section-header">
+              <div className="col-sm-6 pull-left">
+                <p className="section-header-text-main">
+                Active Task List
+                </p>
+              </div>
 
-                            <div className="col-sm-6 pull-right input-group " style={divStyle}>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={this.state.txtSearch}
-                                    onChange={this.searchText}
-                                    placeholder="Enter Search Text"/>
-                                <span style={spanStyle} className="input-group-addon glyphicon glyphicon-search"></span>
+              <SearchBox
+                searchText={this.state.txtSearch}
+                onChange={this.onSearchText}
+              />
+            </div>
+          </div>
 
-                            </div>
-                        </div>
-                    </div>
+          <div className="row">
+            <div className="col-sm-6">
+              <button
+                className="btn btn-info"
+                onClick={this.exportTask} >
+                Export List
+              </button>
+            </div>
 
+            <div className="col-sm-6">
+              <Pagination
+                activePage = {this.state.activePage}
+                numPage = {this.props.tasks.per_page}
+                count = {this.props.tasks.total}
+                getPage = {this.linkClick.bind(this)}/>
+            </div>
+          </div>
 
-                    <TaskList
-                        tasklist = {this.props.tasks.paged}
-                        type = "All"/>
+          <TaskList
+            tasklist = {this.props.tasks.paged}
+            type = "All"/>
 
-
-                    <div className="col-sm-6">
-                         <button className="btn btn-info" onClick={this.exportTask} >Export List</button>
-                    </div>
-
-                    <div className="col-sm-6">
-                        <Pagination
-                          activePage = {this.state.activePage}
-                          numPage = {this.props.tasks.per_page}
-                          count = {this.props.tasks.total}
-                          getPage = {this.linkClick.bind(this)}/>
-                    </div>
-
-
-                </div>
+          </div>
                 )
     }
 };
