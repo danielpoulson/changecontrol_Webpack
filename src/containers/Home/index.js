@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 /* component styles */
 import { styles } from './styles.scss';
 
-export const Home = () => {
+export const Home = () => (
+  <section>
+    <div className={`${styles}`}></div>
+  </section>
 
-    return (
-      <section>
-        <div className={`${styles}`}></div>
-      </section>
-
-    );
-}
+);

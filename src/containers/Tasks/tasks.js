@@ -8,7 +8,7 @@ import Input from 'components/Common/form-text-input';
 /* actions */
 import { getAllTasks, loadPageTask, exportTasks } from 'actions/actions_tasks';
 
-// TODO: HIGH (FUNC Refactor) - Make a common component search box Changes and Task List
+// TODO: MED 3 - Make a common component search box Changes and Task List
 // Changes and Task share the same search text box function which should be made as a common component
 let start = 0;
 

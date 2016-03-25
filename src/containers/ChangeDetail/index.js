@@ -62,8 +62,9 @@ export default class ChangeDetail extends Component {
   };
 
 
-  cancelChange = () => {
-      this.context.router.push('/changes');
+  cancelChange = (e) => {
+    e.preventDefault();
+    this.context.router.push('/changes');
   };
 
   componentWillMount(){
@@ -108,8 +109,9 @@ export default class ChangeDetail extends Component {
     this.props.getChange(this.state.ccNo);
   }
 // TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
-
+// TODO: MED 4 e.preventDefault from redux-form not working
   saveChange = (data) => {
+
         if (this.state.ccNo !== 'new') {
             data._id = this.props.change._id;
             data.CC_Stat = typeof data.CC_Stat === 'object' ? data.CC_Stat.id : data.CC_Stat;

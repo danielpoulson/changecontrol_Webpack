@@ -81,7 +81,6 @@ export default function(state, action) {
         }
 
       case LOAD_PAGE_CHANGES:
-      // this.props.loadPage(page_num, this.state.numPage, search);
         alldata = state.alldata;
         per_page = action.data.numPage;
         page = action.data.page_num || 1;
@@ -91,6 +90,7 @@ export default function(state, action) {
         paged = searcheddata.slice(offset, offset + per_page);
 
         return {
+          searchText: searchText,
           page: page,
           per_page: per_page,
           total: searcheddata.length,
@@ -104,7 +104,7 @@ export default function(state, action) {
 }
 
 
-function dataSort(data, sortColumn){  
+function dataSort(data, sortColumn){
   return _.sortBy(data, sortColumn);
 }
 

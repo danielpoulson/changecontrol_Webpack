@@ -197,7 +197,7 @@ export default class ChangeForm extends Component {
         </div>
 
         <div>
-          <button className="btn btn-success pull-left" disabled={submitting} onClick={handleSubmit}>
+          <button type="submit" className="btn btn-success pull-left" disabled={submitting} >
             {submitting ? <i/> : <i/>} Save Change
           </button>
           <button className="btn btn-info dp-margin-10-LR" disabled={submitting} onClick={this.props.onCancel}>

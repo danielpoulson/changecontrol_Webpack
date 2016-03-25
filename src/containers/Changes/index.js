@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import Toastr from 'toastr';
 
 import  ChangeList from 'components/Changes/change-list';
-import Pagination from 'components/Common/pagination'
+import Pagination from 'components/Common/pagination';
+import SearchBox from 'components/Common/search-box';
 
 /* actions */
 import { getChange, getChanges, addChange, sortByChanges, loadPage, exportChanges } from 'actions/actions_changes';
@@ -23,7 +24,7 @@ export default class Changes extends Component {
       txtSearch: '',
       showAll: false
     };
-    this.searchText= this.searchText.bind(this);
+    this.onSearchText= this.onSearchText.bind(this);
     this.onSortByClick = this.onSortByClick.bind(this);
   }
 
@@ -36,12 +37,14 @@ export default class Changes extends Component {
   };
 
   componentWillMount() {
+    const search = this.props.changes.searchText;
     if (!this.props.changes.alldata.length > 0) {
       this.props.getChanges(4);
     }
     // TODO: MED 5 Sticky options on the change list
     // This section should remember you page and or serach options.
-    this.onChange();
+    this.setState({txtSearch:search});
+    this.onChange(1, search);
   }
 
   newChange = () => {
@@ -100,11 +103,10 @@ export default class Changes extends Component {
     this.props.sortByChanges(column);
   }
 
-  searchText(event){
+  onSearchText(event){
     let value = event.target.value;
     let field = event.target.name;
     this.setState({activePage: 0});
-
     this.setState({txtSearch: value});
     this.onChange(0, value);
 
@@ -114,13 +116,6 @@ export default class Changes extends Component {
     var _changeTitle = "Register";
     let butText;
 
-    var spanStyle = {
-        background: "#71ABFF",
-        color: "#FFFFFF",
-        border: "1px solid #71ABFF"
-    };
-
-    var divStyle = { paddingRight: 15};
 
     if (this.state.showAll !== true) {
       butText = 'Show all changes';
@@ -136,16 +131,10 @@ export default class Changes extends Component {
                         <p className="section-header-text-main">Change Control - {_changeTitle} </p>
                 </div>
 
-                <div className="col-sm-6 pull-right input-group " style={divStyle}>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={this.state.txtSearch}
-                        onChange={this.searchText}
-                        placeholder="Enter Search Text"/>
-                    <span style={spanStyle} className="input-group-addon glyphicon glyphicon-search"></span>
-
-                </div>
+                <SearchBox
+                  searchText={this.state.txtSearch}
+                  onChange={this.onSearchText}
+                  />
             </div>
         </div>
 
