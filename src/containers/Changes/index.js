@@ -7,10 +7,11 @@ import Pagination from 'components/Common/pagination';
 import SearchBox from 'components/Common/search-box';
 
 /* actions */
-import { getChange, getChanges, addChange, sortByChanges, loadPage, exportChanges } from 'actions/actions_changes';
+import { getChange, getChanges, getPage, addChange, sortByChanges, loadPage, exportChanges } from 'actions/actions_changes';
 import { setMain } from 'actions/actions_main';
 
-@connect(state=>({ changes : state.changes, user: state.main.user }),{ getChange, getChanges, sortByChanges, setMain, loadPage, exportChanges })
+@connect(state=>({ changes : state.changes, user: state.main.user }),
+  { getChange, getChanges, getPage, sortByChanges, setMain, loadPage, exportChanges })
 
 export default class Changes extends Component {
   constructor(props) {
@@ -78,6 +79,7 @@ export default class Changes extends Component {
           this.props.getChanges(4);
       }
       this.setState({txtSearch:null});
+      this.setState({activePage : 0});
       Toastr.success('Only showing active changes - ' + this.state.showAll,'Change Detail', {timeOut: 1000});
   };
 
@@ -87,18 +89,19 @@ export default class Changes extends Component {
     this.setState({activePage: i });
   }
 
-  onChange = (page_num, searchText) => {
+  onChange = (page_num, searchText, column) => {
     let action = {};
     action.page_num = page_num || 1;
-    action.search = searchText || this.state.txtSearch;
+    action.search = searchText || null;
     action.numPage = this.state.numPage;
+    action.column = column;
     this.props.loadPage(action);
   };
 
   onSortByClick(column) {
     this.setState({activePage: 0});
-    this.setState({colSelected : column})
-    this.props.sortByChanges(column);
+    // this.props.sortByChanges(column);
+    this.onChange(0, this.state.txtSearch, column);
   }
 
   onSearchText(event){
@@ -169,7 +172,7 @@ export default class Changes extends Component {
             changelist={this.props.changes.paged}
             getChange={this.props.getChange}
             sortByClick = {this.onSortByClick}
-            colSelected = {this.state.colSelected}/>
+            colSelected = {this.props.changes.sorted}/>
         </div>
 
       </section>

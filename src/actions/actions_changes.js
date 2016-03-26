@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const GET_CHANGES = 'GET_CHANGES';
 export const GET_CHANGE = 'GET_CHANGE';
+export const GET_PAGE = 'GET_PAGE';
 export const ADD_CHANGE = 'ADD_CHANGE';
 export const EDIT_CHANGE = 'EDIT_CHANGE';
 export const LOAD_PAGE_CHANGES = 'LOAD_PAGE_CHANGES';
@@ -32,6 +33,18 @@ export function getChange(data) {
   }
 
 }
+
+
+export function getPage(page) {
+
+  return {
+    type: GET_PAGE,
+    payload: page
+  }
+
+}
+
+
 
 export function addChange(data) {
   const url = `/api/changes`;

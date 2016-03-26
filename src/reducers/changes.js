@@ -1,4 +1,4 @@
-import { GET_CHANGES, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES, SORT_BY_CHANGES } from 'actions/actions_changes';
+import { GET_CHANGES, GET_PAGE, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES, SORT_BY_CHANGES } from 'actions/actions_changes';
 import _ from 'lodash';
 
 const initialState = {
@@ -16,6 +16,7 @@ export default function(state, action) {
   let searchText = '';
   let currIds = [];
   let index = [];
+
 
   if (typeof state === 'undefined') {
       return initialState
@@ -57,46 +58,62 @@ export default function(state, action) {
       paged = alldata.slice(offset, offset + per_page);
 
       return {
-        searchText: null,
-        page: page,
-        per_page: per_page,
-        total: alldata.length,
-        total_pages: Math.ceil(alldata.length / per_page),
-        paged: paged,
-        alldata : alldata
-      };
+      searchText: null,
+      page: page,
+      per_page: per_page,
+      total: alldata.length,
+      total_pages: Math.ceil(alldata.length / per_page),
+      paged: paged,
+      alldata : alldata
+    }
+// TODO: LOW 1 : Refactor reducer to remove dead code
+    // case GET_PAGE:
+    //   let per_page = action.payload.per_page
+    //   console.log(state.paged.length);
+    //
+    //   let pagedData = state.paged.length > 0 ? state.paged : state.alldata;
+    //   offset = (action.payload.page - 1) * per_page;
+    //   paged = pagedData.slice(offset, offset + per_page);
+    //
+    //   return {
+    //     ...state,
+    //     page: page,
+    //     per_page: per_page,
+    //     paged: paged
+    //   };
 
-      case SORT_BY_CHANGES:
-
-        alldata = dataSort(state.alldata, action.col);
-        page = 1;
-        offset = (page - 1) * state.per_page;
-        paged = alldata.slice(offset, offset + state.per_page);
-
-        return {
-          ...state,
-          alldata,
-          paged,
-          page
-        }
+      // case SORT_BY_CHANGES:
+      //   let sorted = action.col;
+      //   let pagedSorted = dataSort(state.paged, sorted);
+      //   page = 1;
+      //   offset = (page - 1) * state.per_page;
+      //   paged = pagedSorted.slice(offset, offset + state.per_page);
+      //
+      //   return {
+      //     ...state,
+      //     paged: paged,
+      //     page: page,
+      //     sorted: sorted
+      //   }
 
       case LOAD_PAGE_CHANGES:
-        alldata = state.alldata;
+        let column = action.data.column || state.sorted;
         per_page = action.data.numPage;
         page = action.data.page_num || 1;
         offset = (page - 1) * per_page;
         searchText = action.data.search;
-        let searcheddata = searchData(state.alldata, searchText);
+        let searcheddata = searchData(state.alldata, searchText, column);
         paged = searcheddata.slice(offset, offset + per_page);
 
         return {
+          ...state,
+          sorted: column,
           searchText: searchText,
           page: page,
           per_page: per_page,
           total: searcheddata.length,
           total_pages: Math.ceil(alldata.length / per_page),
-          paged: paged,
-          alldata : alldata
+          paged: paged
         };
   }
 
@@ -104,12 +121,12 @@ export default function(state, action) {
 }
 
 
-function dataSort(data, sortColumn){
-  return _.sortBy(data, sortColumn);
-}
+// function dataSort(data, sortColumn){
+//   return _.sortBy(data, sortColumn);
+// }
 
 
-function searchData(data, searchText){
+function searchData(data, searchText, sortColumn){
     var searched = [];
 
     function search(item){
@@ -127,9 +144,11 @@ function searchData(data, searchText){
 
 
     if (searchText == null) {
-        return data;
+        return _.sortBy(data, sortColumn);
     } else {
-        return data.filter(search);
+      sortColumn = sortColumn || "CC_No";
+      let newList = _.chain(data).filter(search).sortBy(sortColumn).value();
+      return newList;
     }
 
 }

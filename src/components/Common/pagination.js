@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Pagination extends Component {
 
 	render() {
-// TODO: Med 3 max of 4 pages shown
+
 		const activePage = this.props.activePage;
 		const count = this.props.count;
 		const numPage = this.props.numPage;
@@ -27,6 +27,7 @@ class Pagination extends Component {
 					<li className={lastPage ? "hidden" : "dpHand"} onClick={this.props.getPage.bind(null, activePage + 1)}>
 						<span className="glyphicon glyphicon-chevron-right"></span>
 					</li>
+					<li>Records in this list {count}</li>
 				</ul>
 			</nav>
 

@@ -6,7 +6,7 @@ exports.getChanges = function(req, res) {
     var status = req.params.status;
     Change.find({CC_Stat: {$lt:status}})
         .select({ CC_No: 1, CC_Descpt: 1, CC_Champ: 1, CC_TDate: 1, CC_Stat: 1, CC_Prop: 1 })
-        .sort({CC_TDate:1})
+        .sort({CC_No:1})
         .exec(function(err, collection) {
         res.send(collection);
     })
