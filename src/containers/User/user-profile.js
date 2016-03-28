@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import UserProfileForm from 'components/User/user-profile-form';
 import UserSelect from 'components/User/user-select';
 import { TextInputTask } from 'components/Common/text-input-task';
+import toastr from 'toastr';
 
-import { getUser, saveUser } from 'actions/actions_users';
+import { getUser, getUsers, createUser, resetUser, saveUser, deleteUser } from 'actions/actions_users';
 
-@connect(state=>({users: state.users}), { getUser, saveUser })
+@connect(state=>({users: state.users, user: state.user}), { getUser, createUser, resetUser, saveUser, deleteUser, getUsers })
 
 class UserProfile extends Component {
 
@@ -14,12 +15,13 @@ class UserProfile extends Component {
     super(props);
 
     this.state = {
+      isNewUser: false
 
     };
 
     this.saveUser = this.saveUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
-    this.cancelUser = this.cancelUser.bind(this);
+    this.newUser = this.newUser.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
@@ -32,24 +34,33 @@ class UserProfile extends Component {
   };
 
   saveUser(data){
-    this.props.saveUser(data);
-    console.log('saveUser');
-
+    if(this.state.isNewUser) {
+      this.props.createUser(data);
+      this.setState({isNewUser:false});
+      toastr.success('New user account has been created','User Account', {timeOut: 1000});
+    } else {
+      this.props.saveUser(data);
+      toastr.success('User account has been saved','User Account', {timeOut: 1000});
+    }
   }
 
-  // TODO MED 4 Write functions for creating and deleting a user.
-
-  deleteUser(){
-
+  deleteUser(event){
+    event.preventDefault();
+    this.props.deleteUser(this.props.user._id);
+    toastr.warning('User account has been deleted','User Account', {timeOut: 1000});
+    // TODO: LOW 3 Remove server call to repopulate user after delete
+    // When the action to delteUser is call the action does not remove the user from the state tree.
+    // See Actions Users deleteUser
+    this.props.getUsers();
   }
 
-  cancelUser(){
-
+  newUser(){
+    this.setState({isNewUser:true});
+    this.props.resetUser();
   }
 
   onChange(value) {
     this.props.getUser(value);
-    console.log(value);
   }
 
   render () {
@@ -68,6 +79,8 @@ class UserProfile extends Component {
 
     };
 
+    const roleSelect = ['user', 'admin'];
+
     var divStyle = { paddingRight: 15};
 
     return (
@@ -81,13 +94,13 @@ class UserProfile extends Component {
           </div>
         </div>
 
-          <UserSelect users={this.props.users} onChange={this.onChange} />
+        <UserSelect users={this.props.users} onChange={this.onChange} newUser={this.newUser} />
 
         <div className="row" style={formStyle}>
           <UserProfileForm
             onSubmit={this.saveUser}
             deleteUser={this.deleteUser}
-            onCancel={this.cancelUser}/>
+            roleSelect={roleSelect}/>
           </div>
       </div>
     )

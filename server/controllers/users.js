@@ -1,12 +1,6 @@
-var User = require('mongoose').model('User');
-
-//This route is from the old login file not sure if it is still used
-// router.get('/api/users', function (req, res) {
-//     User.find({}).exec(function(err, collection) {
-//         res.json(collection.map(makeUserSafe));
-//     });
-//
-// });
+const User = require('mongoose').model('User');
+const passport = require('passport');
+const crypto = require('../config/cryptopass');
 
 exports.getAllUsers = function(req, res) {
     var status = req.params.status;
@@ -25,29 +19,24 @@ exports.getAllUsers = function(req, res) {
     });
 };
 
-// TODO HIGH 3 This update user function only changes the users password.
-// Need to extend to allow for editing of role, email etc
 exports.updateUser = function (req, res, next) {
     const password = req.body.password;
+    const userData = {};
 
-    User.count({username: req.body.username }, function(err, count){
-        if (err){console.log(err);}
-        if (count === 1 && password) {
-            const userData = {
-                    username: req.body.username,
-                    passwordHash: hash(password)
-                };
+    userData.username = req.body.username;
+    userData.fullname = req.body.fullname;
+    userData.email = req.body.email;
+    userData.role = req.body.role;
 
-             console.log("UserData");
+    if (password) {
+      userData.passwordHash = crypto.hash(password);
+    }
 
-          User.update({username : req.body.username}, {$set: userData}, function (err) {
-            if (err){console.log(err); res.sendStatus(500);}
-            res.sendStatus(200);
-          });
-
-
-        }
+    User.update({_id : req.body._id}, {$set: userData}, function (err) {
+      if (err){console.log(err); res.sendStatus(500);}
+      res.sendStatus(200);
     });
+
 };
 
 
@@ -61,12 +50,12 @@ exports.getLoggedUser = function(req, res) {
 };
 
 exports.getUser = function(req, res) {
-    var _id = req.params.id;
+    var _fullname = req.params.id;
 
     User
         .find({})
-        .select({fullname : 1, username: 1, role: 1})
-        .where({fullname : _id})
+        .select({"passwordHash": 0})
+        .where({fullname : _fullname})
         .exec(function(err, collection) {
           res.send(collection);
     });
@@ -77,43 +66,36 @@ exports.getUserEmail = function(user) {
 
 };
 
-
 exports.createUser = function (req, res, next) {
 
-    User.count({username: req.body.username }, function(err, count){
-        if (err){console.log(err);}
-        if (count === 0) {
-            var userData = {
-                fullname: req.body.fullname,
-                email: req.body.email,
-                username: req.body.username,
-                passwordHash: hash(req.body.password),
-                role: 'user'
-            };
+  var userData = req.body;
 
-          User.create(userData, function(err, user) {
-            if(err) {
-                 res.redirect('/login');
-              return res.send({reason:err.toString()});
-            }
+  userData.username = userData.username.toLowerCase();
+  userData.passwordHash = crypto.hash(userData.password);
 
 
-                passport.authenticate('local', function(err, user, info) {
-                    if (err) { return next(err); }
-                    if (!user) { return res.redirect('/login'); }
-                    req.logIn(user, function(err) {
-                      if (err) { return next(err); }
-                      return res.redirect('/');
-          exports.required = loginRequired;          });
-                  })(req, res, next);
+  User.create(userData, function(err, user) {
+    if(err) {
+      if(err.toString().indexOf('E11000') > -1) {
+        err = new Error('Duplicate Username');
+      }
+      res.status(400);
+      return res.send({reason:err.toString()});
+    }
 
-          });
+    res.sendStatus(200);
+  });
 
+};
 
-        } else {
-            res.redirect('/login');
-        }
+exports.deleteUser= function (req, res) {
+    var id = req.params.id;
+
+    User.remove({_id: id}, function (err) {
+        if (err) return handleError(err);
+        res.status(200);
     });
+
 
 
 };

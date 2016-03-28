@@ -27,7 +27,7 @@ class Pagination extends Component {
 					<li className={lastPage ? "hidden" : "dpHand"} onClick={this.props.getPage.bind(null, activePage + 1)}>
 						<span className="glyphicon glyphicon-chevron-right"></span>
 					</li>
-					<li>Records in this list {count}</li>
+					<li>Records {count}</li>
 				</ul>
 			</nav>
 

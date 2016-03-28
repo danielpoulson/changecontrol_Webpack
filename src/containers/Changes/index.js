@@ -7,11 +7,11 @@ import Pagination from 'components/Common/pagination';
 import SearchBox from 'components/Common/search-box';
 
 /* actions */
-import { getChange, getChanges, getPage, addChange, sortByChanges, loadPage, exportChanges } from 'actions/actions_changes';
+import { getChange, getChanges, addChange, loadPage, exportChanges } from 'actions/actions_changes';
 import { setMain } from 'actions/actions_main';
 
 @connect(state=>({ changes : state.changes, user: state.main.user }),
-  { getChange, getChanges, getPage, sortByChanges, setMain, loadPage, exportChanges })
+  { getChange, getChanges, addChange, loadPage, exportChanges, setMain })
 
 export default class Changes extends Component {
   constructor(props) {
@@ -100,7 +100,6 @@ export default class Changes extends Component {
 
   onSortByClick(column) {
     this.setState({activePage: 0});
-    // this.props.sortByChanges(column);
     this.onChange(0, this.state.txtSearch, column);
   }
 

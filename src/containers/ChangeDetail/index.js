@@ -119,7 +119,7 @@ export default class ChangeDetail extends Component {
             this.props.editChange(data);
         } else {
             var created = [];
-            created.push({CC_Id : 0, CC_Action: "Created", CC_ActBy : this.prop.main.user.fullname, CC_ActDept : this.prop.main.user.dept, CC_ActDate : new Date()});
+            created.push({CC_Id : 0, CC_Action: "Created", CC_ActBy : this.props.main.user.fullname, CC_ActDept : this.props.main.user.dept, CC_ActDate : new Date()});
             data.CC_LOG = created;
             data.CC_Stat = data.CC_Stat.id || 1;
             this.props.addChange(data);

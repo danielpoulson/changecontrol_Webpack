@@ -1,4 +1,4 @@
-import { GET_CHANGES, GET_PAGE, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES, SORT_BY_CHANGES } from 'actions/actions_changes';
+import { GET_CHANGES, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES} from 'actions/actions_changes';
 import _ from 'lodash';
 
 const initialState = {
@@ -66,35 +66,6 @@ export default function(state, action) {
       paged: paged,
       alldata : alldata
     }
-// TODO: LOW 1 : Refactor reducer to remove dead code
-    // case GET_PAGE:
-    //   let per_page = action.payload.per_page
-    //   console.log(state.paged.length);
-    //
-    //   let pagedData = state.paged.length > 0 ? state.paged : state.alldata;
-    //   offset = (action.payload.page - 1) * per_page;
-    //   paged = pagedData.slice(offset, offset + per_page);
-    //
-    //   return {
-    //     ...state,
-    //     page: page,
-    //     per_page: per_page,
-    //     paged: paged
-    //   };
-
-      // case SORT_BY_CHANGES:
-      //   let sorted = action.col;
-      //   let pagedSorted = dataSort(state.paged, sorted);
-      //   page = 1;
-      //   offset = (page - 1) * state.per_page;
-      //   paged = pagedSorted.slice(offset, offset + state.per_page);
-      //
-      //   return {
-      //     ...state,
-      //     paged: paged,
-      //     page: page,
-      //     sorted: sorted
-      //   }
 
       case LOAD_PAGE_CHANGES:
         let column = action.data.column || state.sorted;
@@ -119,11 +90,6 @@ export default function(state, action) {
 
   return state;
 }
-
-
-// function dataSort(data, sortColumn){
-//   return _.sortBy(data, sortColumn);
-// }
 
 
 function searchData(data, searchText, sortColumn){

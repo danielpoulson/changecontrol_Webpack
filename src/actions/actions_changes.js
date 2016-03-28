@@ -2,13 +2,11 @@ import axios from 'axios';
 
 export const GET_CHANGES = 'GET_CHANGES';
 export const GET_CHANGE = 'GET_CHANGE';
-export const GET_PAGE = 'GET_PAGE';
 export const ADD_CHANGE = 'ADD_CHANGE';
 export const EDIT_CHANGE = 'EDIT_CHANGE';
 export const LOAD_PAGE_CHANGES = 'LOAD_PAGE_CHANGES';
 export const CREATE_LOG = 'CREATE_LOG';
 export const BOOKOUT_FILE = 'BOOKOUT_FILE';
-export const SORT_BY_CHANGES = 'SORT_BY_CHANGES';
 
 
 export function getChanges(data) {
@@ -33,18 +31,6 @@ export function getChange(data) {
   }
 
 }
-
-
-export function getPage(page) {
-
-  return {
-    type: GET_PAGE,
-    payload: page
-  }
-
-}
-
-
 
 export function addChange(data) {
   const url = `/api/changes`;
@@ -73,16 +59,6 @@ export function loadPage(data) {
 
     type: LOAD_PAGE_CHANGES,
     data
-  }
-
-}
-
-
-export function sortByChanges(col) {
-  return {
-
-    type: SORT_BY_CHANGES,
-    col
   }
 
 }

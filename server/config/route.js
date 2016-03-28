@@ -32,6 +32,11 @@ router.post('/login', passport.authenticate('local', {
     failureFlash: true
 }));
 
+router.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect('/login');
+});
+
 // function loginRequired (req, res, next) {
 //     if (req.isAuthenticated()) {
 //        exports.required = loginRequired;   res.redirect('/login');
@@ -45,7 +50,10 @@ router.post('/login', passport.authenticate('local', {
    router.get('/api/user/:id', users.getUser);
    router.get('/api/loggeduser', users.getLoggedUser);
    router.put('/api/updateuser/:username', users.updateUser);
+   // TODO: MED Remove when new create user is complete.
    router.post('/signup', users.createUser);
+   router.post('/api/user', users.createUser);
+   router.delete('/api/user/:id', users.deleteUser);
 //**********User Routes ***************
 
 //--------- Changes--------------------

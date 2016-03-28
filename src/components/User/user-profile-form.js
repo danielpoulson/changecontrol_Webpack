@@ -1,11 +1,11 @@
 import React from 'react';
 import {reduxForm} from 'redux-form';
 import { TextInputTask } from 'components/Common/text-input-task';
-import SelectBox from 'components/Common/select-box';
-export const fields = ['fullname', 'username', 'dept', 'role', 'password'];
+import ComboBox from 'components/Common/combo-box';
+export const fields = ['_id', 'fullname', 'username', 'email', 'dept', 'role', 'password'];
 
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
-
+  role: 'user'
 };
 
 const validate = values => {
@@ -26,23 +26,30 @@ const validate = values => {
     validate
   },
   state => ({
-  initialValues: state.user
+    initialValues: state.user ? state.user : newdata // will pull state into form's initialValues
   })
 )
 
 export default class UserProfileForm extends React.Component {
 	static propTypes: {
+    fields: PropTypes.object.isRequired,
 		errors : React.PropTypes.object
 	};
 
 	render() {
     const {
-      fields: {fullname, username, dept, role, password},
+      fields: {fullname, username, email, dept, role, password, _id},
         handleSubmit,
         submitting,
-        onCancel,
-        deleteUser
+        deleteUser,
+        roleSelect
       } = this.props;
+
+    const fnStyle = {
+      marginLeft: 30,
+      paddingTop: 20,
+      paddingBottom: 10
+    }
 
         var wrapperClassSD = '';
         var wrapperClassTD = '';
@@ -56,41 +63,79 @@ export default class UserProfileForm extends React.Component {
         }
 
 		return (
-            <div>
-              <form onSubmit={handleSubmit} className="form form-horizontal" >
-                <TextInputTask
-                  name="username"
-                  label="User Name"
-                  placeholder="Enter Users Full Name (Required)"
-                  dpInputCol="col-sm-9"
-                  dpLabelCol="col-sm-2"
-                  error={username.error}
-                  touched={username.touched}
-                  {...username}/>
+        <div>
+          <form onSubmit={handleSubmit} className="form form-horizontal" >
 
-                <TextInputTask
-                  name="password"
-                  label="Password"
-                  placeholder="Enter password"
-                  dpInputCol="col-sm-9"
-                  dpLabelCol="col-sm-2"
-                  error={password.error}
-                  touched={password.touched}
-                  {...password}/>
-
-                <div className="col-sm-9 col-md-offset-2">
-                  <button className="btn btn-success pull-left" disabled={submitting} onClick={handleSubmit}>
-                    {submitting ? <i/> : <i/>} Submit
-                  </button>
-                  <button className="btn btn-info dp-margin-10-LR hidden" disabled={submitting} onClick={onCancel}>
-                  Cancel
-                  </button>
-                  <button className="btn btn-danger hidden" disabled={submitting} onClick={deleteUser}>
-                    Delete
-                  </button>
-                </div>
-                </form>
+            <div className="col-sm-12">
+              <TextInputTask
+                name="username"
+                label="User Name"
+                placeholder="Enter Users username (Required)"
+                dpInputCol="col-sm-4"
+                dpLabelCol="col-sm-2"
+                error={username.error}
+                touched={username.touched}
+                {...username}/>
             </div>
+
+            <div className="col-sm-12">
+              <TextInputTask
+                name="fullname"
+                label="Full Name"
+                placeholder="Enter Full Name (Required)"
+                dpInputCol="col-sm-5"
+                dpLabelCol="col-sm-2"
+                error={fullname.error}
+                touched={fullname.touched}
+                {...fullname}/>
+            </div>
+
+            <div className="col-sm-12">
+              <TextInputTask
+                name="email"
+                label="Email"
+                placeholder="Enter Email Address (Required)"
+                dpInputCol="col-sm-5"
+                dpLabelCol="col-sm-2"
+                error={email.error}
+                touched={email.touched}
+                {...email}/>
+            </div>
+
+            <div className="col-sm-12">
+              <ComboBox
+                label="Role"
+                name="role"
+                data={roleSelect}
+                dpInputCol="col-sm-4"
+                dpLabelCol="col-sm-2"
+                {...role}
+                />
+            </div>
+
+            <div className="col-sm-12">
+              <TextInputTask
+                name="password"
+                label="Password"
+                type="password"
+                placeholder="***************"
+                dpInputCol="col-sm-5"
+                dpLabelCol="col-sm-2"
+                error={password.error}
+                touched={password.touched}
+                {...password}/>
+            </div>
+
+            <div className="col-sm-9 col-md-offset-2">
+              <button className="btn btn-success pull-left" disabled={submitting} onClick={handleSubmit}>
+                {submitting ? <i/> : <i/>} Save
+              </button>
+              <button className="btn btn-danger dp-margin-10-LR" disabled={submitting} onClick={deleteUser}>
+                Delete
+              </button>
+            </div>
+            </form>
+        </div>
 		);
 	}
 
