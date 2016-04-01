@@ -61,7 +61,7 @@ export default class Tasks extends Component{
     exportTask = () => {
       const info = {
         fsSource : 'exp',
-        fsAddedBy : this.prop.user.username,
+        fsAddedBy : this.props.user.userName,
         fsType : 'tasks',
         search : this.state.txtSearch
       };
