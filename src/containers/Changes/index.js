@@ -56,7 +56,7 @@ export default class Changes extends Component {
 
       const info = {
         fsSource : 'exp',
-        fsAddedBy : this.props.user.userName,
+        fsAddedBy : this.props.user.username,
         fsType : 'changes',
         search : this.state.txtSearch,
         showAll : this.state.showAll

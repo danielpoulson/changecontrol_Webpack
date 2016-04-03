@@ -11,9 +11,19 @@ import Tasks from 'containers/Tasks/tasks';
 import User from 'containers/User/user-profile';
 import Export from 'components/Files/file-export';
 
+function requireAuth(nextState, replace) {
+  // if (!auth.loggedIn()) {
+  //   replace({
+  //     pathname: '/login',
+  //     state: { nextPathname: nextState.location.pathname }
+  //   })
+  // }
+  console.log("requireAuth");
+}
+
 export default (
   <Route path="/" component={App}>
-    <Route path="changes" component={Changes} />
+    <Route path="changes" component={Changes} onEnter={requireAuth} />
     <Route path='change/:id' component={ChangeDetail} />
     <Route path='task/:id' component={TaskDetail} />
     <Route path='tasks' component={Tasks} />

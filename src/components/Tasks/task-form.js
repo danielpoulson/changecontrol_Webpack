@@ -71,13 +71,13 @@ export default class TaskForm extends React.Component {
         var wrapperClassSD = '';
         var wrapperClassTD = '';
 
-        if (this.props.errors.TKStart && this.props.errors.TKStart.length > 0) {
-            wrapperClassSD += " " + 'has-date-error';
-        }
+        // if (this.props.TKStart.touched && this.props.errors.TKStart && this.props.errors.TKStart.length > 0) {
+        //     wrapperClassSD += " " + 'has-date-error';
+        // }
 
-        if (this.props.errors.TKTarg && this.props.errors.TKTarg.length > 0) {
-            wrapperClassTD += " " + 'has-date-error';
-        }
+        // if (this.props.errors.TKTarg && this.props.errors.TKTarg.length > 0) {
+        //     wrapperClassTD += " " + 'has-date-error';
+        // }
 
 		return (
             <div>
@@ -94,9 +94,9 @@ export default class TaskForm extends React.Component {
                   {...TKName}/>
 
                 <DateTimePicker
-                  dpInputCol="col-sm-3"
-                  dpLabelCol="col-sm-2"
                   label="Start date"
+                  dpLabelCol="col-sm-2"
+                  dpInputCol="col-sm-3"
                   onChange={this.handleStartDateChange}
                   {...TKStart}/>
 

@@ -41,9 +41,20 @@ export function setUser() {
 
 }
 
+export function login(data) {
+  const url = `/login`;
+  const request = axios.post(url, data);
+
+  return {
+    type: SET_USER,
+    payload : request
+  }
+
+}
+
 // export function setUser() {
 //   const user = {
-//     userName : data.username,
+//     username : data.username,
 //     fullname : data.fullname,
 //     role : data.role
 //   }

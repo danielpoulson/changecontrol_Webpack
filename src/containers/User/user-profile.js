@@ -94,7 +94,9 @@ class UserProfile extends Component {
           </div>
         </div>
 
-        <UserSelect users={this.props.users} onChange={this.onChange} newUser={this.newUser} />
+        { this.state.isNewUser ? null :
+          <UserSelect users={this.props.users} onChange={this.onChange} newUser={this.newUser} />
+        }
 
         <div className="row" style={formStyle}>
           <UserProfileForm

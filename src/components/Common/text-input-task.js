@@ -5,7 +5,7 @@ export const TextInputTask = (props) => {
 	var spanStyle = { color: "red" };
 
 	let wrapperClass = 'form-group';
-	if (props.error && props.error.length > 0) {
+	if (props.touched && props.error && props.error.length > 0) {
 		wrapperClass += " " + 'has-error';
 	}
 
@@ -24,10 +24,8 @@ export const TextInputTask = (props) => {
 					 	onChange={props.onChange} />
 				</div>
 				{props.touched && props.error &&
-					<div>
-						<div className={labelClass}></div>
 						<div style={spanStyle} className={props.dpInputCol}>{props.error}</div>
-					</div>}
+				}
 				</div>
 
 		);

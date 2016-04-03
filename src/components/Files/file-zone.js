@@ -25,7 +25,7 @@ class FileZone extends React.Component {
           }
 
             req.field('sourceId', sourceId );
-            req.field('dpUser', this.props.user.userName );
+            req.field('dpUser', this.props.user.username );
             req.field('docName', file.name );
             req.attach(_newFileName, file, file.name);
         });

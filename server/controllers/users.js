@@ -110,5 +110,3 @@ function makeUserSafe (user) {
     });
     return safeUser;
 }
-
-exports.safe = makeUserSafe;

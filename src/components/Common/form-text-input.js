@@ -6,7 +6,7 @@ class TextInput extends React.Component {
     const spanStyle = { color: "red" };
 
     let wrapperClass = 'form-group';
-    if (this.props.error && this.props.error.length > 0) {
+    if (this.props.touched && this.props.error && this.props.error.length > 0) {
       wrapperClass += " " + 'has-error';
     }
 

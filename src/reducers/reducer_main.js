@@ -3,7 +3,7 @@ const initialState = {
     MainId : '',
     CurrentMode: 'change',
     user : {
-      userName : '',
+      username : '',
       fullname : '',
       role : 'user'
     }
@@ -24,9 +24,12 @@ export default function (state, action) {
       }
 
     case SET_USER:
+
+      const _user = action.payload.data.success ? action.payload.data.user : {};
+
       return {
         ...state,
-        user : action.payload.data
+        user : _user
       }
 
       case SET_FILETAB_COUNT:

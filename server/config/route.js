@@ -1,5 +1,5 @@
 const router = module.exports = require('express').Router();
-const passport = require('passport');
+const auth = require('./auth');
 const changes = require('../controllers/changes');
 const projects = require('../controllers/projects');
 const tasks = require('../controllers/tasks');
@@ -22,15 +22,16 @@ const upload = multer({ storage: storage });
 
 //*******************Start Login routes*********************
 
-router.get('/login', function (req, res) {
-    res.render('login.html');
-});
+// router.get('/login', function (req, res) {
+//     res.render('login.html');
+// });
 
-router.post('/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-}));
+router.post('/login', auth.authenticate);
+// router.post('/login', passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/login',
+//     failureFlash: true
+// }));
 
 router.get('/logout', function (req, res) {
     req.logout();

@@ -5,7 +5,7 @@ import ComboBox from 'components/Common/combo-box';
 export const fields = ['_id', 'fullname', 'username', 'email', 'dept', 'role', 'password'];
 
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
-  role: 'user'
+  role:'user'
 };
 
 const validate = values => {
@@ -14,7 +14,19 @@ const validate = values => {
   if (!values.username) {
     errors.username = 'This field is required';
   } else if (values.username.length < 5) {
-    errors.username = 'Must more than 7 characters';
+    errors.username = 'Must more than 6 characters';
+  }
+
+  if (!values.fullname) {
+    errors.fullname = 'This field is required';
+  } else if (values.fullname.length < 8) {
+    errors.fullname = 'Must more than 8 characters';
+  }
+
+  if (!values.email) {
+    errors.email = 'This field is required';
+  } else if (values.email.length < 8) {
+    errors.email = 'Must more than 8 characters';
   }
 
   return errors;
@@ -50,17 +62,6 @@ export default class UserProfileForm extends React.Component {
       paddingTop: 20,
       paddingBottom: 10
     }
-
-        var wrapperClassSD = '';
-        var wrapperClassTD = '';
-
-        if (this.props.errors.TKStart && this.props.errors.TKStart.length > 0) {
-            wrapperClassSD += " " + 'has-date-error';
-        }
-
-        if (this.props.errors.TKTarg && this.props.errors.TKTarg.length > 0) {
-            wrapperClassTD += " " + 'has-date-error';
-        }
 
 		return (
         <div>

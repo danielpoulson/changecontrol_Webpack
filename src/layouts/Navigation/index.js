@@ -6,7 +6,7 @@ import { Route, Link } from 'react-router';
 import { getFiles } from 'actions/actions_files';
 
 @connect(
-  state => ({username: state.main.user.userName}),
+  state => ({username: state.main.user.username}),
   {getFiles}
 )
 

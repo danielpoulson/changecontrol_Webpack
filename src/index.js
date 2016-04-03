@@ -5,10 +5,8 @@ import { Router, Redirect, browserHistory } from 'react-router';
 import { createHashHistory } from 'history';
 import configureStore from './store/configureStore';
 import routes from './routes';
-import 'react-widgets/lib/less/react-widgets.less';
 
 const store = configureStore();
-
 
 ReactDOM.render(
   <Provider store={store}>

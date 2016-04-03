@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import 'scss/bootstrap/css/bootstrap.min.css';
 import 'scss/font-awesome-4.5.0/css/font-awesome.min.css';
+import 'react-widgets/lib/less/react-widgets.less';
 import 'scss/react-select.css';
 import 'scss/toastr.scss';
 import 'scss/styles.scss';
@@ -28,7 +29,7 @@ export class App extends Component {
   componentWillMount() {
     this.props.getAllTasks();
     this.props.getUsers();
-    this.props.setUser();
+    // this.props.setUser();
   }
 
   render() {
