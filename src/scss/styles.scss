@@ -162,6 +162,11 @@ $tab-color: #ED1B2C;
     margin-bottom: 15px;
 }
 
+.dp-margin-5-LR {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .dp-margin-10-LR {
     margin-left: 10px;
     margin-right: 10px;
@@ -196,6 +201,7 @@ $tab-color: #ED1B2C;
 
     border-bottom : solid 1px;
     margin-bottom: 15px;
+    margin-top: 5px;
     padding: 0 20px 10px 20px;
 
 }
@@ -214,29 +220,6 @@ $tab-color: #ED1B2C;
 }
 
 /*---------------Footer ------------------*/
-
-.navbar-header a.navbar-brand {
-  margin-top: -15px;
-  margin-bottom: -20px;
-}
-.navbar-header a.navbar-brand h6 {
-  color: #ccc;
-}
-
-.topband {
-  height: 75px;
-  background-color: #ED1B2C;
-}
-
-.topband_h1 {
-  color: #ffffff;
-  font-size: 3em;
-}
-
-.nav-strip {
-    height:20px;
-    background-color: #F8F8F8;
-}
 
 .section-header {
     height: 60px;
@@ -264,6 +247,10 @@ $tab-color: #ED1B2C;
 
 .dp-side-nav {
     padding-left: 0px;
+}
+
+.dp-nav-section {
+    margin: 0 auto;
 }
 
 /*---------------Navigation Bar ------------------*/

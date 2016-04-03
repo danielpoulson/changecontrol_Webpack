@@ -41,12 +41,7 @@ exports.updateUser = function (req, res, next) {
 
 
 exports.getLoggedUser = function(req, res) {
-  const user = {};
-  user.fullname = req.user.fullname;
-  user.userName = req.user.username;
-  user.role = req.user.role;
-
-  res.send(user);
+  res.send({success:true, user: makeUserSafe(req.user)});
 };
 
 exports.getUser = function(req, res) {
@@ -100,6 +95,7 @@ exports.deleteUser= function (req, res) {
 
 };
 
+// TODO: LOW Duplicate code with auth.js
 function makeUserSafe (user) {
     var safeUser = {};
 

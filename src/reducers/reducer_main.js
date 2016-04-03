@@ -1,4 +1,4 @@
-import { SET_MAIN, SET_USER, SET_FILETAB_COUNT, SET_LOADING } from 'actions/actions_main';
+import { SET_MAIN, SET_USER, USER_LOGGED_OUT, SET_FILETAB_COUNT, SET_LOADING } from 'actions/actions_main';
 const initialState = {
     MainId : '',
     CurrentMode: 'change',
@@ -31,6 +31,12 @@ export default function (state, action) {
         ...state,
         user : _user
       }
+
+      case USER_LOGGED_OUT:
+        return {
+          ...state,
+          user: initialState.user
+        }
 
       case SET_FILETAB_COUNT:
         return {

@@ -20,9 +20,7 @@ export class Header extends Component {
 
   onLogin = (e) => {
     e.preventDefault();
-    // console.log(this.state.login.username);
-    // console.log(this.state.login.password);
-
+    sessionStorage.setItem('authorised', true);
     this.props.login(this.state.login);
 
   };
@@ -41,22 +39,26 @@ render() {
             color: 'white'
         }
 
+        const loginStyle = {
+          marginTop:5
+        }
+
 
         return (
             <div>
                 <div className="topband">
-                    <section className="col-sm-12">
+                    <section className="col-sm-12 dp-nav-section ">
                         <div className="col-sm-5">
                             <h3 className="topband_h1">Change Control</h3>
                         </div>
-                        <div className="col-sm-7">
+                        <div className="col-sm-7" style={loginStyle}>
                             {!this.props.fullname ?
                               <Login
                                 login={this.state.login}
                                 onChange={this.setStateLogin.bind(this)}
                                 onLogin={this.onLogin}
-                                /> : <h5 style={textStyle} className="pull-right">Welcome: {this.props.fullname} </h5>
-                            }                        
+                                /> : <p style={textStyle} className="pull-right">Welcome: {this.props.fullname} </p>
+                            }
                         </div>
                     </section>
                 </div>

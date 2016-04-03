@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const SET_MAIN = 'SET_MAIN';
 export const SET_USER = 'SET_USER';
+export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
 export const SET_FILETAB_COUNT = 'SET_FILETAB_COUNT';
 export const SET_LOADING = 'SET_LOADING';
 
@@ -48,6 +49,16 @@ export function login(data) {
   return {
     type: SET_USER,
     payload : request
+  }
+
+}
+
+export function logoutUser() {
+  const url = `/logout`;
+  axios.get(url);
+
+  return {
+    type: USER_LOGGED_OUT
   }
 
 }

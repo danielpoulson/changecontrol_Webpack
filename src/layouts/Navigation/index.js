@@ -4,10 +4,11 @@ import Router from 'react-router';
 import { Route, Link } from 'react-router';
 
 import { getFiles } from 'actions/actions_files';
+import { logoutUser } from 'actions/actions_main';
 
 @connect(
   state => ({username: state.main.user.username}),
-  {getFiles}
+  {getFiles, logoutUser}
 )
 
 export class Navigation extends React.Component {
@@ -28,6 +29,12 @@ export class Navigation extends React.Component {
         this.context.router.push('/export');
 
     };
+    onLogoutUser = () => {
+        sessionStorage.setItem('authorised', false);
+        this.props.logoutUser();
+        this.context.router.push('/');
+
+    };
 
     render() {
         return (
@@ -37,7 +44,7 @@ export class Navigation extends React.Component {
                   <Link className="list-group-item" to="/changes" activeClassName="active"><i className="fa fa-list-ul fa-fw"></i>&nbsp; Change Register</Link>
                     <Link className="list-group-item" to="/tasks" activeClassName="active"><i className="fa fa-tasks fa-fw"></i>&nbsp; All Tasks</Link>
                     <a className="list-group-item" onClick={this.getFileList}><i className="fa fa-file-text-o fa-fw"></i>&nbsp; Files</a>
-                  <a className="list-group-item" href="/logout"><i className="fa fa-sign-out fa-fw"></i>&nbsp; Logout ({this.props.username})</a>
+                  <a className="list-group-item" onClick={this.onLogoutUser}><i className="fa fa-sign-out fa-fw"></i>&nbsp; Logout ({this.props.username})</a>
                 </div>
 
             </div>

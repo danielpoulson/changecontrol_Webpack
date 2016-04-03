@@ -12,13 +12,16 @@ import User from 'containers/User/user-profile';
 import Export from 'components/Files/file-export';
 
 function requireAuth(nextState, replace) {
-  // if (!auth.loggedIn()) {
-  //   replace({
-  //     pathname: '/login',
-  //     state: { nextPathname: nextState.location.pathname }
-  //   })
-  // }
-  console.log("requireAuth");
+    const authorised = sessionStorage.getItem('authorised');
+
+    if (authorised === 'false') {
+        replace({
+            pathname: '/',
+            state: {
+                nextPathname: nextState.location.pathname
+            }
+        })
+    }
 }
 
 export default (

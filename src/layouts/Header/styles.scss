@@ -1,5 +1,13 @@
+.navbar-header a.navbar-brand {
+  margin-top: -15px;
+  margin-bottom: -20px;
+}
+.navbar-header a.navbar-brand h6 {
+  color: #ccc;
+}
+
 .topband {
-  height: 75px;
+  height: 85px;
   background-color: #ED1B2C;
 }
 
@@ -10,5 +18,5 @@
 
 .nav-strip {
     height:20px;
-    background-color: #F8F8F8;
+    background-color: #f6f0f0;
 }

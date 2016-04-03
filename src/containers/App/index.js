@@ -27,9 +27,12 @@ export class App extends Component {
   };
 
   componentWillMount() {
+    const authorised = sessionStorage.getItem('authorised');
     this.props.getAllTasks();
     this.props.getUsers();
-    // this.props.setUser();
+    if(authorised === 'true'){
+      this.props.setUser();
+    }
   }
 
   render() {

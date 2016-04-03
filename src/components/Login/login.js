@@ -12,7 +12,7 @@ const Login = (props) => {
                  name='username'
                  className="form-control" />
           </div>
-          <div className="form-group">
+          <div className="form-group dp-margin-5-LR ">
               <input placeholder="Password"
                 value={props.login.password}
                 onChange={props.onChange}
@@ -20,7 +20,7 @@ const Login = (props) => {
                 name='password'
                 className="form-control" />
           </div>
-          <button className='btn btn-info' onClick={props.onLogin}> Log In </button>
+          <button className='btn btn-primary' onClick={props.onLogin}> Log In </button>
       </form>
 
     </div>
