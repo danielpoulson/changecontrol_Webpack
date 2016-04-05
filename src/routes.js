@@ -14,7 +14,7 @@ import Export from 'components/Files/file-export';
 function requireAuth(nextState, replace) {
     const authorised = sessionStorage.getItem('authorised');
 
-    if (authorised === 'false') {
+    if (authorised === 'false' || !authorised ) {
         replace({
             pathname: '/',
             state: {
@@ -27,11 +27,11 @@ function requireAuth(nextState, replace) {
 export default (
   <Route path="/" component={App}>
     <Route path="changes" component={Changes} onEnter={requireAuth} />
-    <Route path='change/:id' component={ChangeDetail} />
-    <Route path='task/:id' component={TaskDetail} />
-    <Route path='tasks' component={Tasks} />
-    <Route path='user' component={User} />
-    <Route path='export' component={Export} />
+    <Route path='change/:id' component={ChangeDetail} onEnter={requireAuth} />
+    <Route path='task/:id' component={TaskDetail} onEnter={requireAuth} />
+    <Route path='tasks' component={Tasks} onEnter={requireAuth} />
+    <Route path='user' component={User} onEnter={requireAuth} />
+    <Route path='export' component={Export} onEnter={requireAuth} />
      <IndexRoute component={Home} />
     <Route status={404} path="*" component={Home} />
   </Route>

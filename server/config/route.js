@@ -35,6 +35,7 @@ router.post('/login', auth.authenticate);
 
 router.get('/logout', function (req, res) {
     req.logout();
+    res.sendStatus(200);
 });
 
 // function loginRequired (req, res, next) {
