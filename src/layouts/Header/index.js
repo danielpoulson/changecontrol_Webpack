@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Login from 'components/Login/login';
+import NavBar from 'layouts/Navigation/nav-bar';
 
 import { login } from 'actions/actions_main';
 
@@ -61,8 +62,10 @@ render() {
                             }
                         </div>
                     </section>
+
                 </div>
-                <div className="col-sm-12 nav-strip"></div>
+                <NavBar />
+
             </div>
         );
     }

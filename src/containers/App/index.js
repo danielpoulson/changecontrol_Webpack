@@ -38,18 +38,13 @@ export class App extends Component {
   render() {
     return (
       <div className="container">
-        <div className="row">
+        <div className="">
           <Header />
         </div>
-        <div className="row">
-          <div className="col-sm-2 dp-side-nav">
-            <Navigation />
-          </div>
-          <div className="col-sm-10">
+        <div className="">
             {this.props.children}
-          </div>
         </div>
-        <div className="row">
+        <div className="">
           <Footer />
         </div>
       </div>

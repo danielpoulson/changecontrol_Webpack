@@ -125,7 +125,7 @@ export default class Changes extends Component {
 
     return (
       <section>
-        <div className="row">
+        <div className="">
           <div className="section-header">
             <div className="col-sm-6 pull-left">
               <p className="section-header-text-main">Change Control - {_changeTitle} </p>
@@ -166,7 +166,7 @@ export default class Changes extends Component {
         </div>
 
 
-        <div className="row">
+        <div className="">
           <ChangeList
             changelist={this.props.changes.paged}
             getChange={this.props.getChange}

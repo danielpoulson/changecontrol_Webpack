@@ -82,7 +82,7 @@ export default class Tasks extends Component{
       return (
 
         <div>
-          <div className="row">
+          <div className="">
             <div className="section-header">
               <div className="col-sm-6 pull-left">
                 <p className="section-header-text-main">

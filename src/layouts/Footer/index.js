@@ -9,7 +9,7 @@ export class Footer extends Component {
     return (
       <footer className={`${styles}`}>
         <div className="container">
-          <div className="row dpFooter">
+          <div className="dpFooter">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
               Daniel Poulson (c) 2016
             </div>

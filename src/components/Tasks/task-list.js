@@ -32,10 +32,6 @@ class TaskList extends React.Component {
     };
 
     render() {
-        let tableStyle = {
-            marginLeft : 10
-        };
-
 
         //This code is left over from something else
         let _task = {};
@@ -55,8 +51,8 @@ class TaskList extends React.Component {
 
         return (
             <div className={this.props.className}>
-            <div className="row">
-                    <div style={tableStyle} className="row">
+            <div className="">
+                    <div>
                         <TaskTable
                             tasklist = {this.props.tasklist}
                             handleClick = {this.handleClick}/>

@@ -164,7 +164,7 @@ export default class ChangeDetail extends Component {
 
     return (
     <div>
-          <div className="row">
+          <div className="">
             <div className="section-header">
               <p className="section-header-text-sub">{_title}</p>
             </div>
