@@ -74,7 +74,8 @@ class UserProfile extends Component {
         backgroundColor : '#fcfffc',
         border : "solid 1px",
         borderRadius : 4,
-        marginLeft: 10,
+        marginRight: 0,
+        marginLeft: 0,
         padding: 15,
 
     };
@@ -86,7 +87,7 @@ class UserProfile extends Component {
     return (
 
       <div>
-        <div className="row">
+        <div>
           <div className="section-header">
             <div className="col-sm-6 pull-left">
               <p className="section-header-text-main">User Profiles </p>

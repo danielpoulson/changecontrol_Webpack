@@ -93,8 +93,8 @@ class TaskDetail extends React.Component {
                 backgroundColor : '#fcfffc',
                 border : "solid 1px",
                 borderRadius : 4,
-                marginLeft: 10,
-                padding: 15,
+                paddingTop: 10,
+                paddingBottom: 50
 
             };
 
@@ -103,13 +103,13 @@ class TaskDetail extends React.Component {
         return (
 
             <div>
-              <div className="row">
+              <div className="">
                 <div className="section-header">
                   <p className="section-header-text-sub">{taskTitle}</p>
                 </div>
               </div>
 
-              <div className="row" style={formStyle}>
+              <div style={formStyle}>
                 <TaskForm
                   onSubmit={this.saveTask}
                   status={this.state.status}
