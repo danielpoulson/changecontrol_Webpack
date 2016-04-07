@@ -17,7 +17,6 @@ import { getUsers } from 'actions/actions_users';
 /* application components */
 import { Header } from 'layouts/Header';
 import { Footer } from 'layouts/Footer';
-import { Navigation } from 'layouts/Navigation';
 
 @connect(null, { getAllTasks, setUser, getUsers })
 
