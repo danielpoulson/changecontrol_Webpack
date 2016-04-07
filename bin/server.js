@@ -10,5 +10,6 @@ try {
   console.error(err);
 }
 
+//The require hook will bind itself to node's require and automatically compile files on the fly.
 require('babel-core/register')(config);
 require('../server');

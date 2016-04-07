@@ -20,7 +20,7 @@ const Login = (props) => {
                 name='password'
                 className="form-control" />
           </div>
-          <button className='btn btn-primary' onClick={props.onLogin}> Log In </button>
+          <button className="btn btn-success" onClick={props.onLogin}><i className="fa fa-sign-in"/>{' '}Log In</button>
       </form>
 
     </div>
