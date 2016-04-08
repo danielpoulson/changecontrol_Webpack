@@ -14,8 +14,8 @@ export function getUsers() {
 
   return {
     type: GET_USERS,
-    payload: request
-  }
+    payload: request,
+  };
 
 }
 
@@ -25,47 +25,46 @@ export function getUser(id) {
 
   return {
     type: GET_USER,
-    payload: request
-  }
+    payload: request,
+  };
 
 }
 
-export function resetUser(){
+export function resetUser() {
   return {
-    type: RESET_USER
-  }
+    type: RESET_USER,
+  };
 }
 
 export function createUser(data) {
   const url = `/api/user`;
-  const request = axios.post(url, data);
+  axios.post(url, data);
 
   return {
     type: USER_CREATED,
-    fullname: data.fullname
-  }
+    fullname: data.fullname,
+  };
 }
 
 export function saveUser(data) {
   const url = `/api/updateuser/${data.username}`;
-  const request = axios.put(url, data);
+  axios.put(url, data);
 
   return {
     type: SAVE_USER,
-    data
-  }
+    data,
+  };
 }
 
 export function deleteUser(data) {
   const fullname = data;
   const url = `/api/user/${data}`;
-  const request = axios.delete(url);
+  axios.delete(url);
   // TODO: LOW 3 Remove server call to repopulate user after delete
   // This action should remove the user from the state tree
   // See user-profile ondeleteUser
   return {
     type: DELETED_USER,
-    fullname : fullname
-  }
-
+    fullname,
+  };
 }

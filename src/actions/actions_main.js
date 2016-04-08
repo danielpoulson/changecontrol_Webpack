@@ -11,24 +11,24 @@ export function setMain(data) {
 
   return {
     type: SET_MAIN,
-    data
-  }
+    data,
+  };
 }
 
 export function setFiletabCount(data) {
 
   return {
     type: SET_FILETAB_COUNT,
-    data
-  }
+    data,
+  };
 }
 
 export function setLoading(data) {
 
   return {
     type: SET_LOADING,
-    data
-  }
+    data,
+  };
 }
 
 export function setUser() {
@@ -37,8 +37,8 @@ export function setUser() {
 
   return {
     type: SET_USER,
-    payload : request
-  }
+    payload: request,
+  };
 
 }
 
@@ -48,8 +48,8 @@ export function login(data) {
 
   return {
     type: SET_USER,
-    payload : request
-  }
+    payload: request,
+  };
 
 }
 
@@ -58,8 +58,8 @@ export function logoutUser() {
   axios.get(url);
 
   return {
-    type: USER_LOGGED_OUT
-  }
+    type: USER_LOGGED_OUT,
+  };
 
 }
 

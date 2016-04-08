@@ -13,24 +13,24 @@ export const GET_ALL_TASKS = 'GET_ALL_TASKS';
 
 export function getTasks(data) {
   const url = `/api/tasks/${data}`;
-  const request = axios.get(url);;
+  const request = axios.get(url);
 
   return {
     type: GET_TASKS,
-    payload: request
-  }
+    payload: request,
+  };
 
 }
 
 export function getAllTasks() {
-  //TODO: LOW 2 Remove the hardwire status input 4 = "active tasks"
+// TODO: LOW 2 Remove the hardwire status input 4 = "active tasks"
   const url = `/api/alltasks/4`;
   const request = axios.get(url);
 
   return {
     type: GET_TASKS,
-    payload: request
-  }
+    payload: request,
+  };
 
 }
 
@@ -40,23 +40,23 @@ export function getProjectTasks(data) {
 
   return {
     type: GET_PROJECT_TASKS,
-    payload: request
-  }
+    payload: request,
+  };
 
 }
 
 export function getTask(data) {
   let request = {};
 
-  if(data !== 'new'){
+  if (data !== 'new') {
     const url = `/api/task/${data}`;
     request = axios.get(url);
   }
 
   return {
     type: GET_TASK,
-    payload: request
-  }
+    payload: request,
+  };
 
 }
 
@@ -66,30 +66,30 @@ export function addTask(data) {
 
   return {
     type: ADD_TASK,
-    payload: request
-  }
+    payload: request,
+  };
 
 }
 
 export function editTask(data) {
   const url = `/api/task/${data._id}`;
-  const request = axios.put(url, data);
+  axios.put(url, data);
 
   return {
     type: EDIT_TASK,
-    payload: data
-  }
+    payload: data,
+  };
 
 }
 
 export function deleteTask(data) {
   const url = `/api/tasks/${data}`;
-  const request = axios.delete(url);
+  axios.delete(url);
 
   return {
     type: DELETE_TASK,
-    payload: data
-  }
+    payload: data,
+  };
 
 }
 
@@ -98,8 +98,8 @@ export function loadPageTask(data) {
   return {
 
     type: LOAD_PAGE_TASKS,
-    data
-  }
+    data,
+  };
 
 }
 
@@ -108,6 +108,6 @@ export function exportTasks(search) {
   axios.post(url, search);
 
   return {
-    type: "EXPORT_TASKS"
-  }
+    type: 'EXPORT_TASKS',
+  };
 }

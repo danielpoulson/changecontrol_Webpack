@@ -15,20 +15,20 @@ export function getChanges(data) {
 
   return {
     type: GET_CHANGES,
-    payload: request
-  }
+    payload: request,
+  };
 
 }
 
 export function getChange(data) {
 
-    const url = `/api/change/${data}`;
-    const request = axios.get(url);
+  const url = `/api/change/${data}`;
+  const request = axios.get(url);
 
   return {
     type: GET_CHANGE,
-    payload: request
-  }
+    payload: request,
+  };
 
 }
 
@@ -38,19 +38,19 @@ export function addChange(data) {
 
   return {
     type: ADD_CHANGE,
-    payload: request
-  }
+    payload: request,
+  };
 
 }
 
 export function editChange(data) {
   const url = `/api/change/${data._id}`;
-  const request = axios.put(url, data);
+  axios.put(url, data);
 
   return {
     type: EDIT_CHANGE,
-    payload: data
-  }
+    payload: data,
+  };
 
 }
 
@@ -58,30 +58,30 @@ export function loadPage(data) {
   return {
 
     type: LOAD_PAGE_CHANGES,
-    data
-  }
+    data,
+  };
 
 }
 
 export function createLog(data) {
   const url = `/api/changelog/${data.CC_No}`;
-  const request = axios.put(url, data);
+  axios.put(url, data);
 
   return {
     type: CREATE_LOG,
-    payload: data
-  }
+    payload: data,
+  };
 
 }
 
 export function bookoutFile(data) {
   const url = `/api/filebooked/${data._id}`;
-  const request = axios.put(url);
+  axios.put(url);
 
   return {
     type: BOOKOUT_FILE,
-    payload: data
-  }
+    payload: data,
+  };
 
 }
 
@@ -90,6 +90,6 @@ export function exportChanges(search) {
   axios.post(url, search);
 
   return {
-    type: "EXPORT_CHANGES"
-  }
+    type: 'EXPORT_CHANGES',
+  };
 }
