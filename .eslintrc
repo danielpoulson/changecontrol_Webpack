@@ -1,6 +1,6 @@
 {
   "parser": "babel-eslint",
-  "extends": "eslint-config-airbnb",
+  "extends": "airbnb",
   "env": {
     "browser": true,
     "node": true,
@@ -11,6 +11,8 @@
   },
   "rules": {
     "max-len": 0,
+    "vars-on-top": 0,
+    "no-var": 0,
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
     "react/react-in-jsx-scope": 2,

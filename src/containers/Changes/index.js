@@ -27,6 +27,7 @@ export default class Changes extends Component {
     };
     this.onSearchText= this.onSearchText.bind(this);
     this.onSortByClick = this.onSortByClick.bind(this);
+    this.onGetChange = this.onGetChange.bind(this);
   }
 
   static childContextTypes = {
@@ -97,6 +98,15 @@ export default class Changes extends Component {
     action.column = column;
     this.props.loadPage(action);
   };
+
+  onGetChange(i) {
+    const _id = i;
+    // const _id = this.props.changelist[i].CC_No;
+    this.props.setMain({ MainId: _id, CurrentMode: 'change', loading: true });
+    this.props.getChange(_id);
+    this.context.router.push(`/change/${_id}`);
+
+  }
 
   onSortByClick(column) {
     this.setState({activePage: 0});
@@ -169,7 +179,7 @@ export default class Changes extends Component {
         <div className="">
           <ChangeList
             changelist={this.props.changes.paged}
-            getChange={this.props.getChange}
+            getChange={this.onGetChange}
             sortByClick = {this.onSortByClick}
             colSelected = {this.props.changes.sorted}/>
         </div>

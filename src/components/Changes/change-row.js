@@ -4,7 +4,7 @@ import utils from 'utils/status'
 
 const ChangeRow = (props) => {
 	return (
-		<tr onClick={props.getChange.bind(this)}>
+		<tr onClick={props.getChange.bind(null, props.change.CC_No)}>
 			<td>{props.change.CC_No} - {props.change.CC_Descpt}</td>
 			<td>{props.change.CC_Champ}</td>
 			<td>{moment(props.change.CC_TDate).format('DD/MM/YYYY')}</td>
