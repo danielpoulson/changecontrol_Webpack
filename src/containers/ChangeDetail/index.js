@@ -199,7 +199,7 @@ export default class ChangeDetail extends Component {
           />
 
          <ChangeLog
-              className={this.state.LogTab}
+              logTab={this.state.LogTab}
               onApprove={this.onApprove}
               onFinal={this.onFinal}
               onCancel={this.onCancel}

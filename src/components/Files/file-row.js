@@ -1,45 +1,51 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import moment from 'moment';
-import utils from 'utils/status'
+import utils from 'utils/status';
 import DownloadButton from 'components/Common/download-button';
 import BookoutButton from 'components/Common/bookout-button';
 
 
-class FileRow extends React.Component {
+const FileRow = (props) => {
 
+  const file = props.file;
+  const fullFileName = `${file.fsSource} - ${file.fsFileName}.${file.fsFileExt}`;
 
-    render() {
-    	var file = this.props.file;
-        var fullFileName = file.fsSource + " - " + file.fsFileName + "." + file.fsFileExt
-        return (
+  return (
+    <tr>
+      <td><i className={utils.getExt(file.fsFileExt)}></i></td>
+      <td>{file.fsFileName}</td>
+      <td>{file.fsAddedBy}</td>
+      <td>{moment(new Date(file.fsAddedAt)).format('DD/MM/YYYY')}</td>
+      <td>
+        <DownloadButton
+          removeFile={props.removeFile}
+          fileLoad={fullFileName}
+          fileId={file._id}
+          export={props.export} />
+        </td>
+        <td className={props.export}>
+          <BookoutButton
+            user={props.user}
+            fileLoad={fullFileName}
+            source={file.fsSource}
+            fileId={file._id}
+            fsBooked={file.fsBooked}
+            createLog={props.createLog}
+            deleteFile={props.deleteFile}
+            bookoutFile={props.bookoutFile} />
+        </td>
+    </tr>
+  );
+};
 
-                <tr>
-                    <td><i className={utils.getExt(file.fsFileExt)}></i></td>
-                    <td>{file.fsFileName}</td>
-                    <td>{file.fsAddedBy}</td>
-                    <td>{moment(new Date(file.fsAddedAt)).format('DD/MM/YYYY')}</td>
-                    <td>
-                      <DownloadButton
-                        removeFile={this.props.removeFile}
-                        fileLoad={fullFileName}
-                        fileId={file._id}
-                        export={this.props.export}/>
-                    </td>
-                    <td className={this.props.export}>
-                      <BookoutButton
-                        user={this.props.user}
-                        fileLoad={fullFileName}
-                        source={file.fsSource}
-                        fileId={file._id}
-                        fsBooked={file.fsBooked}
-                        createLog={this.props.createLog}
-                        deleteFile={this.props.deleteFile}
-                        bookoutFile={this.props.bookoutFile}/>
-                    </td>
-                </tr>
-
-			);
-    }
+FileRow.propTypes = {
+  file: PropTypes.object,
+  removeFile: PropTypes.func.isRequired,
+  export: PropTypes.func,
+  user: PropTypes.object.isRequired,
+  createLog: PropTypes.func.isRequired,
+  deleteFile: PropTypes.func.isRequired,
+  bookoutFile: PropTypes.func.isRequired,
 };
 
 export default FileRow;

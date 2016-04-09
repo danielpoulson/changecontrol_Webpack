@@ -6,6 +6,10 @@
     "node": true,
     "mocha": true
   },
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true
+  },
   "globals": {
     "connect": true
   },
@@ -13,6 +17,8 @@
     "max-len": 0,
     "vars-on-top": 0,
     "no-var": 0,
+    "react/jsx-closing-bracket-location": 0,
+    "react/jsx-no-bind" : 0,
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
     "react/react-in-jsx-scope": 2,

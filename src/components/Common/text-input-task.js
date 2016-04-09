@@ -1,42 +1,47 @@
-import React from'react';
+import React, { PropTypes } from 'react';
 
 export const TextInputTask = (props) => {
 
-	var spanStyle = { color: "red" };
-
+	const spanStyle = { color: 'red' };
 	let wrapperClass = 'form-group';
 	if (props.touched && props.error && props.error.length > 0) {
-		wrapperClass += " " + 'has-error';
+		wrapperClass += ' ' + 'has-error';
 	}
 
-	let labelClass = 'control-label' + " " + props.dpLabelCol;
+	let labelClass = `control-label ${props.dpLabelCol}`;
 
-		return (
-			//Styled for bootstrap
-			<div className={wrapperClass}>
-				<label className={labelClass} htmlFor={props.name}>{props.label}</label>
-				<div className={props.dpInputCol}>
-					<input type={props.type ? props.type : "text" }
-						name={props.name}
-						className="form-control"
-					 	placeholder={props.placeholder}
-					 	value={props.value}
-					 	onChange={props.onChange} />
-				</div>
-				{props.touched && props.error &&
-						<div style={spanStyle} className={props.dpInputCol}>{props.error}</div>
-				}
-				</div>
+	return (
+		//	Styled for bootstrap
+		<div className={wrapperClass}>
+			<label className={labelClass} htmlFor={props.name}>{props.label}</label>
+			<div className={props.dpInputCol}>
+				<input
+					type={props.type ? props.type : 'text'}
+					name={props.name}
+					className="form-control"
+					placeholder={props.placeholder}
+					value={props.value}
+					onChange={props.onChange}
+				/>
+			</div>
+			{props.touched && props.error &&
+					<div style={spanStyle} className={props.dpInputCol}>{props.error}</div>
+			}
+			</div>
 
-		);
+	);
 
 };
 
 TextInputTask.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  label: React.PropTypes.string.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  placeholder: React.PropTypes.string,
-  value: React.PropTypes.string,
-  error: React.PropTypes.string
-}
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  error: PropTypes.string,
+	dpInputCol: PropTypes.string,
+	dpLabelCol: PropTypes.string,
+	touched: PropTypes.bool,
+	type: PropTypes.string,
+};

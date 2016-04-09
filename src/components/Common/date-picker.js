@@ -1,44 +1,47 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 
-export default class DatePicker extends Component {
+const DatePicker = (props) => {
 
+  const spanStyle = { color: 'red' };
+  let dtStyle = {};
 
-  render() {
-    const spanStyle = { color: "red" };
-    let dtStyle={};
-
-    let wrapperClass = 'form-group';
-    if (this.props.touched && this.props.error && this.props.error.length > 0) {
-      dtStyle = { border: '2px solid red'}
-    }
-
-    let labelClass = 'control-label' + " " + this.props.dpLabelCol;
-
-
-    return (
-      <div className={wrapperClass}>
-        <label className={labelClass} htmlFor={this.props.name}>{this.props.label}</label>
-        <div className={this.props.dpInputCol}>
-          <DateTimePicker
-            style={dtStyle}
-            format="DD/MM/YY"
-            name={this.props.name}
-            time={false}
-            onChange={this.props.onChange}
-            value={!this.props.value ? null : new Date(this.props.value)}/>
-          {this.props.touched && this.props.error &&
-                <div style={spanStyle} className="input">{this.props.error}</div>
-          }
-        </div>
-      </div>
-    );
+  let wrapperClass = 'form-group';
+  if (props.touched && props.error && props.error.length > 0) {
+    dtStyle = { border: '2px solid red' };
   }
-}
+
+  let labelClass = `control-label ${props.dpLabelCol}`;
+
+
+  return (
+    <div className={wrapperClass}>
+      <label className={labelClass} htmlFor={props.name}>{props.label}</label>
+      <div className={props.dpInputCol}>
+        <DateTimePicker
+          style={dtStyle}
+          format="DD/MM/YY"
+          name={props.name}
+          time={false}
+          onChange={props.onChange}
+          value={!props.value ? null : new Date(props.value)} />
+        {props.touched && props.error &&
+              <div style={spanStyle} className="input">{props.error}</div>
+        }
+      </div>
+    </div>
+  );
+};
 
 DatePicker.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  label: React.PropTypes.string.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  error: React.PropTypes.string
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  dpLabelCol: PropTypes.string,
+  dpInputCol: PropTypes.string,
+  value: PropTypes.any,
+  touched: PropTypes.bool,
 };
+
+export default DatePicker;

@@ -1,41 +1,40 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
-export default class TextArea extends React.Component {
-  constructor(props) {
-    super(props);
+const TextArea = (props) => {
+  let wrapperClass = 'form-group';
+  if (props.error && props.error.length > 0) {
+    wrapperClass += ' ' + 'has-error';
   }
+  let labelClass = `control-label ${props.dpLabelCol}`;
 
-  render() {
-    let wrapperClass = 'form-group';
-    if (this.props.error && this.props.error.length > 0) {
-      wrapperClass += " " + 'has-error';
-    }
-    let labelClass = 'control-label' + " " + this.props.dpLabelCol;
-    
-    return (
-      <div className={wrapperClass}>
-        <label className={labelClass} htmlFor={this.props.name}>{this.props.label}</label>
-        <div className={this.props.dpInputCol}>
-          <textarea type="text"
-            name={this.props.name}
-            className={this.props.inputstyle}
-            placeholder={this.props.placeholder}
-            ref={this.props.name}
-            value={this.props.value}
-            rows={this.props.rows}
-            onChange={this.props.onChange} />
-          <div className="input">{this.props.error}</div>
-        </div>
+  return (
+    <div className={wrapperClass}>
+      <label className={labelClass} htmlFor={props.name}>{props.label}</label>
+      <div className={props.dpInputCol}>
+        <textarea type="text"
+          name={props.name}
+          className={props.inputstyle}
+          placeholder={props.placeholder}
+          value={props.value}
+          rows={props.rows}
+          onChange={props.onChange} />
+        <div className="input">{props.error}</div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 TextArea.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  label: React.PropTypes.string.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  placeholder: React.PropTypes.string,
-  value: React.PropTypes.string,
-  error: React.PropTypes.string
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  error: PropTypes.string,
+  dpInputCol: PropTypes.string,
+  dpLabelCol: PropTypes.string,
+  inputstyle: PropTypes.string,
+  rows: PropTypes.string,
 };
+
+export default TextArea;

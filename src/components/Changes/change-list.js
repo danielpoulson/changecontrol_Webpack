@@ -4,29 +4,30 @@ import classNames from 'classnames';
 
 const ChangeList = (props) => {
 
-    const _changes = props.changelist;
+  const _changes = props.changelist;
 
-    const th1Class = classNames({
-      'fa fa-sort-asc': props.colSelected === 'CC_No',
-    });
+  const th1Class = classNames({
+    'fa fa-sort-asc': props.colSelected === 'CC_No',
+  });
 
-    const th2Class = classNames({
-      'fa fa-sort-asc': props.colSelected === 'CC_Champ',
-    });
+  const th2Class = classNames({
+    'fa fa-sort-asc': props.colSelected === 'CC_Champ',
+  });
 
-    const th3Class = classNames({
-      'fa fa-sort-asc': props.colSelected === 'CC_TDate',
-    });
+  const th3Class = classNames({
+    'fa fa-sort-asc': props.colSelected === 'CC_TDate',
+  });
 
-    const th4Class = classNames({
-      'fa fa-sort-asc': props.colSelected === 'CC_Stat',
-    });
+  const th4Class = classNames({
+    'fa fa-sort-asc': props.colSelected === 'CC_Stat',
+  });
 
-    if (_changes !== undefined) {
+  if (_changes !== undefined) {
 
-      var changes = _changes.map((change) => <ChangeRow key={change.CC_No} change={change}
-        getChange = {props.getChange}/>);
-    }
+    var changes = _changes.map((change) => <ChangeRow key={change.CC_No} change={change}
+      getChange = {props.getChange}
+    />);
+  }
 
   return (
       <div>
@@ -44,7 +45,7 @@ const ChangeList = (props) => {
                               Target <span className={th3Class}></span>
                           </th>
                           <th className="col-sm-1" onClick={props.sortByClick.bind(null, 'CC_Stat')}>
-                              Status  <span className={th4Class}></span>
+                              Status <span className={th4Class}></span>
                           </th>
                       </tr>
                   </thead>
@@ -52,8 +53,8 @@ const ChangeList = (props) => {
               </table>
               </div>
       </div>
-  )
-}
+  );
+};
 
 ChangeList.propTypes = {
   changelist: React.PropTypes.array,
