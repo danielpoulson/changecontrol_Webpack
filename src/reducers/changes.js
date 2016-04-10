@@ -1,12 +1,12 @@
-import { GET_CHANGES, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES} from 'actions/actions_changes';
+import { GET_CHANGES, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES } from 'actions/actions_changes';
 import _ from 'lodash';
 
 const initialState = {
-    alldata : [],
-    paged : []
-}
+  alldata: [],
+  paged: [],
+};
 
-export default function(state, action) {
+export default function (state, action) {
   let alldata = [];
   let _data = {};
   let per_page = 10;
@@ -19,35 +19,35 @@ export default function(state, action) {
 
 
   if (typeof state === 'undefined') {
-      return initialState
+    return initialState;
   }
 
   switch (action.type) {
 
     case ADD_CHANGE:
-      _data =  action.payload.data;
+      _data = action.payload.data;
       alldata = [
         ...state.alldata,
-        _data
+        _data,
       ];
       return {
         ...state,
-        alldata
+        alldata,
       };
 
     case EDIT_CHANGE:
-      _data =  action.payload;
-      currIds = state.alldata.map(function (c) { return c._id; });
+      _data = action.payload;
+      currIds = state.alldata.map(c => c._id);
       index = currIds.indexOf(_data._id);
       alldata = [
         ...state.alldata.slice(0, index),
         // Copy the object before mutating
         Object.assign({}, _data),
-        ...state.alldata.slice(index + 1)
+        ...state.alldata.slice(index + 1),
       ];
       return {
-        paged: paged,
-        alldata : alldata
+        paged,
+        alldata,
       };
 
     case GET_CHANGES:
@@ -58,63 +58,60 @@ export default function(state, action) {
       paged = alldata.slice(offset, offset + per_page);
 
       return {
-      searchText: null,
-      page: page,
-      per_page: per_page,
-      total: alldata.length,
-      total_pages: Math.ceil(alldata.length / per_page),
-      paged: paged,
-      alldata : alldata
+        searchText: null,
+        page,
+        per_page,
+        total: alldata.length,
+        total_pages: Math.ceil(alldata.length / per_page),
+        paged,
+        alldata,
+      };
+
+    case LOAD_PAGE_CHANGES: {
+      const column = action.data.column || state.sorted;
+      per_page = action.data.numPage;
+      page = action.data.page_num || 1;
+      offset = (page - 1) * per_page;
+      searchText = action.data.search;
+      const searcheddata = searchData(state.alldata, searchText, column);
+      paged = searcheddata.slice(offset, offset + per_page);
+
+      return {
+        ...state,
+        sorted: column,
+        searchText,
+        page,
+        per_page,
+        total: searcheddata.length,
+        total_pages: Math.ceil(alldata.length / per_page),
+        paged,
+      };
     }
 
-      case LOAD_PAGE_CHANGES:
-        let column = action.data.column || state.sorted;
-        per_page = action.data.numPage;
-        page = action.data.page_num || 1;
-        offset = (page - 1) * per_page;
-        searchText = action.data.search;
-        let searcheddata = searchData(state.alldata, searchText, column);
-        paged = searcheddata.slice(offset, offset + per_page);
-
-        return {
-          ...state,
-          sorted: column,
-          searchText: searchText,
-          page: page,
-          per_page: per_page,
-          total: searcheddata.length,
-          total_pages: Math.ceil(alldata.length / per_page),
-          paged: paged
-        };
+    default:
+      return state;
   }
-
-  return state;
 }
 
 
-function searchData(data, searchText, sortColumn){
-    var searched = [];
+function searchData(data, searchText, sortColumn) {
 
-    function search(item){
+  function search(item) {
+    var reg1 = new RegExp(`${searchText}.*`, 'i');
 
-        var reg1 = new RegExp(searchText + ".*", "i")
-
-
-        if(item.CC_No.match(reg1) || item.CC_Descpt.match(reg1) || item.CC_Champ.match(reg1)){
-          return true
-        } else {
-          return false
-        }
-
+    if (item.CC_No.match(reg1) || item.CC_Descpt.match(reg1) || item.CC_Champ.match(reg1)) {
+      return true;
     }
 
+    return false;
+  }
 
-    if (searchText == null) {
-        return _.sortBy(data, sortColumn);
-    } else {
-      sortColumn = sortColumn || "CC_No";
-      let newList = _.chain(data).filter(search).sortBy(sortColumn).value();
-      return newList;
-    }
+  if (searchText === null) {
+    return _.sortBy(data, sortColumn);
+  } else {
+    sortColumn = sortColumn || 'CC_No';
+    const newList = _.chain(data).filter(search).sortBy(sortColumn).value();
+    return newList;
+  }
 
 }

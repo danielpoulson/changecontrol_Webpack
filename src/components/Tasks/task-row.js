@@ -1,23 +1,23 @@
-import React from 'react'
-import moment from 'moment'
-import utils from 'utils/status'
+import React, { PropTypes } from 'react';
+import moment from 'moment';
+import utils from 'utils/status';
 
-export default class TaskRow extends React.Component {
+const TaskRow = (props) => {
+  const task = props.task;
+  return (
+    <tr onClick={props.getTask}>
+      <td>{task.SourceId} - {task.TKName}</td>
+      <td>{moment(task.TKStart).format('DD/MM/YYYY')}</td>
+      <td>{moment(task.TKTarg).format('DD/MM/YYYY')}</td>
+      <td>{task.TKChamp}</td>
+      <td><i className={utils.getStatus(task.TKStat)}></i></td>
+    </tr>
+  );
+};
 
-    render() {
-    	var task = this.props.task;
-        return (
-
-	        	<tr onClick={this.props.getTask}>
-					<td>{task.SourceId} - {task.TKName}</td>
-	                <td>{moment(task.TKStart).format('DD/MM/YYYY')}</td>
-	                <td>{moment(task.TKTarg).format('DD/MM/YYYY')}</td>
-                    <td>{task.TKChamp}</td>
-                    <td><i className={utils.getStatus(task.TKStat)}></i></td>
-				</tr>
-
-			);
-    }
+TaskRow.propTypes = {
+  task: PropTypes.object,
+  getTask: PropTypes.func.isRequired,
 };
 
 export default TaskRow;

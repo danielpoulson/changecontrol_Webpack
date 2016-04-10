@@ -17,7 +17,6 @@ const ChangeRow = (props) => {
 ChangeRow.propTypes = {
 	getChange: PropTypes.func,
 	change: PropTypes.object,
-
 };
 
 export default ChangeRow;

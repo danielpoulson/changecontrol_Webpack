@@ -1,5 +1,5 @@
-import React from 'react';
-import {reduxForm} from 'redux-form';
+import React, { PropTypes } from 'react';
+import { reduxForm } from 'redux-form';
 import TextArea from 'components/Common/text-area';
 import { TextInputTask } from 'components/Common/text-input-task';
 import DateTimePicker from 'components/Common/date-picker';
@@ -9,7 +9,7 @@ export const fields = ['TKName', 'TKStart', 'TKTarg', 'TKStat', 'TKChamp', 'TKCo
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
   TKStat: 1,
   TKChamp: null,
-  TKStart: new Date()
+  TKStart: new Date(),
 };
 
 const validate = values => {
@@ -36,119 +36,117 @@ const validate = values => {
 };
 
 @reduxForm({
-    form: 'task',
-    fields,
-    validate
-  },
-  state => ({
-  initialValues: state.task ? state.task : newdata // will pull state into form's initialValues
-  })
+  form: 'task',
+  fields,
+  validate,
+},
+state => ({
+  initialValues: state.task ? state.task : newdata, // will pull state into form's initialValues
+})
 )
 
 export default class TaskForm extends React.Component {
-	static propTypes: {
-		onSave : React.PropTypes.func.isRequired,
-		onChange : React.PropTypes.func.isRequired,
-		errors : React.PropTypes.object
-	};
 
-	render() {
+  render() {
     const {
-      fields: {TKName, TKStart, TKTarg, TKStat, TKChamp, TKComment, TKChampNew},
+      fields: { TKName, TKStart, TKTarg, TKStat, TKChamp, TKComment },
       handleSubmit,
       onCancel,
       deleteTask,
       hideDelete,
       submitting,
       status,
-      users
+      users,
       } = this.props;
 
-      if(typeof TKChamp.value !== 'undefined' && TKChamp.defaultValue !== TKChamp.value){
-        this.props.ownerChanged(true);
-      }
+    if (typeof TKChamp.value !== 'undefined' && TKChamp.defaultValue !== TKChamp.value) {
+      this.props.ownerChanged(true);
+    }
 
-        var wrapperClassSD = '';
-        var wrapperClassTD = '';
+    return (
+      <div>
+        <form onChange={this._onChange} onSubmit={handleSubmit} className="form form-horizontal" >
 
-        // if (this.props.TKStart.touched && this.props.errors.TKStart && this.props.errors.TKStart.length > 0) {
-        //     wrapperClassSD += " " + 'has-date-error';
-        // }
+          <TextInputTask
+            name="TKName"
+            label="Task Name"
+            placeholder="Enter Task Name (Required)"
+            dpInputCol="col-sm-9"
+            dpLabelCol="col-sm-2"
+            error={TKName.error}
+            touched={TKName.touched}
+            { ...TKName } />
 
-        // if (this.props.errors.TKTarg && this.props.errors.TKTarg.length > 0) {
-        //     wrapperClassTD += " " + 'has-date-error';
-        // }
+          <DateTimePicker
+            label="Start date"
+            dpLabelCol="col-sm-2"
+            dpInputCol="col-sm-3"
+            onChange={this.handleStartDateChange}
+            { ...TKStart } />
 
-		return (
-            <div>
-              <form onChange={this._onChange} onSubmit={handleSubmit} className="form form-horizontal" >
+          <DateTimePicker
+            label="Target Date"
+            dpLabelCol="col-sm-2"
+            dpInputCol="col-sm-3"
+            onChange={this.handleStartDateChange}
+            { ...TKTarg } />
 
-                <TextInputTask
-                  name="TKName"
-                  label="Task Name"
-                  placeholder="Enter Task Name (Required)"
-                  dpInputCol="col-sm-9"
-                  dpLabelCol="col-sm-2"
-                  error={TKName.error}
-                  touched={TKName.touched}
-                  {...TKName}/>
+          <ComboBox
+            label="Status"
+            onChange={this.handleStartDateChange}
+            data={status}
+            dpInputCol="col-sm-4"
+            dpLabelCol="col-sm-2"
+            { ...TKStat }
+          />
 
-                <DateTimePicker
-                  label="Start date"
-                  dpLabelCol="col-sm-2"
-                  dpInputCol="col-sm-3"
-                  onChange={this.handleStartDateChange}
-                  {...TKStart}/>
+          <ComboBox
+            label="Owner"
+            onChange={this.changeOwner}
+            data={users}
+            dpInputCol="col-sm-4"
+            dpLabelCol="col-sm-2"
+            { ...TKChamp }
+          />
 
-                <DateTimePicker
-                  label="Target Date"
-                  dpLabelCol="col-sm-2"
-                  dpInputCol="col-sm-3"
-                  onChange={this.handleStartDateChange}
-                  {...TKTarg}/>
+          <TextArea
+            name="TKComment"
+            label="Comment"
+            rows="6"
+            inputstyle="form-control"
+            dpInputCol="col-sm-9"
+            dpLabelCol="col-sm-2"
+            { ...TKComment }
+            value={TKComment.value || ''} />
 
-                <ComboBox
-                  label="Status"
-                  onChange={this.handleStartDateChange}
-                  data={status}
-                  dpInputCol="col-sm-4"
-                  dpLabelCol="col-sm-2"
-                  {...TKStat}
-                />
-
-                <ComboBox
-                  label="Owner"
-                  onChange={this.changeOwner}
-                  data={users}
-                  dpInputCol="col-sm-4"
-                  dpLabelCol="col-sm-2"
-                  {...TKChamp}
-                />
-
-                <TextArea
-                  name="TKComment"
-                  label="Comment"
-                  rows="6"
-                  inputstyle="form-control"
-                  dpInputCol="col-sm-9"
-                  dpLabelCol="col-sm-2"
-                  {...TKComment}
-                  value={TKComment.value || ''}/>
-
-                <div className="col-sm-9 col-md-offset-2">
-                  <button className="btn btn-success pull-left" disabled={submitting} onClick={handleSubmit}>
-                    {submitting ? <i/> : <i/>} Save Task
-                  </button>
-                  <button className="btn btn-info dp-margin-10-LR" disabled={submitting} onClick={onCancel}>
-                  Cancel
-                  </button>
-                  <button className={hideDelete} disabled={submitting} onClick={deleteTask}>
-                    Delete
-                  </button>
-                </div>
-                </form>
-            </div>
+          <div className="col-sm-9 col-md-offset-2">
+            <button className="btn btn-success pull-left" disabled={submitting} onClick={handleSubmit}>
+              {submitting ? <i /> : <i />} Save Task
+            </button>
+            <button className="btn btn-info dp-margin-10-LR" disabled={submitting} onClick={onCancel}>
+            Cancel
+            </button>
+            <button className={hideDelete} disabled={submitting} onClick={deleteTask}>
+              Delete
+            </button>
+          </div>
+        </form>
+      </div>
 		);
-	}
+  }
+}
 
-};
+TaskForm.propTypes = {
+  onSave: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  errors: PropTypes.object,
+  fields: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  ownerChanged: PropTypes.func.isRequired,
+  deleteTask: PropTypes.func.isRequired,
+  hideDelete: PropTypes.bool,
+  submitting: PropTypes.string,
+  status: PropTypes.array.isRequired,
+  users: PropTypes.array.isRequired,
+	};
