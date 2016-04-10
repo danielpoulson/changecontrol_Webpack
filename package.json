@@ -6,10 +6,11 @@
     "clean": "rimraf dist",
     "build": "webpack --progress --verbose --colors --display-error-details --config webpack/common.config.js",
     "build:production": "npm run clean && npm run build",
-    "lint": "eslint src/components/Files/",
+    "lint": "eslint src/components/Footer/",
     "start": "NODE_ENV=development node bin/server.js",
     "startProduction": "NODE_ENV=production node bin/server.js",
-    "test": "karma start"
+    "test": "karma start",
+    "dpGit": "git add . && git commit -m 'eslint / refactor' && git push"
   },
   "repository": {
     "type": "git",
