@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import FileRow from './file-row';
 
 const FileTable = (props) => {
@@ -6,18 +6,17 @@ const FileTable = (props) => {
   const _files = props.files;
   const hidden = props.export;
 
-  if(Object.keys(_files).length > 0){
-      var files = _files.map((file, i) => <FileRow key={file._id} file={file}
+  if (Object.keys(_files).length > 0) {
+    var files = _files.map((file) => <FileRow key={file._id} file={file}
       user={props.user}
-      export={hidden} createLog={props.createLog}
+      export={hidden}
+      createLog={props.createLog}
       deleteFile={props.deleteFile}
       removeFile={props.removeFile}
-      bookoutFile={props.bookoutFile}/>);
+      bookoutFile={props.bookoutFile} />);
   }
 
-
-	return (
-
+  return (
 		<div className="panel panel-success">
 			<table className="table table-hover project-table dp_point">
 				<thead>
@@ -34,7 +33,16 @@ const FileTable = (props) => {
 		</div>
 
 	);
+};
 
+FileTable.propTypes = {
+  user: PropTypes.object,
+  export: PropTypes.string,
+  files: PropTypes.array.isRequired,
+  createLog: PropTypes.func.isRequired,
+  deleteFile: PropTypes.func.isRequired,
+  removeFile: PropTypes.func.isRequired,
+  bookoutFile: PropTypes.func.isRequired,
 };
 
 export default FileTable;
