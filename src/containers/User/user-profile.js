@@ -2,21 +2,24 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import UserProfileForm from 'components/User/user-profile-form';
 import UserSelect from 'components/User/user-select';
-import { TextInputTask } from 'components/Common/text-input-task';
 import toastr from 'toastr';
 
 import { getUser, getUsers, createUser, resetUser, saveUser, deleteUser } from 'actions/actions_users';
 
-@connect(state=>({users: state.users, user: state.user}), { getUser, createUser, resetUser, saveUser, deleteUser, getUsers })
-
 class UserProfile extends Component {
+  static childContextTypes = {
+    location: React.PropTypes.object,
+  };
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired,
+  };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      isNewUser: false
-
+      isNewUser: false,
     };
 
     this.saveUser = this.saveUser.bind(this);
@@ -25,64 +28,49 @@ class UserProfile extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  static childContextTypes = {
-      location: React.PropTypes.object
-  };
-
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
-  };
-
-  saveUser(data){
-    if(this.state.isNewUser) {
-      this.props.createUser(data);
-      this.setState({isNewUser:false});
-      toastr.success('New user account has been created','User Account', {timeOut: 1000});
-    } else {
-      this.props.saveUser(data);
-      toastr.success('User account has been saved','User Account', {timeOut: 1000});
-    }
+  onChange(value) {
+    this.props.getUser(value);
   }
 
-  deleteUser(event){
+  newUser() {
+    this.setState({ isNewUser: true });
+    this.props.resetUser();
+  }
+
+  deleteUser(event) {
     event.preventDefault();
     this.props.deleteUser(this.props.user._id);
-    toastr.warning('User account has been deleted','User Account', {timeOut: 1000});
+    toastr.warning('User account has been deleted', 'User Account', { timeOut: 1000 });
     // TODO: LOW 3 Remove server call to repopulate user after delete
     // When the action to delteUser is call the action does not remove the user from the state tree.
     // See Actions Users deleteUser
     this.props.getUsers();
   }
 
-  newUser(){
-    this.setState({isNewUser:true});
-    this.props.resetUser();
+  saveUser(data) {
+    if (this.state.isNewUser) {
+      this.props.createUser(data);
+      this.setState({ isNewUser: false });
+      toastr.success('New user account has been created', 'User Account', { timeOut: 1000 });
+    } else {
+      this.props.saveUser(data);
+      toastr.success('User account has been saved', 'User Account', { timeOut: 1000 });
+    }
   }
 
-  onChange(value) {
-    this.props.getUser(value);
-  }
+  render() {
 
-  render () {
-    var spanStyle = {
-        background: "#71ABFF",
-        color: "#FFFFFF",
-        border: "1px solid #71ABFF"
-    };
-
-    var formStyle = {
-        backgroundColor : '#fcfffc',
-        border : "solid 1px",
-        borderRadius : 4,
-        marginRight: 0,
-        marginLeft: 0,
-        padding: 15,
+    const formStyle = {
+      backgroundColor: '#fcfffc',
+      border: 'solid 1px',
+      borderRadius: 4,
+      marginRight: 0,
+      marginLeft: 0,
+      padding: 15,
 
     };
 
     const roleSelect = ['user', 'admin'];
-
-    var divStyle = { paddingRight: 15};
 
     return (
 
@@ -103,12 +91,25 @@ class UserProfile extends Component {
           <UserProfileForm
             onSubmit={this.saveUser}
             deleteUser={this.deleteUser}
-            roleSelect={roleSelect}/>
+            roleSelect={roleSelect} />
           </div>
       </div>
-    )
+    );
 
   }
 }
 
-export default UserProfile;
+UserProfile.propTypes = {
+  user: PropTypes.object,
+  users: PropTypes.array,
+  resetUser: PropTypes.func,
+  getUser: PropTypes.func,
+  getUsers: PropTypes.func,
+  createUser: PropTypes.func,
+  saveUser: PropTypes.func,
+  deleteUser: PropTypes.func,
+
+};
+
+export default connect(state => ({ users: state.users, user: state.user }),
+{ getUser, createUser, resetUser, saveUser, deleteUser, getUsers })(UserProfile);

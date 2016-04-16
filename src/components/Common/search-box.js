@@ -12,7 +12,7 @@ const SearchBox = ({ searchText, onChange }) => {
       <input
         type="text"
         className="form-control"
-        value={searchText}
+        value={searchText || ''}
         onChange={onChange}
         placeholder="Enter Search Text"
       />

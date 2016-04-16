@@ -41,7 +41,7 @@ const FileRow = (props) => {
 FileRow.propTypes = {
   file: PropTypes.object,
   removeFile: PropTypes.func.isRequired,
-  export: PropTypes.func,
+  export: PropTypes.string,
   user: PropTypes.object.isRequired,
   createLog: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,

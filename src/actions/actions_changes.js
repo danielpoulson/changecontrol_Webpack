@@ -33,7 +33,7 @@ export function getChange(data) {
 }
 
 export function addChange(data) {
-  const url = `/api/changes`;
+  const url = '/api/changes';
   const request = axios.post(url, data);
 
   return {
@@ -86,7 +86,7 @@ export function bookoutFile(data) {
 }
 
 export function exportChanges(search) {
-  const url = `/export/changes`;
+  const url = '/export/changes';
   axios.post(url, search);
 
   return {

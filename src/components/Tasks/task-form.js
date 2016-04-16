@@ -137,15 +137,14 @@ export default class TaskForm extends React.Component {
 }
 
 TaskForm.propTypes = {
-  onSave: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   errors: PropTypes.object,
-  fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  fields: PropTypes.object,
+  handleSubmit: PropTypes.func,
   onCancel: PropTypes.func.isRequired,
   ownerChanged: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
-  hideDelete: PropTypes.bool,
+  hideDelete: PropTypes.string,
   submitting: PropTypes.string,
   status: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,

@@ -13,17 +13,9 @@ import { getProjectTasks } from 'actions/actions_tasks';
 import { setMain } from 'actions/actions_main';
 import { getUsers } from 'actions/actions_users';
 
-@connect(state => ({
-  change : state.change,
-  main: state.main,
-  tasklist: state.tasks.ctlist,
-  ctTotal : state.tasks.ctTotal,
-  users: state.users
-}), {
-  addChange, createLog, editChange, getChange, getProjectTasks, setMain
-})
 
-export default class ChangeDetail extends Component {
+
+class ChangeDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -194,7 +186,7 @@ export default class ChangeDetail extends Component {
 
           <TaskList
             tasklist = {this.props.tasklist}
-            className={this.state.TasksTab}
+            tasksTab={this.state.TasksTab}
             title={this.state.changeTitle}
           />
 
@@ -214,3 +206,13 @@ export default class ChangeDetail extends Component {
     );
   }
 }
+
+export default connect(state => ({
+  change : state.change,
+  main: state.main,
+  tasklist: state.tasks.ctlist,
+  ctTotal : state.tasks.ctTotal,
+  users: state.users
+}), {
+  addChange, createLog, editChange, getChange, getProjectTasks, setMain
+})(ChangeDetail)

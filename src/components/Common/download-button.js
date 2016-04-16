@@ -31,7 +31,7 @@ export default class DownloadButton extends React.Component {
 
 DownloadButton.propTypes = {
   fileLoad: React.PropTypes.any,
-  export: React.PropTypes.func,
+  export: React.PropTypes.string,
   removeFile: React.PropTypes.func,
   fileId: React.PropTypes.string,
 };

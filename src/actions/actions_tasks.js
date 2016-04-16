@@ -24,7 +24,7 @@ export function getTasks(data) {
 
 export function getAllTasks() {
 // TODO: LOW 2 Remove the hardwire status input 4 = "active tasks"
-  const url = `/api/alltasks/4`;
+  const url = '/api/alltasks/4';
   const request = axios.get(url);
 
   return {
@@ -61,7 +61,7 @@ export function getTask(data) {
 }
 
 export function addTask(data) {
-  const url = `/api/task`;
+  const url = '/api/task';
   const request = axios.post(url, data);
 
   return {
@@ -104,7 +104,7 @@ export function loadPageTask(data) {
 }
 
 export function exportTasks(search) {
-  const url = `/export/tasks`;
+  const url = '/export/tasks';
   axios.post(url, search);
 
   return {

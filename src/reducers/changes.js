@@ -108,10 +108,10 @@ function searchData(data, searchText, sortColumn) {
 
   if (searchText === null) {
     return _.sortBy(data, sortColumn);
-  } else {
-    sortColumn = sortColumn || 'CC_No';
-    const newList = _.chain(data).filter(search).sortBy(sortColumn).value();
-    return newList;
   }
+
+  sortColumn = sortColumn || 'CC_No';
+  const newList = _.chain(data).filter(search).sortBy(sortColumn).value();
+  return newList;
 
 }

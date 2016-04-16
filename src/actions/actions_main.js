@@ -32,7 +32,7 @@ export function setLoading(data) {
 }
 
 export function setUser() {
-  const url = `/api/loggeduser`;
+  const url = '/api/loggeduser';
   const request = axios.get(url);
 
   return {
@@ -43,7 +43,7 @@ export function setUser() {
 }
 
 export function login(data) {
-  const url = `/login`;
+  const url = '/login';
   const request = axios.post(url, data);
 
   return {
@@ -54,7 +54,7 @@ export function login(data) {
 }
 
 export function logoutUser() {
-  const url = `/logout`;
+  const url = '/logout';
   axios.get(url);
 
   return {
@@ -62,16 +62,3 @@ export function logoutUser() {
   };
 
 }
-
-// export function setUser() {
-//   const user = {
-//     username : data.username,
-//     fullname : data.fullname,
-//     role : data.role
-//   }
-//
-//   return {
-//     type: SET_USER,
-//     user
-//   }
-// }

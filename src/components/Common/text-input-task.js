@@ -20,7 +20,7 @@ export const TextInputTask = (props) => {
 					name={props.name}
 					className="form-control"
 					placeholder={props.placeholder}
-					value={props.value}
+					value={props.value || ''}
 					onChange={props.onChange}
 				/>
 			</div>

@@ -19,7 +19,7 @@ class TextInput extends React.Component {
             className={this.props.inputstyle}
             placeholder={this.props.placeholder}
             ref={this.props.name}
-            value={this.props.value}
+            value={this.props.value || ''}
             onChange={this.props.onChange} />
           {this.props.touched && this.props.error && <div style={spanStyle} className="input">{this.props.error}</div> }
         </div>
