@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
-import utils from 'utils/status';
+import { getStatus } from 'utils/status';
 
 const TaskRow = (props) => {
   const task = props.task;
@@ -10,7 +10,7 @@ const TaskRow = (props) => {
       <td>{moment(task.TKStart).format('DD/MM/YYYY')}</td>
       <td>{moment(task.TKTarg).format('DD/MM/YYYY')}</td>
       <td>{task.TKChamp}</td>
-      <td><i className={utils.getStatus(task.TKStat)}></i></td>
+      <td><i className={getStatus(task.TKStat)}></i></td>
     </tr>
   );
 };

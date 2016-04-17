@@ -6,17 +6,16 @@ import Request from 'superagent';
 class FileZone extends React.Component {
   // TODO: MED 2 Change function of the filezone drop function to multiply files
   onDrop = (files) => {
-    var file = files[0];
-    var sourceId = this.props.sourceId;
-    var addFile = this.props.addFile;
-    var req = Request.post('/server/upload');
+    const sourceId = this.props.sourceId;
+    const addFile = this.props.addFile;
+    const req = Request.post('/server/upload');
 
     files.forEach((file) => {
 
       const myRe = /C{2}\d{6}\s[-]\s/;
-      var _fileName = file.name;
-      var _newFileName = '';
-      var myArray = myRe.exec(_fileName);
+      const _fileName = file.name;
+      let _newFileName = '';
+      const myArray = myRe.exec(_fileName);
 
       if (myArray) {
         _newFileName = _fileName;

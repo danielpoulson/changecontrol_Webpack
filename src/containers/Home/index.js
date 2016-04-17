@@ -6,5 +6,4 @@ export const Home = () => (
   <section>
     <div className={`${styles}`}></div>
   </section>
-
 );

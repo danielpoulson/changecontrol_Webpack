@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
-import utils from 'utils/status';
+import { getExt } from 'utils/status';
 import DownloadButton from 'components/Common/download-button';
 import BookoutButton from 'components/Common/bookout-button';
 
@@ -12,7 +12,7 @@ const FileRow = (props) => {
 
   return (
     <tr>
-      <td><i className={utils.getExt(file.fsFileExt)}></i></td>
+      <td><i className={getExt(file.fsFileExt)}></i></td>
       <td>{file.fsFileName}</td>
       <td>{file.fsAddedBy}</td>
       <td>{moment(new Date(file.fsAddedAt)).format('DD/MM/YYYY')}</td>

@@ -5,13 +5,14 @@ export default function (state = [], action) {
 
   switch (action.type) {
     case GET_USERS:
-      return action.payload.data
+      return action.payload.data;
 
     case USER_CREATED:
       return [
         ...state,
-        action.fullname
-      ]
+        action.fullname,
+      ];
+    default:
+      return state;
   }
-  return state
 }

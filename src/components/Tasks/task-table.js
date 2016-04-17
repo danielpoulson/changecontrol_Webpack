@@ -28,7 +28,7 @@ const TaskTable = (props) => {
 };
 
 TaskTable.propTypes = {
-	tasklist: PropTypes.array.isRequired,
+	tasklist: PropTypes.array,
 	handleClick: PropTypes.func.isRequired,
 };
 

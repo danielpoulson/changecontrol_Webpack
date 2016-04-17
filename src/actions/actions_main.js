@@ -32,46 +32,30 @@ export function setLoading(data) {
 }
 
 export function setUser() {
-  const url = `/api/loggeduser`;
+  const url = '/api/loggeduser';
   const request = axios.get(url);
 
   return {
     type: SET_USER,
     payload: request,
   };
-
 }
 
 export function login(data) {
-  const url = `/login`;
+  const url = '/login';
   const request = axios.post(url, data);
 
   return {
     type: SET_USER,
     payload: request,
   };
-
 }
 
 export function logoutUser() {
-  const url = `/logout`;
+  const url = '/logout';
   axios.get(url);
 
   return {
     type: USER_LOGGED_OUT,
   };
-
 }
-
-// export function setUser() {
-//   const user = {
-//     username : data.username,
-//     fullname : data.fullname,
-//     role : data.role
-//   }
-//
-//   return {
-//     type: SET_USER,
-//     user
-//   }
-// }

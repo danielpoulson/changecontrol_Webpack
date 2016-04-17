@@ -40,7 +40,7 @@ class TaskList extends Component {
     }
 
     return (
-      <div>
+      <div className={this.props.tasksTab}>
         <div>
           <TaskTable
             tasklist = {this.props.tasklist}
@@ -56,7 +56,7 @@ class TaskList extends Component {
 
 TaskList.propTypes = {
   type: PropTypes.string,
-  tasklist: PropTypes.array.isRequired,
+  tasklist: PropTypes.array,
   setMain: PropTypes.func,
   getChange: PropTypes.func,
   getTask: PropTypes.func,

@@ -18,11 +18,11 @@ describe('Items reducer:', () => {
         text: 'test'
       }],
     };
-    const fields =  { name: { value: 'test'}};
+    const fields = { name: { value: 'test' } };
     expect(
       items(initialState, {
         type: 'ADD_ITEM',
-        fields: fields,
+        fields,
       })
     ).toEqual(stateAfterAdd);
   });

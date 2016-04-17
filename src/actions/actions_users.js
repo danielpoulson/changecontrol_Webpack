@@ -9,7 +9,7 @@ export const USER_CREATED = 'USER_CREATED';
 
 
 export function getUsers() {
-  const url = `/api/allusers`;
+  const url = '/api/allusers';
   const request = axios.get(url);
 
   return {
@@ -37,7 +37,7 @@ export function resetUser() {
 }
 
 export function createUser(data) {
-  const url = `/api/user`;
+  const url = '/api/user';
   axios.post(url, data);
 
   return {

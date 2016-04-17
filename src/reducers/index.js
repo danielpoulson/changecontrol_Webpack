@@ -12,8 +12,8 @@ import UserReducer from './reducer_user';
 const rootReducer = combineReducers({
   form: formReducer,
   /* your reducers */
-  changes : ChangesReducer,
-  change : ChangeReducer,
+  changes: ChangesReducer,
+  change: ChangeReducer,
   main: MainReducer,
   tasks: TasksReducer,
   task: TaskReducer,

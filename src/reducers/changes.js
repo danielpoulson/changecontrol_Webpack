@@ -6,6 +6,26 @@ const initialState = {
   paged: [],
 };
 
+function searchData(data, searchText, sortColumn) {
+  function search(item) {
+    const reg1 = new RegExp(`${searchText}.*`, 'i');
+
+    if (item.CC_No.match(reg1) || item.CC_Descpt.match(reg1) || item.CC_Champ.match(reg1)) {
+      return true;
+    }
+    return false;
+  }
+
+  if (searchText === null) {
+    return _.sortBy(data, sortColumn);
+  }
+
+  let _sortColumn = '';
+  _sortColumn = sortColumn || 'CC_No';
+  const newList = _.chain(data).filter(search).sortBy(_sortColumn).value();
+  return newList;
+}
+
 export default function (state, action) {
   let alldata = [];
   let _data = {};
@@ -91,27 +111,4 @@ export default function (state, action) {
     default:
       return state;
   }
-}
-
-
-function searchData(data, searchText, sortColumn) {
-
-  function search(item) {
-    var reg1 = new RegExp(`${searchText}.*`, 'i');
-
-    if (item.CC_No.match(reg1) || item.CC_Descpt.match(reg1) || item.CC_Champ.match(reg1)) {
-      return true;
-    }
-
-    return false;
-  }
-
-  if (searchText === null) {
-    return _.sortBy(data, sortColumn);
-  } else {
-    sortColumn = sortColumn || 'CC_No';
-    const newList = _.chain(data).filter(search).sortBy(sortColumn).value();
-    return newList;
-  }
-
 }

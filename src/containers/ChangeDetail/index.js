@@ -194,7 +194,7 @@ export default class ChangeDetail extends Component {
 
           <TaskList
             tasklist = {this.props.tasklist}
-            className={this.state.TasksTab}
+            tasksTab = {this.state.TasksTab}
             title={this.state.changeTitle}
           />
 
