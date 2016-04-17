@@ -114,7 +114,6 @@ export default function (state, action) {
       };
 
     case LOAD_PAGE_TASKS: {
-      // this.props.loadPage(page_num, this.state.numPage, search);
       alldata = state.alldata;
       per_page = action.data.numPage;
       page = action.data.page_num || 1;

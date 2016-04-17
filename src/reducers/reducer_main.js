@@ -35,7 +35,7 @@ export default function (state, action) {
     case USER_LOGGED_OUT:
       return {
         ...state,
-        user: initialState.user
+        user: initialState.user,
       };
 
     case SET_FILETAB_COUNT:

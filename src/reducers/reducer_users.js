@@ -12,6 +12,7 @@ export default function (state = [], action) {
         ...state,
         action.fullname,
       ];
+      
     default:
       return state;
   }

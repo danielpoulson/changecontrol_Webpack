@@ -7,7 +7,6 @@ export default function (state = null, action) {
       if (!action.payload.data) {
         return {};
       }
-      return action.payload.data;
 
     case CREATE_LOG: {
       const _addLog = state.CC_LOG;

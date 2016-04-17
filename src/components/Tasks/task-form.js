@@ -137,6 +137,7 @@ export default class TaskForm extends React.Component {
 }
 
 TaskForm.propTypes = {
+  onChange: PropTypes.func,
   errors: PropTypes.object,
   fields: PropTypes.object,
   handleSubmit: PropTypes.func,

@@ -56,6 +56,7 @@ class TaskList extends Component {
 
 TaskList.propTypes = {
   type: PropTypes.string,
+  tasksTab: PropTypes.string,
   tasklist: PropTypes.array,
   setMain: PropTypes.func,
   getChange: PropTypes.func,
