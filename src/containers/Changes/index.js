@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Toastr from 'toastr';
 
-import  ChangeList from 'components/Changes/change-list';
+import ChangeList from 'components/Changes/change-list';
 import Pagination from 'components/Common/pagination';
 import SearchBox from 'components/Common/search-box';
 
@@ -10,88 +10,55 @@ import SearchBox from 'components/Common/search-box';
 import { getChange, getChanges, addChange, loadPage, exportChanges } from 'actions/actions_changes';
 import { setMain } from 'actions/actions_main';
 
-@connect(state=>({ changes : state.changes, user: state.main.user }),
+@connect(state => ({ changes: state.changes, user: state.main.user }),
   { getChange, getChanges, addChange, loadPage, exportChanges, setMain })
 
 export default class Changes extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activePage: 0,
-      colSelected : null,
-      paged: {},
-      count: 0,
-      numPage: 15,
-      txtSearch: '',
-      showAll: false
-    };
-    this.onSearchText= this.onSearchText.bind(this);
-    this.onSortByClick = this.onSortByClick.bind(this);
-    this.onGetChange = this.onGetChange.bind(this);
-  }
-
   static childContextTypes = {
-  location: React.PropTypes.object
+    location: React.PropTypes.object
   };
 
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      activePage: 0,
+      colSelected: null,
+      paged: {},
+      count: 0,
+      numPage: 15,
+      txtSearch: '',
+      showAll: false
+    };
+    this.onSearchText = this.onSearchText.bind(this);
+    this.onSortByClick = this.onSortByClick.bind(this);
+    this.onGetChange = this.onGetChange.bind(this);
+  }
+
   componentWillMount() {
     const search = this.props.changes.searchText;
     if (!this.props.changes.alldata.length > 0) {
       this.props.getChanges(4);
     }
-    this.setState({txtSearch:search});
+    this.setState({ txtSearch: search });
     this.onChange(1, search);
   }
 
-  newChange = () => {
-    this.props.getChange(null);
-    this.props.setMain({MainId : 'new', CurrentMode: 'change', loading : false});
-    this.context.router.push('/change/new');
-  };
-
-  exportChange = () => {
-
-      const info = {
-        fsSource : 'exp',
-        fsAddedBy : this.props.user.username,
-        fsType : 'changes',
-        search : this.state.txtSearch,
-        showAll : this.state.showAll
-      };
-
-      this.props.exportChanges(info);
-  };
-
   // TODO: MED 2 Show all button reverts to "Show all"
-  //The button should be "Show Current" but reverts back when returning from the details page.
+  // The button should be "Show Current" but reverts back when returning from the details page.
 
-  allChanges = () => {
-      let _showAll = this.state.showAll;
-      _showAll = !_showAll;
-      this.setState({showAll:_showAll});
-
-      if (this.state.showAll !== true) {
-          this.props.getChanges(5);
-      } else {
-          this.props.getChanges(4);
-      }
-      this.setState({txtSearch:null});
-      this.setState({activePage : 0});
-      Toastr.success('Only showing active changes - ' + this.state.showAll,'Change Detail', {timeOut: 1000});
-  };
-
-  linkClick(i){
-    //TODO LOW 2 Pagination Adding 1 to the page mumber as it uses the base of 0
-    this.onChange(i + 1, this.state.txtSearch);
-    this.setState({activePage: i });
+  onSearchText(event) {
+    const value = event.target.value;
+    this.setState({ activePage: 0 });
+    this.setState({ txtSearch: value });
+    this.onChange(0, value);
   }
 
   onChange = (page_num, searchText, column) => {
-    let action = {};
+    const action = {};
     action.page_num = page_num || 1;
     action.search = searchText || null;
     action.numPage = this.state.numPage;
@@ -105,25 +72,54 @@ export default class Changes extends Component {
     this.props.setMain({ MainId: _id, CurrentMode: 'change', loading: true });
     this.props.getChange(_id);
     this.context.router.push(`/change/${_id}`);
-
   }
 
   onSortByClick(column) {
-    this.setState({activePage: 0});
+    this.setState({ activePage: 0 });
     this.onChange(0, this.state.txtSearch, column);
   }
 
-  onSearchText(event){
-    let value = event.target.value;
-    let field = event.target.name;
-    this.setState({activePage: 0});
-    this.setState({txtSearch: value});
-    this.onChange(0, value);
-
+  linkClick(i) {
+    // TODO LOW 2 Pagination Adding 1 to the page mumber as it uses the base of 0
+    this.onChange(i + 1, this.state.txtSearch);
+    this.setState({ activePage: i });
   }
 
+  allChanges = () => {
+    let _showAll = this.state.showAll;
+    _showAll = !_showAll;
+    this.setState({ showAll: _showAll });
+
+    if (this.state.showAll !== true) {
+      this.props.getChanges(5);
+    } else {
+      this.props.getChanges(4);
+    }
+    this.setState({ txtSearch: null });
+    this.setState({ activePage: 0 });
+    Toastr.success(`Only showing active changes - ${this.state.showAll}`, 'Change Detail', { timeOut: 1000 });
+  };
+
+  exportChange = () => {
+    const info = {
+      fsSource: 'exp',
+      fsAddedBy: this.props.user.username,
+      fsType: 'changes',
+      search: this.state.txtSearch,
+      showAll: this.state.showAll
+    };
+
+    this.props.exportChanges(info);
+  };
+
+  newChange = () => {
+    this.props.getChange(null);
+    this.props.setMain({ MainId: 'new', CurrentMode: 'change', loading: false });
+    this.context.router.push('/change/new');
+  };
+
   render() {
-    var _changeTitle = "Register";
+    var _changeTitle = 'Register';
     let butText;
 
 
@@ -171,7 +167,7 @@ export default class Changes extends Component {
               activePage = {this.state.activePage}
               numPage = {this.props.changes.per_page}
               count = {this.props.changes.total}
-              getPage = {this.linkClick.bind(this)}/>
+              getPage = {this.linkClick.bind(this)} />
           </div>
         </div>
 
@@ -181,10 +177,20 @@ export default class Changes extends Component {
             changelist={this.props.changes.paged}
             getChange={this.onGetChange}
             sortByClick = {this.onSortByClick}
-            colSelected = {this.props.changes.sorted}/>
+            colSelected = {this.props.changes.sorted} />
         </div>
 
       </section>
     );
   }
 }
+
+Changes.propTypes = {
+  changes: PropTypes.array,
+  exportChanges: PropTypes.func,
+  getChanges: PropTypes.func,
+  getChange: PropTypes.func,
+  loadPage: PropTypes.func,
+  setMain: PropTypes.func,
+  user: PropTypes.object,
+};

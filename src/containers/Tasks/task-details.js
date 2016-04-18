@@ -23,11 +23,11 @@ class TaskDetail extends React.Component {
     ownerNew: false,
     taskId: '',
     status: [
-      { 'id': 1, 'name': 'Task - Not Started (New)' },
-      { 'id': 2, 'name': 'Task - On Track' },
-      { 'id': 3, 'name': 'Task - In Concern' },
-      { 'id': 4, 'name': 'Task - Behind Schedule' },
-      { 'id': 5, 'name': 'Task - Completed' },
+      { id: 1, name: 'Task - Not Started (New)' },
+      { id: 2, name: 'Task - On Track' },
+      { id: 3, name: 'Task - In Concern' },
+      { id: 4, name: 'Task - Behind Schedule' },
+      { id: 5, name: 'Task - Completed' },
     ],
   };
 
@@ -40,17 +40,17 @@ class TaskDetail extends React.Component {
 
   cancelTask = (event) => {
     event.preventDefault();
-    this.props.setLoading({loading: false});
+    this.props.setLoading({ loading: false });
     this.taskNav(this.props.main.MainId);
   };
 
   deleteTask = (event) => {
-      event.preventDefault();
-      this.props.setLoading({loading: false});
-      const _id = this.state.taskId;
-      this.props.deleteTask(_id);
-      toastr.error('Task has been deleted', 'Task Detail', { timeOut: 1000 });
-      this.taskNav(this.props.main.MainId);
+    event.preventDefault();
+    this.props.setLoading({ loading: false });
+    const _id = this.state.taskId;
+    this.props.deleteTask(_id);
+    toastr.error('Task has been deleted', 'Task Detail', { timeOut: 1000 });
+    this.taskNav(this.props.main.MainId);
   };
 
   ownerChanged = (status) => {
@@ -58,73 +58,78 @@ class TaskDetail extends React.Component {
   };
 
   saveTask = (data) => {
-      let _SourceId = this.props.main.MainId;
+    const _SourceId = this.props.main.MainId;
+    const _data = data;
 
-      if (this.state.taskId !== 'new') {
-          data.TKChampNew = this.state.ownerNew;
-          data._id = this.state.taskId;
-          data.TKStat = typeof data.TKStat === 'object' ? data.TKStat.id : data.TKStat;
-          data.SourceId = _SourceId
-          this.props.editTask(data);
-      } else {
-          data.TKStat = data.TKStat.id || 1;
-          data.SourceId = _SourceId
-          this.props.addTask(data);
-      }
+    if (this.state.taskId !== 'new') {
+      _data.TKChampNew = this.state.ownerNew;
+      _data._id = this.state.taskId;
+      _data.TKStat = typeof _data.TKStat === 'object' ? _data.TKStat.id : _data.TKStat;
+      _data.SourceId = _SourceId;
+      this.props.editTask(_data);
+    } else {
+      _data.TKStat = _data.TKStat.id || 1;
+      _data.SourceId = _SourceId;
+      this.props.addTask(_data);
+    }
 
-      toastr.success('Task has been saved', 'Task Detail', { timeOut: 1000 });
-      this.taskNav(_SourceId);
+    toastr.success('Task has been saved', 'Task Detail', { timeOut: 1000 });
+    this.taskNav(_SourceId);
   };
 
-  taskNav(id){
-      if(this.props.main.CurrentMode === 'project'){
-          this.context.router.push(`/project/${id}`)
-      } else {
-          this.context.router.push(`/change/${id}`)
-      }
+  taskNav(id) {
+    if (this.props.main.CurrentMode === 'project') {
+      this.context.router.push(`/project/${id}`);
+    } else {
+      this.context.router.push(`/change/${id}`);
+    }
   }
 
-    render() {
+  render() {
 
-      const formStyle = {
-          backgroundColor: '#fcfffc',
-          border: 'solid 1px',
-          borderRadius: 4,
-          paddingTop: 10,
-          paddingBottom: 50,
-      };
+    const formStyle = {
+      backgroundColor: '#fcfffc',
+      border: 'solid 1px',
+      borderRadius: 4,
+      paddingTop: 10,
+      paddingBottom: 50,
+    };
 
-      const taskTitle = this.state.taskTitle ? this.state.taskTitle : 'New Task';
+    const taskTitle = this.state.taskTitle ? this.state.taskTitle : 'New Task';
 
-      return (
-          <div>
-            <div className="">
-              <div className="section-header">
-                <p className="section-header-text-sub">{taskTitle}</p>
-              </div>
+    return (
+        <div>
+          <div className="">
+            <div className="section-header">
+              <p className="section-header-text-sub">{taskTitle}</p>
             </div>
-
-            <div style={formStyle}>
-              <TaskForm
-                onSubmit={this.saveTask}
-                status={this.state.status}
-                users={this.props.users}
-                ownerChanged={this.ownerChanged}
-                deleteTask={this.deleteTask}
-                hideDelete={this.state.hideDelete}
-                onCancel={this.cancelTask} />
-              </div>
           </div>
-      );
-    }
+
+          <div style={formStyle}>
+            <TaskForm
+              onSubmit={this.saveTask}
+              status={this.state.status}
+              users={this.props.users}
+              ownerChanged={this.ownerChanged}
+              deleteTask={this.deleteTask}
+              hideDelete={this.state.hideDelete}
+              onCancel={this.cancelTask} />
+            </div>
+        </div>
+    );
+  }
 }
 
 TaskDetail.propTypes = {
   location: PropTypes.object,
+  deleteTask: PropTypes.func,
   main: PropTypes.object,
   newTask: PropTypes.func,
   setLoading: PropTypes.func,
-}
+  editTask: PropTypes.func,
+  addTask: PropTypes.func,
+  users: PropTypes.array,
+};
 
-export default connect( state => ({ main : state.main, users : state.users }),
+export default connect(state => ({ main: state.main, users: state.users }),
  { addTask, editTask, deleteTask, setLoading })(TaskDetail);

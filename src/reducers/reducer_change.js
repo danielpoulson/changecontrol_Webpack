@@ -8,6 +8,8 @@ export default function (state = null, action) {
         return {};
       }
 
+      return action.payload.data;
+
     case CREATE_LOG: {
       const _addLog = state.CC_LOG;
       const randomID = Math.random() * (1000000 - 0) + 0;

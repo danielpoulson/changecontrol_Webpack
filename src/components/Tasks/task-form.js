@@ -6,7 +6,7 @@ import DateTimePicker from 'components/Common/date-picker';
 import ComboBox from 'components/Common/combo-box';
 export const fields = ['TKName', 'TKStart', 'TKTarg', 'TKStat', 'TKChamp', 'TKComment', 'TKChampNew'];
 
-const newdata = {  // used to populate "account" reducer when "Load" is clicked
+const newdata = {
   TKStat: 1,
   TKChamp: null,
   TKStart: new Date(),

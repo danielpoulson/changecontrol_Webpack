@@ -110,7 +110,7 @@ class Tasks extends Component {
 
 Tasks.propTypes = {
   user: PropTypes.object,
-  tasks: PropTypes.array,
+  tasks: PropTypes.object,
   exportTasks: PropTypes.func,
   getAllTasks: PropTypes.func,
   loadPageTask: PropTypes.func,
