@@ -5,7 +5,7 @@ const TextArea = (props) => {
   if (props.error && props.error.length > 0) {
     wrapperClass += ' ' + 'has-error';
   }
-  let labelClass = `control-label ${props.dpLabelCol}`;
+  const labelClass = `control-label ${props.dpLabelCol}`;
 
   return (
     <div className={wrapperClass}>

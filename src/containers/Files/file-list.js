@@ -92,7 +92,7 @@ FileList.propTypes = {
   filesTab: PropTypes.string,
   getFiles: PropTypes.func,
   removeFile: PropTypes.func,
-  setFiletabCount: PropTypes.number,
+  setFiletabCount: PropTypes.func,
   sourceId: PropTypes.string,
   user: PropTypes.object,
 };

@@ -23,13 +23,16 @@ import { Footer } from 'layouts/Footer';
 export class App extends Component {
   static propTypes = {
     children: React.PropTypes.any,
+    getAllTasks: React.PropTypes.func,
+    getUsers: React.PropTypes.func,
+    setUser: React.PropTypes.func,
   };
 
   componentWillMount() {
     const authorised = sessionStorage.getItem('authorised');
     this.props.getAllTasks();
     this.props.getUsers();
-    if(authorised === 'true'){
+    if (authorised === 'true') {
       this.props.setUser();
     }
   }

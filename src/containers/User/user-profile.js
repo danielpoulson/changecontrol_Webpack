@@ -7,12 +7,12 @@ import toastr from 'toastr';
 import { getUser, getUsers, createUser, resetUser, saveUser, deleteUser } from 'actions/actions_users';
 
 class UserProfile extends Component {
-  static childContextTypes = {
-    location: React.PropTypes.object,
-  };
-
   static contextTypes = {
     router: React.PropTypes.object.isRequired,
+  };
+
+  static childContextTypes = {
+    location: React.PropTypes.object,
   };
 
   constructor(props) {

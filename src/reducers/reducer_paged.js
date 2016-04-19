@@ -16,7 +16,7 @@ export default function (state = [], action) {
         data: paginatedItems,
       };
     }
-    
+
     default:
       return state;
   }

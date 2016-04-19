@@ -14,7 +14,7 @@ function toggleBooked(state, action) {
     default:
       return state;
   }
-};
+}
 
 function searchIndex(data, index) {
   return data.filter((item) => item._id !== index);

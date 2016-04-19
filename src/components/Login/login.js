@@ -5,7 +5,7 @@ const Login = (props) => (
     <form className="navbar-form">
       <div className="form-group">
         <input placeholder="Username"
-          value={props.login.username}
+          value={props.login.username || ''}
           onChange={props.onChange}
           type="text"
           name="username"
@@ -13,7 +13,7 @@ const Login = (props) => (
       </div>
       <div className="form-group dp-margin-5-LR ">
         <input placeholder="Password"
-          value={props.login.password}
+          value={props.login.password || ''}
           onChange={props.onChange}
           type="password"
           name="password"

@@ -8,7 +8,7 @@ const SelectBox = (props) => {
     wrapperClass += ' ' + 'has-error';
   }
 
-  let labelClass = `control-label ${props.dpLabelCol}`;
+  const labelClass = `control-label ${props.dpLabelCol}`;
 
   return (
     <div className={wrapperClass}>

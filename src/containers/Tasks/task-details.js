@@ -7,12 +7,12 @@ import { addTask, editTask, deleteTask } from 'actions/actions_tasks';
 import { setLoading } from 'actions/actions_main';
 
 class TaskDetail extends React.Component {
-  static childContextTypes = {
-    location: React.PropTypes.object,
-  };
-
   static contextTypes = {
     router: React.PropTypes.object.isRequired,
+  };
+
+  static childContextTypes = {
+    location: React.PropTypes.object,
   };
 
   state = {

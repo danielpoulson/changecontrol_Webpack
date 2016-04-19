@@ -5,7 +5,7 @@ export default function (state = null, action) {
   switch (action.type) {
     case GET_CHANGE:
       if (!action.payload.data) {
-        return {};
+        return null;
       }
 
       return action.payload.data;

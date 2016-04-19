@@ -14,12 +14,12 @@ import { setMain } from 'actions/actions_main';
   { getChange, getChanges, addChange, loadPage, exportChanges, setMain })
 
 export default class Changes extends Component {
-  static childContextTypes = {
-    location: React.PropTypes.object
-  };
-
   static contextTypes = {
     router: React.PropTypes.object.isRequired
+  };
+
+  static childContextTypes = {
+    location: React.PropTypes.object
   };
 
   constructor(props) {

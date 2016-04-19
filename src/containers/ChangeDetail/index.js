@@ -13,13 +13,12 @@ import { getProjectTasks } from 'actions/actions_tasks';
 import { setMain } from 'actions/actions_main';
 
 class ChangeDetail extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
 
   static childContextTypes = {
     location: React.PropTypes.object
-  };
-
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -134,21 +133,21 @@ class ChangeDetail extends Component {
 
     const _title = this.props.change !== null ? `${this.props.change.CC_No} - ${this.props.change.CC_Descpt}` : 'New - Change Control';
 
-    let detailTabClass = classNames({
+    const detailTabClass = classNames({
       active: this.state.DetailTab === 'show'
     });
 
-    let tasksTabClass = classNames({
+    const tasksTabClass = classNames({
       active: this.state.TasksTab === 'show',
       hidden: this.props.main.MainId === 'new'
     });
 
-    let fileTabClass = classNames({
+    const fileTabClass = classNames({
       active: this.state.FilesTab === 'show',
       hidden: this.props.main.MainId === 'new'
     });
 
-    let logTabClass = classNames({
+    const logTabClass = classNames({
       active: this.state.LogTab === 'show',
       hidden: this.props.main.MainId === 'new'
     });
@@ -183,18 +182,17 @@ class ChangeDetail extends Component {
             </div>
           </div>
 
-          <TaskList
-            tasklist = {this.props.tasklist}
-            tasksTab = {this.state.TasksTab}
-            title={this.state.changeTitle}
-          />
-
           <ChangeLog
             logTab={this.state.LogTab}
             onApprove={this.onApprove}
             onFinal={this.onFinal}
             onCancel={this.onCancel}
             log={this.props.change} />
+
+          <TaskList
+            tasklist = {this.props.tasklist}
+            tasksTab = {this.state.TasksTab}
+            title={this.state.changeTitle} />
 
           <FileList
             filesTab={this.state.FilesTab}
@@ -215,7 +213,7 @@ ChangeDetail.propTypes = {
   getChange: PropTypes.func,
   getProjectTasks: PropTypes.func,
   main: PropTypes.object,
-  location: PropTypes.string,
+  location: PropTypes.object,
   setMain: PropTypes.func,
   tasklist: PropTypes.array,
   users: PropTypes.array,

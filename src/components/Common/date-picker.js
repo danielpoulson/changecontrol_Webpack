@@ -6,12 +6,12 @@ const DatePicker = (props) => {
   const spanStyle = { color: 'red' };
   let dtStyle = {};
 
-  let wrapperClass = 'form-group';
+  const wrapperClass = 'form-group';
   if (props.touched && props.error && props.error.length > 0) {
     dtStyle = { border: '2px solid red' };
   }
 
-  let labelClass = `control-label ${props.dpLabelCol}`;
+  const labelClass = `control-label ${props.dpLabelCol}`;
 
 
   return (
