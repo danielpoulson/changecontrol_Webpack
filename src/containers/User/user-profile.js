@@ -92,7 +92,8 @@ class UserProfile extends Component {
             onSubmit={this.saveUser}
             deleteUser={this.deleteUser}
             roleSelect={roleSelect} />
-          </div>
+        </div>
+
       </div>
     );
 

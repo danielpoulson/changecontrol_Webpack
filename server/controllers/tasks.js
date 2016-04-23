@@ -113,6 +113,10 @@ exports.getTaskCount = function(req,res){
     });
 };
 
+exports.getTasksCountByUser = function(user){
+  return Task.count({$and: [{TKChamp:user}, {TKStat: {$lt:5}}]});
+}
+
 exports.dumpTasks = function(req, res) {
     var fileData = {};
     var newDate = new Date();

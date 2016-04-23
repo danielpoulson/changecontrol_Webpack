@@ -16,16 +16,18 @@ class Tasks extends Component {
     paged: {},
     count: 0,
     numPage: 15,
-    txtSearch: null,
+    txtSearch: '',
   };
 
   componentWillMount() {
+    const search = this.props.tasks.searchText;
     if (!this.props.tasks.alldata.length > 0) {
       this.props.getAllTasks();
     }
     // TODO: HIGH (FUNC) Sticky options on the task list
     // This section should remember you page and or serach options.
-    this.onChange();
+    this.setState({ txtSearch: search });
+    this.onChange(1, search);
   }
 
   onChange = (page_num, searchText) => {

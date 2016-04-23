@@ -1,6 +1,7 @@
 var Change = require('mongoose').model('Change');
 var fs = require('fs');
 var files = require('../controllers/files');
+const tasks = require('../controllers/tasks');
 
 exports.getChanges = function(req, res) {
     var status = req.params.status;
@@ -80,6 +81,21 @@ exports.getChangeById = function(req, res) {
         res.send(change);
     })
 };
+
+// This function gets the count for **active** tasks and change controls for the logged in user
+exports.getUserDashboard = function(req, res){
+  const dashboard = {};
+  const promise = Change.count({$and: [{CC_Champ:req.params.user}, {CC_Stat: {$lt:4}}]}).exec();
+
+  promise.then( data => {
+    dashboard.changeCount = data;
+    return tasks.getTasksCountByUser(req.params.user);
+  }).then( data => {
+    dashboard.taskCount = data;
+    console.log(dashboard);
+    res.send(dashboard);
+  });
+}
 
 exports.dumpChanges = function(req, res) {
     //var status = 2;

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import TextArea from 'components/Common/text-area';
-import { TextInputTask } from 'components/Common/text-input-task';
+import TextInputTask from 'components/Common/text-input-task';
 import DateTimePicker from 'components/Common/date-picker';
 import ComboBox from 'components/Common/combo-box';
 export const fields = ['TKName', 'TKStart', 'TKTarg', 'TKStat', 'TKChamp', 'TKComment', 'TKChampNew'];

@@ -55,6 +55,8 @@ router.get('/logout', function (req, res) {
    router.post('/signup', users.createUser);
    router.post('/api/user', users.createUser);
    router.delete('/api/user/:id', users.deleteUser);
+
+
 //**********User Routes ***************
 
 //--------- Changes--------------------
@@ -74,6 +76,8 @@ router.route('/api/change/:id')
     .put(changes.updateChange);
 
 router.post('/export/changes', changes.dumpChanges);
+
+router.get('/api/userdashboard/:user', changes.getUserDashboard);
 
 //--------- Changes--------------------
 

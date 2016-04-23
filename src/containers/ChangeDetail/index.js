@@ -98,7 +98,6 @@ class ChangeDetail extends Component {
   };
 
 // TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
-// TODO: MED 4 e.preventDefault from redux-form not working
   saveChange = (data) => {
     const _data = data;
 

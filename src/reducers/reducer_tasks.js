@@ -115,10 +115,11 @@ export default function (state, action) {
 
     case LOAD_PAGE_TASKS: {
       alldata = state.alldata;
-      per_page = action.data.numPage;
+      per_page = action.data.numPage || 15;
       page = action.data.page_num || 1;
       offset = (page - 1) * per_page;
       searchText = action.data.search;
+      console.log(searchText);
       const searcheddata = searchData(alldata, searchText);
       paged = searcheddata.slice(offset, offset + per_page);
 
@@ -126,6 +127,7 @@ export default function (state, action) {
         ...state,
         page,
         per_page,
+        searchText,
         total: searcheddata.length,
         total_pages: Math.ceil(alldata.length / per_page),
         paged,

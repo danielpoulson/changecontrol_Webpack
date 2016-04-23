@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import { TextInputTask } from 'components/Common/text-input-task';
+import TextInputTask from 'components/Common/text-input-task';
 import ComboBox from 'components/Common/combo-box';
 export const fields = ['_id', 'fullname', 'username', 'email', 'dept', 'role', 'password'];
 
@@ -35,10 +35,9 @@ const validate = values => {
 @reduxForm({
   form: 'user',
   fields,
-  validate,
-},
-state => ({
-  initialValues: state.user ? state.user : newdata, // will pull state into form's initialValues
+  validate
+}, state => ({
+  initialValues: state.user ? state.user : newdata,
 })
 )
 
@@ -48,14 +47,13 @@ export default class UserProfileForm extends React.Component {
     const {
       fields: { fullname, username, email, role, password },
         handleSubmit,
-        submitting,
         deleteUser,
         roleSelect,
       } = this.props;
 
     return (
       <div>
-        <form onSubmit={handleSubmit} className="form form-horizontal" >
+        <form className="form form-horizontal" onSubmit={handleSubmit}>
 
           <div className="col-sm-12">
             <TextInputTask
@@ -118,10 +116,10 @@ export default class UserProfileForm extends React.Component {
           </div>
 
           <div className="col-sm-9 col-md-offset-2">
-            <button className="btn btn-success pull-left" disabled={submitting} onClick={handleSubmit}>
-              {submitting ? <i /> : <i />} Save
+            <button type="submit" className="btn btn-success pull-left">
+              Save
             </button>
-            <button className="btn btn-danger dp-margin-10-LR" disabled={submitting} onClick={deleteUser}>
+            <button className="btn btn-danger dp-margin-10-LR" onClick={deleteUser}>
               Delete
             </button>
           </div>
@@ -132,10 +130,9 @@ export default class UserProfileForm extends React.Component {
 }
 
 UserProfileForm.propTypes = {
-  fields: PropTypes.object.isRequired,
+  fields: PropTypes.object,
   errors: PropTypes.object,
-  handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func,
   deleteUser: PropTypes.func.isRequired,
   roleSelect: PropTypes.array.isRequired,
 };
