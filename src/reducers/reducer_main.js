@@ -53,10 +53,14 @@ export default function (state, action) {
     case SET_USER_DASHBOARD:
       const countChangesUser = action.payload.data ? action.payload.data.changeCount : 0;
       const countTasksUser = action.payload.data ? action.payload.data.taskCount : 0;
+      const allOpenTasks = action.payload.data ? action.payload.data.allTaskCount : 0;
+      const allOpenChanges = action.payload.data ? action.payload.data.allChangeCount : 0;
       return {
         ...state,
         countChangesUser,
-        countTasksUser
+        countTasksUser,
+        allOpenTasks,
+        allOpenChanges
       }
 
     default:

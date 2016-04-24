@@ -92,7 +92,12 @@ exports.getUserDashboard = function(req, res){
     return tasks.getTasksCountByUser(req.params.user);
   }).then( data => {
     dashboard.taskCount = data;
-    console.log(dashboard);
+    return Change.count({CC_Stat: {$lt:4}});
+  }).then( data => {
+    dashboard.allChangeCount = data;
+    return tasks.getCountAll();
+  }).then( data => {
+    dashboard.allTaskCount = data;
     res.send(dashboard);
   });
 }

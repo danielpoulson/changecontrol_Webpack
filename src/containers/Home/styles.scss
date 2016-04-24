@@ -1,67 +1,75 @@
 
-$color_red: #FF3747;
+$color_purple: #5C6BC0;
+$color_red: #F44336;
 $color_orange: #DC572E;
-$color_green: #00A600;
-$color_blue: #3864A3;
+$color_green: #00BFA5;
+$color_blue: #26C6DA;
 
 // colors from http://www.creepyed.com/2012/09/windows-8-colors-hex-code/
-
-:local(.styles) {
-    width: 75%;
-    margin: 0 auto;
-    height: 700px;
-    background-position: center top;
-    background-repeat: no-repeat;
+:local(h2) {
 }
 
-:local(.tile_blue) {
-  width: 75%;
-  color: white;
+:local(.tile) {
+  width: 100%;
   font-weight: 600;
-  font-size: 5em;
-  background: $color_blue;
-  padding: 0.1em 0.50em;
-  border-radius: 10px;
-  margin: 20px;
+  font-size: 4em;
+  padding: 0.1em 0.5em;
+  border-radius: 5px;
+  margin: 20px 0px;
+  // box-shadow: 6px 6px 16px 1px rgba(50,50,50,0.7);
+  box-shadow: 6px 6px 16px -3px rgba(50, 50, 50, 0.75);
 
   &:hover {
-    background: darken($color_blue, 10%);
     cursor: pointer;
     cursor: hand;
   }
 
-}
+  &.grow { transition: all .1s ease-in-out; }
 
-:local(.tile_red) {
-  width: 75%;
-  color: white;
-  font-weight: 600;
-  font-size: 5em;
-  background: $color_red;
-  padding: 0.1em 0.50em;
-  border-radius: 10px;
-  margin: 20px;
+  &.grow:hover { transform: scale(1.05); }
 
-  &:hover {
-    background: darken($color_red, 10%);
-    cursor: pointer;
-    cursor: hand;
-  }
-
-}
-
-:local(.title) {
-    margin-top: 0px;
-
-  &.purple, &.blue, &.red, &.orange, &.blue {
+  &.purple, &.blue, &.red, &.orange, &.green {
     color: #fff;
   }
 
-  &.purple {
+  &.green {
     background: $color_green;
 
+		&:hover {
+			background: darken($color_green, 10%);
+		}
+  }
+
+  &.blue {
+    background: $color_blue;
+
     &:hover {
-      background: darken($color_green, 10%);
+      background: darken($color_blue, 10%);
     }
   }
+
+  &.purple {
+    background: $color_purple;
+
+    &:hover {
+      background: darken($color_purple, 10%);
+    }
+  }
+
+  &.red {
+    background: $color_red;
+
+    &:hover {
+      background: darken($color_red, 10%);
+    }
+  }
+
+  &.orange {
+    background: $color_orange;
+
+    &:hover {
+      background: darken($color_orange, 10%);
+    }
+  }
+
 }
