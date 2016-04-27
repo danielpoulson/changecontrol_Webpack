@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { getUserDashboard} from 'actions/actions_main';
+import { getUserDashboard } from 'actions/actions_main';
 import { loadPage } from 'actions/actions_changes';
 import { loadPageTask } from 'actions/actions_tasks';
+import BarChart from 'components/graphs/bar-chart';
+import LineChart from 'components/graphs/line-chart';
 
 /* component styles */
-import { tile } from './styles.scss';
+import { tile, dashboard } from './styles.scss';
 
 @connect(
   state => ({ fullname: state.main.user.fullname,
@@ -54,12 +56,8 @@ export default class Home extends Component {
 
   render(){
     return(
-      <section>
-        <div className="section-header">
-          <div className="col-sm-6 pull-left">
-            <p className="section-header-text-main">Dashboard</p>
-          </div>
-        </div>
+      <div>
+        <div className={`${dashboard}`}><h1>Dashboard</h1></div>
         <div className="row">
           <div className="col-sm-3">
             <div className={`${tile} green grow`} onClick={this.getChanges}>
@@ -70,7 +68,7 @@ export default class Home extends Component {
           <div className="col-sm-3">
             <div className={`${tile} blue grow`} onClick={this.getTasks}>
               <h2>My Tasks</h2>
-              <i className="fa fa-tasks"></i>&nbsp; {this.props.countTasksUser}
+              <i className="fa fa-tasks">&nbsp; </i>{this.props.countTasksUser}
             </div>
           </div>
           <div className="col-sm-3">
@@ -86,7 +84,17 @@ export default class Home extends Component {
             </div>
           </div>
         </div>
-      </section>
+        <div className="row cc-graph">
+          <div className="col-sm-6">
+            <h3>Open vs Closed Change Controls</h3>
+            <BarChart />
+          </div>
+          <div className="col-sm-6">
+            <h3>Open tasks beyond target date</h3>
+            <LineChart />
+          </div>
+        </div>
+      </div>
     )
   }
 };

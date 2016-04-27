@@ -24,8 +24,10 @@ export default function (state, action) {
       };
 
     case SET_USER: {
-      const _user = action.payload.data.success ? action.payload.data.user : {};
 
+      console.log('set User');
+      console.log(action);
+      const _user = action.payload.data.success ? action.payload.data.user : {};
       return {
         ...state,
         user: _user
@@ -51,6 +53,7 @@ export default function (state, action) {
       };
 
     case SET_USER_DASHBOARD:
+      console.log(action);
       const countChangesUser = action.payload.data ? action.payload.data.changeCount : 0;
       const countTasksUser = action.payload.data ? action.payload.data.taskCount : 0;
       const allOpenTasks = action.payload.data ? action.payload.data.allTaskCount : 0;

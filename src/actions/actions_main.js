@@ -53,14 +53,19 @@ export function setUser() {
   };
 }
 
-export function login(data) {
-  const url = '/login';
-  const request = axios.post(url, data);
-
+function login(data) {
+  console.log(data);
   return {
     type: SET_USER,
-    payload: request,
+    payload: data,
   };
+}
+
+export function loginStart(data){
+  const url = '/login';
+  axios.post(url, data).then(response => {
+    login(response);
+  });
 }
 
 export function logoutUser() {

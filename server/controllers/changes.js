@@ -85,7 +85,7 @@ exports.getChangeById = function(req, res) {
 // This function gets the count for **active** tasks and change controls for the logged in user
 exports.getUserDashboard = function(req, res){
   const dashboard = {};
-  const promise = Change.count({$and: [{CC_Champ:req.params.user}, {CC_Stat: {$lt:4}}]}).exec();
+  const promise = Change.count({$and: [{CC_Champ: req.params.user}, {CC_Stat: {$lt:4}}]}).exec();
 
   promise.then( data => {
     dashboard.changeCount = data;
