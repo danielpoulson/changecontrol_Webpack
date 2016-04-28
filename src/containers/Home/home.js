@@ -23,7 +23,8 @@ export default class Home extends Component {
   };
 
   componentWillMount(){
-    this.props.getUserDashboard(this.props.fullname);
+    const username = sessionStorage.getItem('username');
+    this.props.getUserDashboard(username);
   }
 
   getTasks = () => {

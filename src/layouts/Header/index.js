@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import Login from 'components/Login/login';
 import NavBar from 'layouts/Navigation/nav-bar';
 
-import { loginStart } from 'actions/actions_main';
+import { getUserDashboard, login } from 'actions/actions_main';
 
 /* component styles */
 import './styles.scss';
 
 @connect(
-  state => ({ fullname: state.main.user.fullname }), { loginStart }
+  state => ({ fullname: state.main.user.fullname }), { getUserDashboard, login }
 )
 
 export class Header extends Component {
@@ -21,7 +21,9 @@ export class Header extends Component {
   onLogin = (e) => {
     e.preventDefault();
     sessionStorage.setItem('authorised', true);
-    this.props.loginStart(this.state.login);
+    sessionStorage.setItem('username', this.state.login.username);
+    this.props.login(this.state.login);
+    this.props.getUserDashboard(this.state.login.username);
   };
 
   setStateLogin = (evt) => {

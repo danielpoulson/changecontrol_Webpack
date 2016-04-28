@@ -39,7 +39,6 @@ exports.updateUser = function (req, res, next) {
 
 };
 
-
 exports.getLoggedUser = function(req, res) {
   res.send({success:true, user: makeUserSafe(req.user)});
 };
@@ -54,6 +53,13 @@ exports.getUser = function(req, res) {
         .exec(function(err, collection) {
           res.send(collection);
     });
+};
+
+exports.getFullname = function(username) {
+    return User
+        .find({})
+        .select({ "fullname": 1, "_id": 0 })
+        .where({ username: username});
 };
 
 exports.getUserEmail = function(user) {

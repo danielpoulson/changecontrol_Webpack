@@ -34,6 +34,7 @@ export class NavBar extends React.Component {
 
   onLogoutUser = () => {
     sessionStorage.setItem('authorised', false);
+    sessionStorage.setItem('username', false);
     this.props.logoutUser();
     this.context.router.push('/');
 

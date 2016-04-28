@@ -2,6 +2,7 @@ var Change = require('mongoose').model('Change');
 var fs = require('fs');
 var files = require('../controllers/files');
 const tasks = require('../controllers/tasks');
+const users = require('../controllers/users');
 
 exports.getChanges = function(req, res) {
     var status = req.params.status;
@@ -12,8 +13,6 @@ exports.getChanges = function(req, res) {
         res.send(collection);
     })
 };
-
-
 
 exports.createChange = function(req, res, next) {
     var newNum = '';
@@ -85,16 +84,20 @@ exports.getChangeById = function(req, res) {
 // This function gets the count for **active** tasks and change controls for the logged in user
 exports.getUserDashboard = function(req, res){
   const dashboard = {};
-  const promise = Change.count({$and: [{CC_Champ: req.params.user}, {CC_Stat: {$lt:4}}]}).exec();
+  var username = '';
+  const promise = Change.count({CC_Stat: {$lt:4}}).exec();
 
-  promise.then( data => {
+  promise.then(data => {
+    dashboard.allChangeCount = data;
+    return users.getFullname(req.params.user);
+  }).then(data => {
+    username = data[0].fullname;
+    return Change.count({$and: [{CC_Champ: username }, {CC_Stat: {$lt:4}}]})
+  }).then( data => {
     dashboard.changeCount = data;
-    return tasks.getTasksCountByUser(req.params.user);
+    return tasks.getTasksCountByUser(username);
   }).then( data => {
     dashboard.taskCount = data;
-    return Change.count({CC_Stat: {$lt:4}});
-  }).then( data => {
-    dashboard.allChangeCount = data;
     return tasks.getCountAll();
   }).then( data => {
     dashboard.allTaskCount = data;
