@@ -50,7 +50,7 @@ export default class LineGraph extends Component{
 
       // Scale the range of the data
     x.domain(dates);
-    y.domain([0, 40]);
+    y.domain([0, d3.max(counts)]);
 
     var path = svg.append("path")
       .attr("d", line(data));

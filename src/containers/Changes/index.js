@@ -91,7 +91,7 @@ export default class Changes extends Component {
     this.setState({ showAll: _showAll });
 
     if (this.state.showAll !== true) {
-      this.props.getChanges(5);
+      this.props.getChanges(6);
     } else {
       this.props.getChanges(4);
     }

@@ -46,7 +46,6 @@ state => ({
 )
 
 export default class TaskForm extends React.Component {
-
   render() {
     const {
       fields: { TKName, TKStart, TKTarg, TKStat, TKChamp, TKComment },
@@ -57,15 +56,11 @@ export default class TaskForm extends React.Component {
       submitting,
       status,
       users,
-      } = this.props;
-
-    if (typeof TKChamp.value !== 'undefined' && TKChamp.defaultValue !== TKChamp.value) {
-      this.props.ownerChanged(true);
-    }
+    } = this.props;
 
     return (
       <div>
-        <form onChange={this._onChange} onSubmit={handleSubmit} className="form form-horizontal" >
+        <form onSubmit={handleSubmit} className="form form-horizontal" >
 
           <TextInputTask
             name="TKName"
@@ -93,7 +88,6 @@ export default class TaskForm extends React.Component {
 
           <ComboBox
             label="Status"
-            onChange={this.handleStartDateChange}
             data={status}
             dpInputCol="col-sm-4"
             dpLabelCol="col-sm-2"
@@ -102,7 +96,6 @@ export default class TaskForm extends React.Component {
 
           <ComboBox
             label="Owner"
-            onChange={this.changeOwner}
             data={users}
             dpInputCol="col-sm-4"
             dpLabelCol="col-sm-2"
@@ -142,7 +135,6 @@ TaskForm.propTypes = {
   fields: PropTypes.object,
   handleSubmit: PropTypes.func,
   onCancel: PropTypes.func.isRequired,
-  ownerChanged: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
   hideDelete: PropTypes.string,
   submitting: PropTypes.string,

@@ -32,9 +32,6 @@ exports.sendMail = function(toEmail, emailType, emailActivity) {
       if (err) {
         console.log('Error: ' + err);
       }
-      else {
-        console.log('Request:' + info);
-      }
     });
   });
 
