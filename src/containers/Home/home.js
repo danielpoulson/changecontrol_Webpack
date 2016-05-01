@@ -73,7 +73,7 @@ export default class Home extends Component {
             </div>
           </div>
           <div className="col-sm-3">
-            <div className={`${tile} red grow`} onClick={this.getAllChanges}>
+            <div className={`${tile} orange grow`} onClick={this.getAllChanges}>
               <h2>Open Changes</h2>
               <i className="fa fa-list-alt"></i>&nbsp; {this.props.allOpenChanges}
             </div>
@@ -91,7 +91,7 @@ export default class Home extends Component {
             <BarChart />
           </div>
           <div className="col-sm-6">
-            <h3>Open tasks beyond target date</h3>
+            <h3>Overdue Tasks</h3>
             <LineChart />
           </div>
         </div>
