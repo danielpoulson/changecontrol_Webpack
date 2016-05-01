@@ -23,7 +23,7 @@ export default class BarChart extends React.Component{
 			.range([height, 0]);
 
 		var color = d3.scale.ordinal()
-			.range(["#e57373", "#f44336"]);
+			.range(["rgba(230, 115, 115, 0.83)", "rgba(244, 67, 54, 0.85)"]);
 
 		var xAxis = d3.svg.axis()
 			.scale(x0)
@@ -45,6 +45,22 @@ export default class BarChart extends React.Component{
 			//of category names e.g ["closed", "open"]
 			// var _category = d3.keys(data[0]).filter(function(key) { return key !== "Years"; });
       const _category = ['closed', 'open'];
+
+			// This function is used to make grid lines
+			// function make_x_axis() {
+		  //   return d3.svg.axis()
+	    //     .scale(x0)
+	    //      .orient("bottom")
+	    //      .ticks(5)
+			// }
+
+			// This function is used to make grid lines
+			function make_y_axis() {
+		    return d3.svg.axis()
+	        .scale(y)
+	        .orient("left")
+	        .ticks(5)
+			}
 
 			data.forEach(function(d) {
 				d._object = _category.map(function(name) { return {name: name, value: +d[name]}; });
@@ -71,6 +87,23 @@ export default class BarChart extends React.Component{
 			.style("text-anchor", "end")
 			.text("Change Controls");
 
+		// Adding in x grid lines
+		// svg.append("g")
+    //   .attr("class", "grid")
+    //   .attr("transform", "translate(0," + height + ")")
+    //   .call(make_x_axis()
+    //     .tickSize(-height, 0, 0)
+    //     .tickFormat("")
+    //   );
+
+		// Adding in y grid lines
+    svg.append("g")
+      .attr("class", "grid")
+      .call(make_y_axis()
+        .tickSize(-width, 0, 0)
+        .tickFormat("")
+      );
+
 		var state = svg.selectAll(".state")
 			.data(data)
 			.enter().append("g")
@@ -80,38 +113,42 @@ export default class BarChart extends React.Component{
 		state.selectAll("rect")
 			.data(d => d._object)
 			.enter().append("rect")
+			.attr("class", "rectclass")
 			.attr("width", x1.rangeBand())
 			.attr("x", d => x1(d.name))
 			.attr('y', 250)
 			.attr('height', 0)
+			.style("fill", function(d) { return color(d.name); })
 			.transition()
 			.duration(2000)
 			.attr("y", function(d) { return y(d.value); })
 			.attr("height", function(d) { return height - y(d.value); })
-			.style("fill", function(d) { return color(d.name); });
+			.style("fill", function(d) { return color(d.name); })
+
 
 		var legend = svg.selectAll(".legend")
 			.data(_category.slice().reverse())
 			.enter().append("g")
 			.attr("class", "legend")
-			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+			.attr("transform", "translate(0,-10)");
 
 		legend.append("rect")
 			.attr("x", width - 18)
+			.attr("y", function(d, i){ return i *  20;})
 			.attr("width", 18)
 			.attr("height", 18)
 			.style("fill", color);
 
 		legend.append("text")
 			.attr("x", width - 24)
-			.attr("y", 9)
+			.attr("y", function(d, i){ return i *  20 + 9;})
 			.attr("dy", ".35em")
 			.style("text-anchor", "end")
 			.text(function(d) { return d; });
-
 	}
+
 
 	render(){
 		return <div id="chartArea"></div>
 	}
-	}
+}

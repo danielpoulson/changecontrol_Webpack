@@ -56,11 +56,35 @@ export function setUser() {
 export function login(data) {
   const url = '/login';
   const request = axios.post(url, data);
+
   return {
     type: SET_USER,
-    payload: request,
+    payload: request
   };
 }
+
+// export function login(data) {
+//   const url = '/login';
+//   const request = new Promise((resolve, reject) => {
+//     axios.post(url, data).then((response) => {
+//       if(response.data.success === true) {
+//         resolve(response);
+//       } else {
+//         reject({"success":false});
+//       }
+//     });
+//   });
+//
+//   request.then((request) => {
+//     console.log('resolved');
+//   });
+//
+//   return {
+//     type: SET_USER,
+//     payload: request
+//   };
+//
+// }
 
 export function logoutUser() {
   const url = '/logout';

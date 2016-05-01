@@ -1,8 +1,11 @@
 import React, { PropTypes, Component } from 'react';
 import d3 from 'd3';
+import tip from 'd3-tip';
 import _ from 'lodash';
 import { myData } from './data';
 import './styles.scss'
+
+d3.tip = tip;
 
 export default class LineGraph extends Component{
 
@@ -18,6 +21,14 @@ export default class LineGraph extends Component{
 
     var dates = _.map(data, 'date');
     var counts = _.map(data, 'count');
+
+    /* Initialize tooltip */
+    var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function(d) {
+        return "<strong>Overdue:</strong> <span>" + d.count + "</span>";
+      })
 
     var x = d3.scale.ordinal()
       .rangePoints([0, w]);
@@ -40,6 +51,7 @@ export default class LineGraph extends Component{
         return y(d.count);
       });
 
+
     var svg = d3
       .select('#chart')
       .append('svg')
@@ -47,6 +59,8 @@ export default class LineGraph extends Component{
       .attr("height", h + margin.top + margin.bottom)
       .append('g')
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg.call(tip);
 
       // Scale the range of the data
     x.domain(dates);
@@ -64,6 +78,17 @@ export default class LineGraph extends Component{
         .duration(2000)
         .ease("linear")
         .attr("stroke-dashoffset", 0);
+
+        // Add the scatterplot
+    svg.selectAll("dot")
+      .data(data)
+      .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 5)
+      .attr("cx", function(d) { return x(d.date); })
+      .attr("cy", function(d) { return y(d.count); })
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)
 
     svg.append("g")         // Add the X Axis
         .attr("class", "axis")

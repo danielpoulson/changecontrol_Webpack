@@ -20,8 +20,6 @@ export class Header extends Component {
 
   onLogin = (e) => {
     e.preventDefault();
-    sessionStorage.setItem('authorised', true);
-    sessionStorage.setItem('username', this.state.login.username);
     this.props.login(this.state.login);
     this.props.getUserDashboard(this.state.login.username);
   };

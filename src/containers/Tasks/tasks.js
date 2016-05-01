@@ -11,13 +11,21 @@ import { getAllTasks, loadPageTask, exportTasks } from 'actions/actions_tasks';
 // Changes and Task share the same search text box function which should be made as a common component
 
 class Tasks extends Component {
-  state = {
-    activePage: 0,
-    paged: {},
-    count: 0,
-    numPage: 15,
-    txtSearch: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+        activePage: 0,
+        paged: {},
+        count: 0,
+        numPage: 15,
+        txtSearch: '',
+      };
+
+    this.onSearchText = this.onSearchText.bind(this);
+    this.linkClick = this.linkClick.bind(this);
+    this.exportTask = this.exportTask.bind(this);
+
+  }
 
   componentWillMount() {
     const search = this.props.tasks.searchText;
@@ -30,29 +38,34 @@ class Tasks extends Component {
     this.onChange(1, search);
   }
 
-  onChange = (page_num, searchText) => {
+  onChange(page_num, searchText, column) {
     const action = {};
     action.page_num = page_num || 1;
     action.search = searchText || this.state.txtSearch;
     action.numPage = this.state.numPage;
+    action.column = column;
     this.props.loadPageTask(action);
-  };
+  }
 
-  onSearchText = (event) => {
+  onSearchText(event) {
     const value = event.target.value;
     this.setState({ activePage: 0 });
     this.setState({ txtSearch: value });
     this.onChange(0, value);
+  }
+
+  onSortByClick = (column) => {
+    this.setState({ activePage: 0 });
+    this.onChange(0, this.state.txtSearch, column);
   };
 
-  linkClick = (i) => {
+  linkClick(i) {
     // TODO: LOW (BUG) Pagination Adding 1 to the page mumber as it uses the base of 0
     this.onChange(i + 1, this.state.txtSearch);
     this.setState({ activePage: i });
+  }
 
-  };
-
-  exportTask = () => {
+  exportTask() {
     const info = {
       fsSource: 'exp',
       fsAddedBy: this.props.user.username,
@@ -61,7 +74,7 @@ class Tasks extends Component {
     };
 
     this.props.exportTasks(info);
-  };
+  }
 
   render() {
 

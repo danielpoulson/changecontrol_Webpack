@@ -1,4 +1,6 @@
 import { SET_MAIN, SET_USER, USER_LOGGED_OUT, SET_FILETAB_COUNT, SET_LOADING, SET_USER_DASHBOARD} from 'actions/actions_main';
+import toastr from 'toastr';
+
 const initialState = {
   MainId: '',
   CurrentMode: 'change',
@@ -24,7 +26,16 @@ export default function (state, action) {
       };
 
     case SET_USER: {
-      const _user = action.payload.data.success ? action.payload.data.user : {};
+      let _user = {};
+
+      if (action.payload.data.success) {
+         _user = action.payload.data.user;
+        sessionStorage.setItem('authorised', true);
+        sessionStorage.setItem('username', action.payload.data.user.username);
+      } else {
+        toastr.error('Your username / password combination was incorrect!', 'Authentication Failed', { timeOut: 2000, positionClass: 'toast-bottom-right' });
+      }
+
       return {
         ...state,
         user: _user

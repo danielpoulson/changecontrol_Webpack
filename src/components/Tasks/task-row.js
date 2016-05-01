@@ -7,7 +7,6 @@ const TaskRow = (props) => {
   return (
     <tr onClick={props.getTask}>
       <td>{task.SourceId} - {task.TKName}</td>
-      <td>{moment(task.TKStart).format('DD/MM/YYYY')}</td>
       <td>{moment(task.TKTarg).format('DD/MM/YYYY')}</td>
       <td>{task.TKChamp}</td>
       <td><i className={getStatus(task.TKStat)}></i></td>

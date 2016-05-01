@@ -1,5 +1,4 @@
 import { ADD_TASK, EDIT_TASK, DELETE_TASK, GET_TASKS, LOAD_PAGE_TASKS, GET_PROJECT_TASKS } from 'actions/actions_tasks';
-
 const initialState = {
   alldata: [],
   paged: [],
@@ -9,8 +8,7 @@ function searchIndex(data, index) {
   return data.filter((item) => item._id !== index);
 }
 
-function searchData(data, searchText) {
-
+function searchData(data, searchText, sortColumn) {
   function search(item) {
     const reg1 = new RegExp(`${searchText}.*`, 'i');
 
@@ -21,10 +19,13 @@ function searchData(data, searchText) {
   }
 
   if (searchText === null) {
-    return data;
+    return _.sortBy(data, sortColumn);
   }
 
-  return data.filter(search);
+  let _sortColumn = '';
+  _sortColumn = sortColumn || 'TKTarg';
+  const newList = _.chain(data).filter(search).sortBy(_sortColumn).value();
+  return newList;
 }
 
 export default function (state, action) {
@@ -114,24 +115,23 @@ export default function (state, action) {
       };
 
     case LOAD_PAGE_TASKS: {
-      alldata = state.alldata;
+      const column = action.data.column || state.sorted;
       per_page = action.data.numPage || 15;
       page = action.data.page_num || 1;
       offset = (page - 1) * per_page;
       searchText = action.data.search;
-      console.log(searchText);
-      const searcheddata = searchData(alldata, searchText);
+      const searcheddata = searchData(state.alldata, searchText, column);
       paged = searcheddata.slice(offset, offset + per_page);
 
       return {
         ...state,
+        sorted: column,
+        searchText,
         page,
         per_page,
-        searchText,
         total: searcheddata.length,
         total_pages: Math.ceil(alldata.length / per_page),
-        paged,
-        alldata,
+        paged
       };
     }
     default:
