@@ -218,6 +218,14 @@ ChangeDetail.propTypes = {
   users: PropTypes.array,
 };
 
+ChangeDetail.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+ChangeDetail.childContextTypes = {
+  location: React.PropTypes.object
+};
+
 export default connect(state => ({
   change: state.change,
   main: state.main,

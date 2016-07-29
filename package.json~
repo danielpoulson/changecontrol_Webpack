@@ -6,19 +6,29 @@
     "clean": "rimraf dist",
     "build": "webpack --progress --verbose --colors --display-error-details --config webpack/common.config.js",
     "build:production": "npm run clean && npm run build",
-    "lint": "node_modules/.bin/esw webpack.config.* src",
-    "lint:watch": "npm run lint -- --watch",
-    "start": "npm-run-all --parallel test:watch open:src lint:watch",
-    "open:src": "NODE_ENV=development node server.js",
+    "lint": "eslint src/",
+    "start": "NODE_ENV=development node bin/server.js",
     "startProduction": "NODE_ENV=production node bin/server.js",
     "test": "karma start",
-    "test:watch": "node bin/testMessage",
     "dpGit": "git add . && git commit -m 'eslint / refactor' && git push"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/danielpoulson/changecontrol.git"
   },
+  "keywords": [
+    "react",
+    "reactjs",
+    "babel6",
+    "boilerplate",
+    "redux",
+    "hot",
+    "reload",
+    "hmr",
+    "live",
+    "edit",
+    "webpack"
+  ],
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "6.2.3",

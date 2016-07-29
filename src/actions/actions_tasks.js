@@ -17,7 +17,7 @@ export function getTasks(data) {
 
   return {
     type: GET_TASKS,
-    payload: request,
+    payload: request
   };
 
 }
@@ -30,7 +30,7 @@ export function getAllTasks() {
 
   return {
     type: GET_TASKS,
-    payload: request,
+    payload: request
   };
 
 }
@@ -41,7 +41,7 @@ export function getProjectTasks(data) {
 
   return {
     type: GET_PROJECT_TASKS,
-    payload: request,
+    payload: request
   };
 
 }
@@ -56,7 +56,7 @@ export function getTask(data) {
 
   return {
     type: GET_TASK,
-    payload: request,
+    payload: request
   };
 
 }
@@ -67,7 +67,7 @@ export function addTask(data) {
 
   return {
     type: ADD_TASK,
-    payload: request,
+    payload: request
   };
 
 }
@@ -78,7 +78,7 @@ export function editTask(data) {
 
   return {
     type: EDIT_TASK,
-    payload: data,
+    payload: data
   };
 
 }
@@ -89,7 +89,7 @@ export function deleteTask(data) {
 
   return {
     type: DELETE_TASK,
-    payload: data,
+    payload: data
   };
 
 }
@@ -99,7 +99,7 @@ export function loadPageTask(data) {
   return {
 
     type: LOAD_PAGE_TASKS,
-    data,
+    data
   };
 
 }
@@ -109,6 +109,6 @@ export function exportTasks(search) {
   axios.post(url, search);
 
   return {
-    type: 'EXPORT_TASKS',
+    type: 'EXPORT_TASKS'
   };
 }

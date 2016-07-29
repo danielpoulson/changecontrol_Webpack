@@ -15,7 +15,7 @@ export function getChanges(data) {
 
   return {
     type: GET_CHANGES,
-    payload: request,
+    payload: request
   };
 
 }
@@ -27,7 +27,7 @@ export function getChange(data) {
 
   return {
     type: GET_CHANGE,
-    payload: request,
+    payload: request
   };
 
 }
@@ -38,7 +38,7 @@ export function addChange(data) {
 
   return {
     type: ADD_CHANGE,
-    payload: request,
+    payload: request
   };
 
 }
@@ -49,7 +49,7 @@ export function editChange(data) {
 
   return {
     type: EDIT_CHANGE,
-    payload: data,
+    payload: data
   };
 
 }
@@ -58,7 +58,7 @@ export function loadPage(data) {
   return {
 
     type: LOAD_PAGE_CHANGES,
-    data,
+    data
   };
 
 }
@@ -69,7 +69,7 @@ export function createLog(data) {
 
   return {
     type: CREATE_LOG,
-    payload: data,
+    payload: data
   };
 
 }
@@ -80,7 +80,7 @@ export function bookoutFile(data) {
 
   return {
     type: BOOKOUT_FILE,
-    payload: data,
+    payload: data
   };
 
 }
