@@ -2,17 +2,23 @@ import React from 'react';
 import toastr from 'toastr';
 
 export default class BookoutButton extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onBookout = this.onBookout.bind(this);
+    this.deleteFile = this.deleteFile.bind(this);
+  }
 
   // TODO: LOW Remove CC_ActDept : this.props.user.dept
   // Not sure if this is needed or not.
-  onBookout = () => {
+  onBookout() {
       // TODO MED 3 If download does not complete donot delete from server.
     if (window.ActiveXObject || 'ActiveXObject' in window) {
       // Always true if browser is Internet Explorer
       toastr.error('This function does not work with internet explorer. Please contact your administrator', 'Error - Internet Explorer', { timeOut: 5000 });
     } else {
 
-      var _log = { CC_No: this.props.source, CC_Id: 4, CC_Action: `File booked out - ${this.props.fileLoad}`,
+      const _log = { CC_No: this.props.source, CC_Id: 4, CC_Action: `File booked out - ${this.props.fileLoad}`,
                 CC_ActDept: this.props.user.dept, CC_ActBy: this.props.user.fullname, CC_ActDate: new Date() };
 
       window.location.href = `/server/upload/${this.props.fileLoad}`;
@@ -21,14 +27,14 @@ export default class BookoutButton extends React.Component {
       this.props.bookoutFile(this.props.fileId);
 
     }
-  };
+  }
 
-  deleteFile = () => {
+  deleteFile() {
     const _log = { CC_No: this.props.source, CC_Id: 4, CC_Action: `**** File Deleted **** - ${this.props.fileLoad}`,
             CC_ActDept: this.props.user.dept, CC_ActBy: this.props.user.fullname, CC_ActDate: new Date() };
     this.props.createLog(_log);
     this.props.deleteFile(this.props.fileId);
-  };
+  }
 
   render() {
 
@@ -72,5 +78,5 @@ BookoutButton.propTypes = {
   bookoutFile: React.PropTypes.func,
   fileLoad: React.PropTypes.string,
   createLog: React.PropTypes.func,
-  deleteFile: React.PropTypes.func,
+  deleteFile: React.PropTypes.func
 };

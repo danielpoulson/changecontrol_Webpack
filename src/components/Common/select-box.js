@@ -34,7 +34,7 @@ SelectBox.propTypes = {
   onChange: PropTypes.func,
   error: PropTypes.string,
   dpInputCol: PropTypes.string,
-  dpLabelCol: PropTypes.string,
+  dpLabelCol: PropTypes.string
 };
 
 export default SelectBox;

@@ -5,26 +5,27 @@ import classNames from 'classnames';
 const ChangeList = (props) => {
 
   const _changes = props.changelist;
+  let changes = [];
 
   const th1Class = classNames({
-    'fa fa-sort-asc': props.colSelected === 'CC_No',
+    'fa fa-sort-asc': props.colSelected === 'CC_No'
   });
 
   const th2Class = classNames({
-    'fa fa-sort-asc': props.colSelected === 'CC_Champ',
+    'fa fa-sort-asc': props.colSelected === 'CC_Champ'
   });
 
   const th3Class = classNames({
-    'fa fa-sort-asc': props.colSelected === 'CC_TDate',
+    'fa fa-sort-asc': props.colSelected === 'CC_TDate'
   });
 
   const th4Class = classNames({
-    'fa fa-sort-asc': props.colSelected === 'CC_Stat',
+    'fa fa-sort-asc': props.colSelected === 'CC_Stat'
   });
 
   if (_changes !== undefined) {
 
-    var changes = _changes.map((change) => <ChangeRow key={change.CC_No} change={change}
+    changes = _changes.map((change) => <ChangeRow key={change.CC_No} change={change}
       getChange = {props.getChange}
     />);
   }
@@ -61,7 +62,7 @@ ChangeList.propTypes = {
   setMain: React.PropTypes.func,
   getChange: React.PropTypes.func,
   sortByClick: React.PropTypes.func,
-  colSelected: React.PropTypes.string,
+  colSelected: React.PropTypes.string
 };
 
 export default ChangeList;

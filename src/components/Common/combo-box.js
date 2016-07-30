@@ -42,7 +42,7 @@ ComboBox.propTypes = {
   dpInputCol: PropTypes.string,
   defaultValue: PropTypes.any,
   value: PropTypes.any,
-  touched: PropTypes.bool,
+  touched: PropTypes.bool
 };
 
 export default ComboBox;

@@ -90,6 +90,6 @@ export function exportChanges(search) {
   axios.post(url, search);
 
   return {
-    type: 'EXPORT_CHANGES',
+    type: 'EXPORT_CHANGES'
   };
 }

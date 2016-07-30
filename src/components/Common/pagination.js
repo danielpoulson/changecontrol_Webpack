@@ -30,7 +30,7 @@ Pagination.propTypes = {
   activePage: PropTypes.number,
   count: PropTypes.number,
   numPage: PropTypes.number,
-  getPage: PropTypes.func,
+  getPage: PropTypes.func
 };
 
 export default Pagination;
