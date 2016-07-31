@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import ChangeForm from 'components/Changes/change-form';
 import {changeFormIsValid} from './change-form.validation';
+import {usersFormattedForDropdown} from '../../selectors/selectors';
 import TaskList from 'components/Tasks/task-list';
 import FileList from 'containers/Files/file-list';
 import ChangeLog from 'components/Changes/change-log';
@@ -14,13 +15,6 @@ import { getProjectTasks } from 'actions/actions_tasks';
 import { setMain } from 'actions/actions_main';
 
 class ChangeDetail extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
-  };
-
-  static childContextTypes = {
-    location: React.PropTypes.object
-  };
 
   constructor(props) {
     super(props);
@@ -46,12 +40,14 @@ class ChangeDetail extends Component {
       ]
     };
 
+    this.cancelChange = this.cancelChange.bind(this);
     this.onApprove = this.onApprove.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onDateChange = this.onDateChange.bind(this);
     this.onFinal = this.onFinal.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
+    this.saveChange = this.saveChange.bind(this);
   }
 
   componentWillMount() {
@@ -96,10 +92,10 @@ class ChangeDetail extends Component {
 
   }
 
-  cancelChange = (e) => {
+  cancelChange(e) {
     e.preventDefault();
     this.context.router.push('/changes');
-  };
+  }
 
   updateChangeState(event) {
     const field = event.target.name;
@@ -115,7 +111,7 @@ class ChangeDetail extends Component {
   }
 
 // TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
-  saveChange = () => {
+  saveChange() {
     event.preventDefault();
     let _change = this.state.change;
 
@@ -132,7 +128,7 @@ class ChangeDetail extends Component {
       // _change.CC_No = this.props.change.CC_No;
       this.props.editChange(_change);
     } else {
-      var created = [];
+      let created = [];
       created.push({ CC_Id: 0, CC_Action: 'Created', CC_ActBy: this.props.main.user.fullname, CC_ActDept: this.props.main.user.dept, CC_ActDate: new Date() });
       _change.CC_LOG = created;
       _change.CC_Stat = _change.CC_Stat.id || 1;
@@ -142,7 +138,7 @@ class ChangeDetail extends Component {
     toastr.success('Change has been saved', 'Change Detail', { timeOut: 1000 });
     this.setState({ dirty: false });
     this.context.router.push('/changes');
-  };
+  }
 
   showTab(value) {
     this.setState({ DetailTab: 'hidden' });
@@ -248,7 +244,7 @@ ChangeDetail.propTypes = {
   location: PropTypes.object,
   setMain: PropTypes.func,
   tasklist: PropTypes.array,
-  users: PropTypes.array,
+  users: PropTypes.array
 };
 
 ChangeDetail.contextTypes = {
@@ -259,12 +255,17 @@ ChangeDetail.childContextTypes = {
   location: React.PropTypes.object
 };
 
-export default connect(state => ({
-  change: state.change,
-  main: state.main,
-  tasklist: state.tasks.ctlist,
-  ctTotal: state.tasks.ctTotal,
-  users: state.users
-}), {
+function mapStateToProps(state, ownProps) {
+
+  return {
+    change: state.change,
+    main: state.main,
+    tasklist: state.tasks.ctlist,
+    ctTotal: state.tasks.ctTotal,
+    users: usersFormattedForDropdown(state.users)
+  };
+}
+
+export default connect(mapStateToProps, {
   addChange, createLog, editChange, getChange, getProjectTasks, setMain
 })(ChangeDetail);

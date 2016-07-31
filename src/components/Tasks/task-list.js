@@ -6,14 +6,15 @@ import { getTask } from 'actions/actions_tasks';
 import { getChange } from 'actions/actions_changes';
 import { setMain } from 'actions/actions_main';
 
-@connect(null, { getTask, getChange, setMain })
-
 class TaskList extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.handleClick = this.handleClick.bind(this);
+    this.newTask = this.newTask.bind(this);
+  }
 
-  handleClick = (i) => {
+  handleClick(i) {
     if (this.props.type === 'All') {
       const ccNo = this.props.tasklist[i].SourceId;
       this.props.setMain({ MainId: ccNo, CurrentMode: 'change', loading: true });
@@ -24,12 +25,12 @@ class TaskList extends Component {
       this.props.getTask(_id);
       this.context.router.push(`/task/${_id}`);
     }
-  };
+  }
 
-  newTask = () => {
+  newTask() {
     this.props.getTask('new');
     this.context.router.push('/task/new');
-  };
+  }
 
   render() {
 
@@ -60,7 +61,12 @@ TaskList.propTypes = {
   tasklist: PropTypes.array,
   setMain: PropTypes.func,
   getChange: PropTypes.func,
-  getTask: PropTypes.func,
+  getTask: PropTypes.func
 };
 
-export default TaskList;
+TaskList.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+export default connect(state => null,
+  { getTask, getChange, setMain })(TaskList);

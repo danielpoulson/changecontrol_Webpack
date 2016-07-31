@@ -1,76 +1,94 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
 import TaskForm from 'components/Tasks/task-form';
 import toastr from 'toastr';
+import {taskFormIsValid} from '../components/task-form.validation';
+import {usersFormattedForDropdown} from '../../selectors/selectors';
 
-import { addTask, editTask, deleteTask } from 'actions/actions_tasks';
-import { setLoading } from 'actions/actions_main';
+import * as taskActions from 'actions/actions_tasks';
+import * as mainActions from 'actions/actions_main';
 
 class TaskDetail extends React.Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-  };
+  constructor(props, context) {
+    super(props, context);
 
-  static childContextTypes = {
-    location: React.PropTypes.object,
-  };
+    this.state = {
+      dirty: false,
+      errors: {},
+      hideDelete: props.main.user.role !== 'admin' || props.newTask === true ? 'hidden' : 'btn btn-danger',
+      newTask: false,
+      submitting: false,
+      taskId: '',
+      task: Object.assign({}, props.task),
+      status: [
+        { id: 1, name: 'Task - Not Started (New)' },
+        { id: 2, name: 'Task - On Track' },
+        { id: 3, name: 'Task - In Concern' },
+        { id: 4, name: 'Task - Behind Schedule' },
+        { id: 5, name: 'Task - Completed' }
+      ]
+    };
 
-  state = {
-    dirty: false,
-    errors: {},
-    hideDelete: null,
-    newTask: false,
-    taskId: '',
-    status: [
-      { id: 1, name: 'Task - Not Started (New)' },
-      { id: 2, name: 'Task - On Track' },
-      { id: 3, name: 'Task - In Concern' },
-      { id: 4, name: 'Task - Behind Schedule' },
-      { id: 5, name: 'Task - Completed' },
-    ],
-  };
+    this.cancelTask = this.cancelTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
+    this.saveTask = this.saveTask.bind(this);
+    this.updateTaskState = this.updateTaskState.bind(this);
+    this.updateTaskStateDate = this.updateTaskStateDate.bind(this);
+}
 
   componentDidMount() {
-    const _taskId = this.props.location.pathname.split('/')[2];
-    const _hideDelete = this.props.main.user.role !== 'admin' || this.props.newTask === true ? 'hidden' : 'btn btn-danger';
-    this.setState({ taskId: _taskId });
-    this.setState({ hideDelete: _hideDelete });
+    // const _taskId = this.props.location.pathname.split('/')[2];
+    // this.setState({ taskId: _taskId });
   }
 
-  cancelTask = (event) => {
-    event.preventDefault();
-    this.props.setLoading({ loading: false });
-    this.taskNav(this.props.main.MainId);
-  };
+  componentWillReceiveProps(nextProps) {
+    if (this.props.task._id != nextProps.task._id) {
+      // Necessary to populate form when existing course is loaded directly.
+      this.setState({task: Object.assign({}, nextProps.task)});
+    }
+  }
 
-  deleteTask = (event) => {
+  cancelTask(event) {
     event.preventDefault();
-    this.props.setLoading({ loading: false });
+    this.props.mainActions.setLoading({ loading: false });
+    this.taskNav(this.props.main.MainId);
+  }
+
+  deleteTask(event) {
+    event.preventDefault();
+    this.props.mainActions.setLoading({ loading: false });
     const _id = this.state.taskId;
-    this.props.deleteTask(_id);
+    this.props.taskActions.deleteTask(_id);
     toastr.error('Task has been deleted', 'Task Detail', { timeOut: 1000 });
     this.taskNav(this.props.main.MainId);
-  };
+  }
 
-  saveTask = (data) => {
+  saveTask(event) {
+    event.preventDefault();
+
     const _SourceId = this.props.main.MainId;
-    const _data = data;
+    let _task = this.state.task;
+
+    let validation = taskFormIsValid(_task);
+    this.setState({errors: validation.errors});
+
+    if(!validation.formIsValid) {
+      return; 
+    }
 
     if (this.state.taskId !== 'new') {
-      _data.TKChampNew = _data.TKChamp !== this.props.task.TKChamp;
-      _data._id = this.state.taskId;
-      _data.TKStat = typeof _data.TKStat === 'object' ? _data.TKStat.id : _data.TKStat;
-      _data.SourceId = _SourceId;
-      this.props.editTask(_data);
+      const TKChampNew = _task.TKChamp !== this.props.task.TKChamp;
+      this.props.taskActions.editTask(_task);
     } else {
-      _data.TKStat = _data.TKStat.id || 1;
-      _data.SourceId = _SourceId;
-      this.props.addTask(_data);
+      _task.TKStat = _task.TKStat.id || 1;
+      _task.SourceId = _SourceId;
+      this.props.taskActions.addTask(_task);
     }
 
     toastr.success('Task has been saved', 'Task Detail', { timeOut: 1000 });
     this.taskNav(_SourceId);
-  };
+  }
 
   taskNav(id) {
     if (this.props.main.CurrentMode === 'project') {
@@ -80,6 +98,20 @@ class TaskDetail extends React.Component {
     }
   }
 
+  updateTaskState(event) {
+    const field = event.target.name;
+    let task = this.state.task;
+    task[field] = event.target.value;
+    return this.setState({task: task});
+  }
+
+  updateTaskStateDate(field, value) {
+    // this.setState({dirty: true});
+    let task = this.state.task;
+    task[field] = value;
+    return this.setState({task: task});
+  }
+
   render() {
 
     const formStyle = {
@@ -87,7 +119,7 @@ class TaskDetail extends React.Component {
       border: 'solid 1px',
       borderRadius: 4,
       paddingTop: 10,
-      paddingBottom: 50,
+      paddingBottom: 50
     };
 
     const taskTitle = this.state.taskTitle ? this.state.taskTitle : 'New Task';
@@ -102,12 +134,17 @@ class TaskDetail extends React.Component {
 
           <div style={formStyle}>
             <TaskForm
-              onSubmit={this.saveTask}
-              status={this.state.status}
-              users={this.props.users}
-              deleteTask={this.deleteTask}
+              errors={this.state.errors}
               hideDelete={this.state.hideDelete}
-              onCancel={this.cancelTask} />
+              onCancel={this.cancelTask}
+              onChange={this.updateTaskState}
+              onDateChange={this.updateTaskStateDate}
+              onDeleteTask={this.deleteTask}
+              onSaveTask={this.saveTask}
+              status={this.state.status}
+              submitting={this.state.submitting}
+              task={this.state.task}
+              users={this.props.users} />
             </div>
         </div>
     );
@@ -118,12 +155,39 @@ TaskDetail.propTypes = {
   location: PropTypes.object,
   deleteTask: PropTypes.func,
   main: PropTypes.object,
+  mainActions: PropTypes.object,
   newTask: PropTypes.func,
   setLoading: PropTypes.func,
   editTask: PropTypes.func,
   addTask: PropTypes.func,
-  users: PropTypes.array,
+  task: PropTypes.object,
+  taskActions: PropTypes.object,
+  users: PropTypes.array
 };
 
-export default connect(state => ({ main: state.main, task: state.task, users: state.users }),
- { addTask, editTask, deleteTask, setLoading })(TaskDetail);
+TaskDetail.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+TaskDetail.childContextTypes = {
+  location: React.PropTypes.object
+};
+
+function mapStateToProps(state, ownProps) {
+  const taskId = ownProps.params.id;
+
+  return {
+    main: state.main,
+    task: state.task, 
+    users: usersFormattedForDropdown(state.users)
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    taskActions: bindActionCreators(taskActions, dispatch),
+    mainActions: bindActionCreators(mainActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskDetail);

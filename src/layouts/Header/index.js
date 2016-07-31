@@ -8,36 +8,37 @@ import { getUserDashboard, login } from 'actions/actions_main';
 /* component styles */
 import './styles.scss';
 
-@connect(
-  state => ({ fullname: state.main.user.fullname }), { getUserDashboard, login }
-)
+class Header extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+       login: {}
+    };
+    this.onLogin = this.onLogin.bind(this);
+    this.setStateLogin = this.setStateLogin.bind(this);
+  }
 
-export class Header extends Component {
-
-  state = {
-    login: {},
-  };
-
-  onLogin = (e) => {
+  onLogin(e) {
     e.preventDefault();
     this.props.login(this.state.login);
     this.props.getUserDashboard(this.state.login.username);
-  };
+  }
 
-  setStateLogin = (evt) => {
+  setStateLogin(evt) {
+    let _login = this.state.login;
     const name = evt.target.name;
     const value = evt.target.value;
-    this.state.login[name] = value;
-    return this.setState({ login: this.state.login });
-  };
+    _login[name] = value;
+    return this.setState({ login: _login });
+  }
 
   render() {
     const textStyle = {
-      color: 'white',
+      color: 'white'
     };
 
     const loginStyle = {
-      marginTop: 5,
+      marginTop: 5
     };
 
 
@@ -49,7 +50,7 @@ export class Header extends Component {
                         <h3 className="topband_h1">Change Control</h3>
                     </div>
                     <div className="col-sm-7" style={loginStyle}>
-                        { !this.props.fullname ?
+                        {!this.props.fullname ?
                           <Login
                             login={this.state.login}
                             onChange={this.setStateLogin}
@@ -68,6 +69,11 @@ export class Header extends Component {
 }
 
 Header.propTypes = {
+  getUserDashboard: React.PropTypes.func.isRequired,
   login: React.PropTypes.object,
-  fullname: React.PropTypes.string,
+  fullname: React.PropTypes.string
 };
+
+export default connect(
+  state => ({ fullname: state.main.user.fullname }), { getUserDashboard, login }
+)(Header);

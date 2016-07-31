@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   task: TaskReducer,
   files: FilesReducer,
   users: UsersReducer,
-  user: UserReducer,
+  user: UserReducer
 });
 
 export default rootReducer;

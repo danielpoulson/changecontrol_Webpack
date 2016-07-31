@@ -45,7 +45,7 @@ export default function (state, action) {
     case USER_LOGGED_OUT:
       return {
         ...state,
-        user: initialState.user,
+        user: initialState.user
       };
 
     case SET_FILETAB_COUNT:
@@ -60,18 +60,20 @@ export default function (state, action) {
         loading: action.data.loading
       };
 
-    case SET_USER_DASHBOARD:
-      const countChangesUser = action.payload.data ? action.payload.data.changeCount : 0;
-      const countTasksUser = action.payload.data ? action.payload.data.taskCount : 0;
-      const allOpenTasks = action.payload.data ? action.payload.data.allTaskCount : 0;
-      const allOpenChanges = action.payload.data ? action.payload.data.allChangeCount : 0;
-      return {
-        ...state,
-        countChangesUser,
-        countTasksUser,
-        allOpenTasks,
-        allOpenChanges
-      }
+  case SET_USER_DASHBOARD: {
+    const countChangesUser = action.payload.data ? action.payload.data.changeCount : 0;
+    const countTasksUser = action.payload.data ? action.payload.data.taskCount : 0;
+    const allOpenTasks = action.payload.data ? action.payload.data.allTaskCount : 0;
+    const allOpenChanges = action.payload.data ? action.payload.data.allChangeCount : 0;
+    return {
+      ...state,
+      countChangesUser,
+      countTasksUser,
+      allOpenTasks,
+      allOpenChanges
+    };
+  }
+
 
     default:
       return state;

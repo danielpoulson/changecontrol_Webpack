@@ -16,7 +16,7 @@ const TaskRow = (props) => {
 
 TaskRow.propTypes = {
   task: PropTypes.object,
-  getTask: PropTypes.func.isRequired,
+  getTask: PropTypes.func.isRequired
 };
 
 export default TaskRow;

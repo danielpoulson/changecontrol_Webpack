@@ -5,7 +5,7 @@ const UserSelect = (props) => {
   const fnStyle = {
     marginLeft: 40,
     paddingTop: 20,
-    paddingBottom: 10,
+    paddingBottom: 10
   };
 
   return (
@@ -32,7 +32,7 @@ const UserSelect = (props) => {
 UserSelect.propTypes = {
   users: PropTypes.array,
   onChange: PropTypes.func,
-  newUser: PropTypes.func.isRequired,
+  newUser: PropTypes.func.isRequired
 };
 
 export default UserSelect;

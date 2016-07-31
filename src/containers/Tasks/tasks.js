@@ -18,10 +18,11 @@ class Tasks extends Component {
         paged: {},
         count: 0,
         numPage: 15,
-        txtSearch: '',
+        txtSearch: ''
       };
 
     this.onSearchText = this.onSearchText.bind(this);
+    this.onSortByClick = this.onSortByClick.bind(this);
     this.linkClick = this.linkClick.bind(this);
     this.exportTask = this.exportTask.bind(this);
 
@@ -54,10 +55,10 @@ class Tasks extends Component {
     this.onChange(0, value);
   }
 
-  onSortByClick = (column) => {
+  onSortByClick(column) {
     this.setState({ activePage: 0 });
     this.onChange(0, this.state.txtSearch, column);
-  };
+  }
 
   linkClick(i) {
     // TODO: LOW (BUG) Pagination Adding 1 to the page mumber as it uses the base of 0
@@ -70,7 +71,7 @@ class Tasks extends Component {
       fsSource: 'exp',
       fsAddedBy: this.props.user.username,
       fsType: 'tasks',
-      search: this.state.txtSearch,
+      search: this.state.txtSearch
     };
 
     this.props.exportTasks(info);
@@ -128,7 +129,7 @@ Tasks.propTypes = {
   tasks: PropTypes.object,
   exportTasks: PropTypes.func,
   getAllTasks: PropTypes.func,
-  loadPageTask: PropTypes.func,
+  loadPageTask: PropTypes.func
 };
 
 export default connect(state => ({ tasks: state.tasks, user: state.main.user }),

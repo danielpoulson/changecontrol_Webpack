@@ -2,30 +2,36 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import UserProfileForm from 'components/User/user-profile-form';
 import UserSelect from 'components/User/user-select';
+import {usersFormattedForDropdown} from '../../selectors/selectors';
+import {userFormIsValid} from './user-form.validation';
 import toastr from 'toastr';
 
 import { getUser, getUsers, createUser, resetUser, saveUser, deleteUser } from 'actions/actions_users';
 
 class UserProfile extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-  };
-
-  static childContextTypes = {
-    location: React.PropTypes.object,
-  };
 
   constructor(props) {
     super(props);
 
     this.state = {
       isNewUser: false,
+      user: Object.assign({}, props.user),
+      errors: {}
     };
 
     this.saveUser = this.saveUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
     this.newUser = this.newUser.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onCancel = this.onCancel.bind(this);
+    this.updateUserState = this.updateUserState.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.user._id != nextProps.user._id) {
+      // Necessary to populate form when existing course is loaded directly.
+      this.setState({user: Object.assign({}, nextProps.user)});
+    }
   }
 
   onChange(value) {
@@ -47,15 +53,32 @@ class UserProfile extends Component {
     this.props.getUsers();
   }
 
-  saveUser(data) {
+  saveUser(event) {
+    event.preventDefault();
+    let _user = this.state.user;
+
+    let validation = userFormIsValid(_user);
+    this.setState({errors: validation.errors});
+
+    if(!validation.formIsValid) {
+      return; 
+    }
+
     if (this.state.isNewUser) {
-      this.props.createUser(data);
+      this.props.createUser(_user);
       this.setState({ isNewUser: false });
       toastr.success('New user account has been created', 'User Account', { timeOut: 1000 });
     } else {
-      this.props.saveUser(data);
+      this.props.saveUser(_user);
       toastr.success('User account has been saved', 'User Account', { timeOut: 1000 });
     }
+  }
+
+  updateUserState(event) {
+    const field = event.target.name;
+    let user = this.state.user;
+    user[field] = event.target.value;
+    return this.setState({user: user});
   }
 
   render() {
@@ -66,7 +89,7 @@ class UserProfile extends Component {
       borderRadius: 4,
       marginRight: 0,
       marginLeft: 0,
-      padding: 15,
+      padding: 15
 
     };
 
@@ -83,14 +106,19 @@ class UserProfile extends Component {
           </div>
         </div>
 
-        { this.state.isNewUser ? null :
+        {this.state.isNewUser ? null :
           <UserSelect users={this.props.users} onChange={this.onChange} newUser={this.newUser} />
         }
 
         <div className="row" style={formStyle}>
           <UserProfileForm
-            onSubmit={this.saveUser}
+            errors={this.state.errors}
+            user={this.state.user}
+            newUser={this.state.isNewUser}
+            onSave={this.saveUser}
             deleteUser={this.deleteUser}
+            onCancel={this.onCancel}
+            onChange={this.updateUserState}
             roleSelect={roleSelect} />
         </div>
 
@@ -108,9 +136,24 @@ UserProfile.propTypes = {
   getUsers: PropTypes.func,
   createUser: PropTypes.func,
   saveUser: PropTypes.func,
-  deleteUser: PropTypes.func,
+  deleteUser: PropTypes.func
 
 };
 
-export default connect(state => ({ users: state.users, user: state.user }),
+UserProfile.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+UserProfile.childContextTypes = {
+  location: React.PropTypes.object
+};
+
+function mapStateToProps(state, ownProps) {
+  return {
+    user: state.user,  
+    users: usersFormattedForDropdown(state.users)
+  };
+}
+
+export default connect(mapStateToProps,
 { getUser, createUser, resetUser, saveUser, deleteUser, getUsers })(UserProfile);

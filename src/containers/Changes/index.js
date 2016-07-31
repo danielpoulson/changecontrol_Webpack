@@ -10,17 +10,7 @@ import SearchBox from 'components/Common/search-box';
 import { getChange, getChanges, addChange, loadPage, exportChanges } from 'actions/actions_changes';
 import { setMain } from 'actions/actions_main';
 
-@connect(state => ({ changes: state.changes, user: state.main.user }),
-  { getChange, getChanges, addChange, loadPage, exportChanges, setMain })
-
-export default class Changes extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
-  };
-
-  static childContextTypes = {
-    location: React.PropTypes.object
-  };
+class Changes extends Component {
 
   constructor(props) {
     super(props);
@@ -33,6 +23,10 @@ export default class Changes extends Component {
       txtSearch: '',
       showAll: false
     };
+    this.allChanges = this.allChanges.bind(this);
+    this.exportChange = this.exportChange.bind(this);
+    this.newChange = this.newChange.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.onSearchText = this.onSearchText.bind(this);
     this.onSortByClick = this.onSortByClick.bind(this);
     this.onGetChange = this.onGetChange.bind(this);
@@ -57,14 +51,14 @@ export default class Changes extends Component {
     this.onChange(0, value);
   }
 
-  onChange = (page_num, searchText, column) => {
+  onChange(page_num, searchText, column) {
     const action = {};
     action.page_num = page_num || 1;
     action.search = searchText || null;
     action.numPage = this.state.numPage;
     action.column = column;
     this.props.loadPage(action);
-  };
+  }
 
   onGetChange(i) {
     const _id = i;
@@ -85,7 +79,7 @@ export default class Changes extends Component {
     this.setState({ activePage: i });
   }
 
-  allChanges = () => {
+  allChanges() {
     let _showAll = this.state.showAll;
     _showAll = !_showAll;
     this.setState({ showAll: _showAll });
@@ -98,9 +92,9 @@ export default class Changes extends Component {
     this.setState({ txtSearch: null });
     this.setState({ activePage: 0 });
     Toastr.success(`Only showing active changes - ${this.state.showAll}`, 'Change Detail', { timeOut: 1000 });
-  };
+  }
 
-  exportChange = () => {
+  exportChange() {
     const info = {
       fsSource: 'exp',
       fsAddedBy: this.props.user.username,
@@ -110,16 +104,16 @@ export default class Changes extends Component {
     };
 
     this.props.exportChanges(info);
-  };
+  }
 
-  newChange = () => {
+  newChange() {
     this.props.getChange(null);
     this.props.setMain({ MainId: 'new', CurrentMode: 'change', loading: false });
     this.context.router.push('/change/new');
-  };
+  }
 
   render() {
-    var _changeTitle = 'Register';
+    let _changeTitle = 'Register';
     let butText;
 
 
@@ -192,5 +186,16 @@ Changes.propTypes = {
   getChange: PropTypes.func,
   loadPage: PropTypes.func,
   setMain: PropTypes.func,
-  user: PropTypes.object,
+  user: PropTypes.object
 };
+
+Changes.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+Changes.childContextTypes = {
+  location: React.PropTypes.object
+};
+
+export default connect(state => ({ changes: state.changes, user: state.main.user }),
+  { getChange, getChanges, addChange, loadPage, exportChanges, setMain })(Changes);

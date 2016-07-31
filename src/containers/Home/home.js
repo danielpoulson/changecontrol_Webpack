@@ -9,51 +9,48 @@ import LineChart from 'components/graphs/line-chart';
 /* component styles */
 import { tile, dashboard } from './styles.scss';
 
-@connect(
-  state => ({ fullname: state.main.user.fullname,
-    countChangesUser: state.main.countChangesUser,
-    allOpenChanges: state.main.allOpenChanges,
-    allOpenTasks: state.main.allOpenTasks,
-    countTasksUser: state.main.countTasksUser }), { getUserDashboard, loadPage, loadPageTask}
-)
-
 export default class Home extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-  };
+  constructor(props){
+    super(props);
+
+    this.getAllChanges = this.getAllChanges.bind(this);
+    this.getAllTasks = this.getAllTasks.bind(this);
+    this.getChanges = this.getChanges.bind(this);
+    this.getTasks = this.getTasks.bind(this);
+  }
 
   componentWillMount(){
     const username = sessionStorage.getItem('username');
     this.props.getUserDashboard(username);
   }
 
-  getTasks = () => {
+  getTasks() {
     const action = {};
     action.search = this.props.fullname || null;
     this.props.loadPageTask(action);
     this.context.router.push('/tasks');
-  };
+  }
 
-  getChanges = () => {
+  getChanges() {
     const action = {};
     action.search = this.props.fullname || null;
     this.props.loadPage(action);
     this.context.router.push('/changes');
-  };
+  }
 
-  getAllTasks = () => {
+  getAllTasks() {
     const action = {};
     action.search = null;
     this.props.loadPageTask(action);
     this.context.router.push('/tasks');
-  };
+  }
 
-  getAllChanges = () => {
+  getAllChanges() {
     const action = {};
     action.search = null;
     this.props.loadPage(action);
     this.context.router.push('/changes');
-  };
+  }
 
   render(){
     return(
@@ -96,6 +93,29 @@ export default class Home extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
+}
+
+Home.propTypes = {
+  allOpenChanges: React.PropTypes.number.isRequired,
+  allOpenTasks: React.PropTypes.number.isRequired,
+  countChangesUser: React.PropTypes.number.isRequired,
+  countTasksUser: React.PropTypes.number.isRequired,
+  getUserDashboard: React.PropTypes.func.isRequired,
+  fullname: React.PropTypes.string.isRequired,
+  loadPage: React.PropTypes.func.isRequired,
+  loadPageTask: React.PropTypes.func.isRequired
 };
+
+Home.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+export default connect(
+  state => ({ fullname: state.main.user.fullname,
+    countChangesUser: state.main.countChangesUser,
+    allOpenChanges: state.main.allOpenChanges,
+    allOpenTasks: state.main.allOpenTasks,
+    countTasksUser: state.main.countTasksUser }), { getUserDashboard, loadPage, loadPageTask}
+)(Home);
