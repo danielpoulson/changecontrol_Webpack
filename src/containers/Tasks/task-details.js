@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import TaskForm from 'components/Tasks/task-form';
 import toastr from 'toastr';
-import {taskFormIsValid} from '../components/task-form.validation';
+import {taskFormIsValid} from './task-form.validation';
 import {usersFormattedForDropdown} from '../../selectors/selectors';
 
 import * as taskActions from 'actions/actions_tasks';

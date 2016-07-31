@@ -81,7 +81,7 @@ const common = {
   },
 };
 
-if (TARGET === 'start' || !TARGET) {
+if (TARGET === 'open:src' || !TARGET) {
   module.exports = merge(development, common);
 }
 
