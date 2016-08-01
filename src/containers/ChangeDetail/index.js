@@ -16,8 +16,8 @@ import { setMain } from 'actions/actions_main';
 
 class ChangeDetail extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       change: Object.assign({}, props.change),
       changeTitle: 'Get the main title',
@@ -43,8 +43,8 @@ class ChangeDetail extends Component {
     this.cancelChange = this.cancelChange.bind(this);
     this.onApprove = this.onApprove.bind(this);
     this.onCancel = this.onCancel.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onDateChange = this.onDateChange.bind(this);
+    this.updateChangeState = this.updateChangeState.bind(this);
+    this.updateChangeStateDate = this.updateChangeStateDate.bind(this);
     this.onFinal = this.onFinal.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
     this.saveChange = this.saveChange.bind(this);
@@ -215,7 +215,7 @@ class ChangeDetail extends Component {
             onApprove={this.onApprove}
             onFinal={this.onFinal}
             onCancel={this.onCancel}
-            log={this.props.change} />
+            log={this.state.change} />
 
           <TaskList
             tasklist = {this.props.tasklist}
@@ -255,17 +255,17 @@ ChangeDetail.childContextTypes = {
   location: React.PropTypes.object
 };
 
-function mapStateToProps(state, ownProps) {
-
+const mapStateToProps = (state) => {
   return {
     change: state.change,
     main: state.main,
     tasklist: state.tasks.ctlist,
     ctTotal: state.tasks.ctTotal,
     users: usersFormattedForDropdown(state.users)
-  };
-}
+  }
+};
 
-export default connect(mapStateToProps, {
-  addChange, createLog, editChange, getChange, getProjectTasks, setMain
-})(ChangeDetail);
+export default connect(
+  mapStateToProps,
+  {addChange, createLog, editChange, getChange, getProjectTasks, setMain}
+)(ChangeDetail);

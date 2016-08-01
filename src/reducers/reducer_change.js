@@ -1,6 +1,11 @@
 import { GET_CHANGE, CREATE_LOG } from 'actions/actions_changes';
 
-export default function (state = null, action) {
+const initialState = {
+  CC_No:"",
+  CC_Descpt:""
+};
+
+export default function (state = initialState, action) {
 
   switch (action.type) {
     case GET_CHANGE:

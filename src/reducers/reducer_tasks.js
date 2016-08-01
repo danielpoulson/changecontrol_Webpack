@@ -3,7 +3,9 @@ import _ from 'lodash';
 
 const initialState = {
   alldata: [],
-  paged: []
+  paged: [],
+  ctTotal: 0,
+  ctlist: []
 };
 
 function searchIndex(data, index) {
