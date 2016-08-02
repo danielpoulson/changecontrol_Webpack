@@ -28,7 +28,6 @@ class ChangeDetail extends Component {
       FilesTab: 'hidden',
       fCount: 0,
       LogTab: 'hidden',
-      mainId: 'new',
       tasks: [],
       TasksTab: 'hidden',
       tCount: 0,
@@ -188,7 +187,7 @@ class ChangeDetail extends Component {
               <a onClick={this.showTab.bind(this, 'TasksTab')} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
             </li>
             <li className={fileTabClass}>
-              <a onClick={this.showTab.bind(this, 'FilesTab')} data-toggle="tab">Files <span className="badge"> {} </span></a>
+              <a onClick={this.showTab.bind(this, 'FilesTab')} data-toggle="tab">Files <span className="badge"> {this.props.main.fileTabCount} </span></a>
             </li>
             <li className={logTabClass}>
               <a onClick={this.showTab.bind(this, 'LogTab')} data-toggle="tab">Log</a>
@@ -210,6 +209,23 @@ class ChangeDetail extends Component {
               </div>
             </div>
           </div>
+
+          <ChangeLog
+            logTab={this.state.LogTab}
+            onApprove={this.onApprove}
+            onFinal={this.onFinal}
+            onCancel={this.onCancel}
+            log={this.state.change} />
+
+          <TaskList
+            tasklist = {this.props.tasklist}
+            tasksTab = {this.state.TasksTab}
+            title={this.state.changeTitle} />
+
+          <FileList
+            filesTab={this.state.FilesTab}
+            refreshChange={this.onRefresh}
+            sourceId={this.props.location.pathname.split('/')[2]} />
 
       </div>
     );

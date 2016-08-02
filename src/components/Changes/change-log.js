@@ -4,7 +4,8 @@ import moment from 'moment';
 const ChangeLog = (props) => {
 
   let logs = [];
-  const _log = props.log.CC_No;
+  const _log = null;
+  // const _log = props.log.CC_No;
   const spanStyle = { color: 'blue' };
   const butGroup = { padding: 10 };
 

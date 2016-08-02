@@ -11,10 +11,7 @@ const initialState = {
   }
 };
 
-export default function (state, action) {
-  if (typeof state === 'undefined') {
-    return initialState;
-  }
+export default function (state = initialState, action) {
 
   switch (action.type) {
     case SET_MAIN:

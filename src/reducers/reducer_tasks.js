@@ -32,7 +32,7 @@ function searchData(data, searchText, sortColumn) {
   return newList;
 }
 
-export default function (state, action) {
+export default function (state = initialState, action) {
   let alldata = [];
   let _data = {};
   let per_page = 15;
@@ -43,10 +43,6 @@ export default function (state, action) {
   let currIds = [];
   let ctTotal = 0;
   let ctlist = [];
-
-  if (typeof state === 'undefined') {
-    return initialState;
-  }
 
   switch (action.type) {
     case ADD_TASK:
