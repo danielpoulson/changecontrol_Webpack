@@ -59,6 +59,13 @@ class ChangeDetail extends Component {
     this.setState({ ccNo: CC_No });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.change._id != nextProps.change._id) {
+      // Necessary to populate form when existing course is loaded directly.
+      this.setState({change: Object.assign({}, nextProps.change)});
+    }
+  }
+
   onRefresh() {
     this.props.getChange(this.state.ccNo);
   }
@@ -211,6 +218,23 @@ class ChangeDetail extends Component {
             </div>
           </div>
 
+          <TaskList
+            tasklist = {this.props.tasklist}
+            tasksTab = {this.state.TasksTab}
+            title={this.state.changeTitle} />
+          
+          <ChangeLog
+            logTab={this.state.LogTab}
+            onApprove={this.onApprove}
+            onFinal={this.onFinal}
+            onCancel={this.onCancel}
+            log={this.state.change} />
+
+          <FileList
+            filesTab={this.state.FilesTab}
+            refreshChange={this.onRefresh}
+            sourceId={this.props.location.pathname.split('/')[2]} />
+
       </div>
     );
   }
@@ -246,7 +270,7 @@ const mapStateToProps = (state) => {
     tasklist: state.tasks.ctlist,
     ctTotal: state.tasks.ctTotal,
     users: usersFormattedForDropdown(state.users)
-  }
+  };
 };
 
 export default connect(

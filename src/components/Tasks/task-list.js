@@ -68,5 +68,5 @@ TaskList.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
-export default connect(state => null,
+export default connect(null,
   { getTask, getChange, setMain })(TaskList);
