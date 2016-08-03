@@ -70,7 +70,7 @@ class Header extends Component {
 
 Header.propTypes = {
   getUserDashboard: React.PropTypes.func.isRequired,
-  login: React.PropTypes.object,
+  login: React.PropTypes.func,
   fullname: React.PropTypes.string
 };
 

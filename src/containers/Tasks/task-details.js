@@ -22,11 +22,11 @@ class TaskDetail extends React.Component {
       taskId: '',
       task: Object.assign({}, props.task),
       status: [
-        { id: 1, name: 'Task - Not Started (New)' },
-        { id: 2, name: 'Task - On Track' },
-        { id: 3, name: 'Task - In Concern' },
-        { id: 4, name: 'Task - Behind Schedule' },
-        { id: 5, name: 'Task - Completed' }
+        { value: 1, text: 'Task - Not Started (New)' },
+        { value: 2, text: 'Task - On Track' },
+        { value: 3, text: 'Task - In Concern' },
+        { value: 4, text: 'Task - Behind Schedule' },
+        { value: 5, text: 'Task - Completed' }
       ]
     };
 
@@ -43,6 +43,7 @@ class TaskDetail extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(this.props.task);
     if (this.props.task._id != nextProps.task._id) {
       // Necessary to populate form when existing course is loaded directly.
       this.setState({task: Object.assign({}, nextProps.task)});

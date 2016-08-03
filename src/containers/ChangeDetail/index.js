@@ -33,11 +33,11 @@ class ChangeDetail extends Component {
       TasksTab: 'hidden',
       tCount: 0,
       status: [
-        { id: 1, name: 'Review' },
-        { id: 2, name: 'Approved' },
-        { id: 3, name: 'On-hold' },
-        { id: 4, name: 'Closed' },
-        { id: 5, name: 'Cancelled' }
+        { value: 1, text: 'Review' },
+        { value: 2, text: 'Approved' },
+        { value: 3, text: 'On-hold' },
+        { value: 4, text: 'Closed' },
+        { value: 5, text: 'Cancelled' }
       ]
     };
 
@@ -195,7 +195,7 @@ class ChangeDetail extends Component {
               <a onClick={this.showTab.bind(this, 'TasksTab')} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
             </li>
             <li className={fileTabClass}>
-              <a onClick={this.showTab.bind(this, 'FilesTab')} data-toggle="tab">Files <span className="badge"> {} </span></a>
+              <a onClick={this.showTab.bind(this, 'FilesTab')} data-toggle="tab">Files <span className="badge"> {this.props.ctTotal} </span></a>
             </li>
             <li className={logTabClass}>
               <a onClick={this.showTab.bind(this, 'LogTab')} data-toggle="tab">Log</a>

@@ -2,7 +2,8 @@ import { GET_CHANGE, CREATE_LOG } from 'actions/actions_changes';
 
 const initialState = {
   CC_No:"",
-  CC_Descpt:""
+  CC_Descpt:"",
+  CC_LOG: []
 };
 
 export default function (state = initialState, action) {

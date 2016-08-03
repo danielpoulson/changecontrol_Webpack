@@ -180,7 +180,7 @@ class Changes extends Component {
 }
 
 Changes.propTypes = {
-  changes: PropTypes.array,
+  changes: PropTypes.object,
   exportChanges: PropTypes.func,
   getChanges: PropTypes.func,
   getChange: PropTypes.func,

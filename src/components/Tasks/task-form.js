@@ -92,8 +92,10 @@ TaskForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onDeleteTask: PropTypes.func.isRequired,
   hideDelete: PropTypes.string,
-  submitting: PropTypes.string,
+  submitting: React.PropTypes.bool,
   status: PropTypes.array.isRequired,
-  task: PropTypes.array.isRequired,
+  task: PropTypes.object.isRequired,
   users: PropTypes.array.isRequired
 	};
+
+  export default TaskForm;
