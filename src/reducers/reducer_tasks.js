@@ -58,11 +58,9 @@ export default function (state = initialState, action) {
 
     case EDIT_TASK: {
       _data = action.payload;
-      currIds = state.alldata.map(c => c._id);
-      const index = currIds.indexOf(_data._id);
 
-      const ctIds = state.ctlist.map(c => c._id);
-      const ctIndex = currIds.indexOf(_data._id);
+      const index = state.alldata.findIndex(item => item._id === _data._id);
+      const ctIndex = state.ctlist.findIndex(item => item._id === _data._id);
 
       alldata = [
         ...state.alldata.slice(0, index),
@@ -72,10 +70,10 @@ export default function (state = initialState, action) {
       ];
 
       ctlist = [
-        ...state.ctlist.slice(0, index),
+        ...state.ctlist.slice(0, ctIndex),
         // Copy the object before mutating
         Object.assign({}, _data),
-        ...state.ctlist.slice(index + 1)
+        ...state.ctlist.slice(ctIndex + 1)
       ];
 
       return {
