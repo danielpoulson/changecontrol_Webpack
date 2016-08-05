@@ -35,15 +35,9 @@ class TaskDetail extends React.Component {
     this.saveTask = this.saveTask.bind(this);
     this.updateTaskState = this.updateTaskState.bind(this);
     this.updateTaskStateDate = this.updateTaskStateDate.bind(this);
-}
-
-  componentDidMount() {
-    // const _taskId = this.props.location.pathname.split('/')[2];
-    // this.setState({ taskId: _taskId });
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props.task);
     if (this.props.task._id != nextProps.task._id) {
       // Necessary to populate form when existing course is loaded directly.
       this.setState({task: Object.assign({}, nextProps.task)});

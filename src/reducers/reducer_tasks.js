@@ -61,15 +61,27 @@ export default function (state = initialState, action) {
       currIds = state.alldata.map(c => c._id);
       const index = currIds.indexOf(_data._id);
 
+      const ctIds = state.ctlist.map(c => c._id);
+      const ctIndex = currIds.indexOf(_data._id);
+
       alldata = [
         ...state.alldata.slice(0, index),
         // Copy the object before mutating
         Object.assign({}, _data),
         ...state.alldata.slice(index + 1)
       ];
+
+      ctlist = [
+        ...state.ctlist.slice(0, index),
+        // Copy the object before mutating
+        Object.assign({}, _data),
+        ...state.ctlist.slice(index + 1)
+      ];
+
       return {
         ...state,
-        alldata
+        alldata,
+        ctlist
       };
     }
 

@@ -10,8 +10,8 @@ import { getUser, getUsers, createUser, resetUser, saveUser, deleteUser } from '
 
 class UserProfile extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
     this.state = {
       isNewUser: false,
@@ -23,7 +23,6 @@ class UserProfile extends Component {
     this.deleteUser = this.deleteUser.bind(this);
     this.newUser = this.newUser.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.onCancel = this.onCancel.bind(this);
     this.updateUserState = this.updateUserState.bind(this);
   }
 

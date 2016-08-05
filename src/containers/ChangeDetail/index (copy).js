@@ -262,7 +262,7 @@ const mapStateToProps = (state) => {
     tasklist: state.tasks.ctlist,
     ctTotal: state.tasks.ctTotal,
     users: usersFormattedForDropdown(state.users)
-  }
+  };
 };
 
 export default connect(
