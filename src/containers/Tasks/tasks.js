@@ -6,6 +6,7 @@ import Pagination from 'components/Common/pagination';
 import SearchBox from 'components/Common/search-box';
 /* actions */
 import { getAllTasks, loadPageTask, exportTasks } from 'actions/actions_tasks';
+import { getFiles } from 'actions/actions_files';
 
 // TODO: MED 3 - Make a common component search box Changes and Task List
 // Changes and Task share the same search text box function which should be made as a common component
@@ -75,6 +76,8 @@ class Tasks extends Component {
     };
 
     this.props.exportTasks(info);
+    this.props.getFiles('exp');
+    this.context.router.push('/export');
   }
 
   render() {
@@ -129,8 +132,17 @@ Tasks.propTypes = {
   tasks: PropTypes.object,
   exportTasks: PropTypes.func,
   getAllTasks: PropTypes.func,
+  getFiles: PropTypes.func,
   loadPageTask: PropTypes.func
 };
 
+Tasks.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+Tasks.childContextTypes = {
+  location: React.PropTypes.object
+};
+
 export default connect(state => ({ tasks: state.tasks, user: state.main.user }),
-  { getAllTasks, loadPageTask, exportTasks })(Tasks);
+  { getAllTasks, loadPageTask, exportTasks, getFiles })(Tasks);

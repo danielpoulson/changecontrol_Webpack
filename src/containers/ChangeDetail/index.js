@@ -119,7 +119,7 @@ class ChangeDetail extends Component {
   }
 
 // TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
-  saveChange() {
+  saveChange(event) {
     event.preventDefault();
     let _change = this.state.change;
 
@@ -127,7 +127,7 @@ class ChangeDetail extends Component {
     this.setState({errors: validation.errors});
 
     if(!validation.formIsValid) {
-      return; 
+      return;
     }
 
     if (this.state.ccNo !== 'new') {
@@ -222,7 +222,7 @@ class ChangeDetail extends Component {
             tasklist = {this.props.tasklist}
             tasksTab = {this.state.TasksTab}
             title={this.state.changeTitle} />
-          
+
           <ChangeLog
             logTab={this.state.LogTab}
             onApprove={this.onApprove}

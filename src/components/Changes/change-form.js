@@ -9,7 +9,7 @@ momentLocalizer(Moment);
 
 const ChangeForm = ({
   errors, change, status, users, onSave, onChange, onDateChange, onCancel }) => {
-  
+
   return(
     <form className="form form-horizontal" >
       <FormInput
@@ -19,7 +19,7 @@ const ChangeForm = ({
         onChange={onChange}
         placeholder="Enter the title of your change request (Required)"
         labelstyle="col-sm-2 control-label"
-        inputdiv="col-sm-4"
+        inputdiv="col-sm-9"
         error={errors.CC_Descpt}/>
 
       <FormInput
@@ -29,7 +29,7 @@ const ChangeForm = ({
         onChange={onChange}
         placeholder="Enter an item code (Required)"
         labelstyle="col-sm-2 control-label"
-        inputdiv="col-sm-6"
+        inputdiv="col-sm-4"
         error={errors.CC_Code}/>
 
       <FormInput
@@ -39,8 +39,8 @@ const ChangeForm = ({
         onChange={onChange}
         placeholder="Does this CC affect multiply products?"
         labelstyle="col-sm-2 control-label"
-        inputdiv="col-sm-6"
-        error={errors.CC_Multi}/> 
+        inputdiv="col-sm-4"
+        error={errors.CC_Multi}/>
 
       <FormInput
         name="CC_ASS"
@@ -115,7 +115,7 @@ const ChangeForm = ({
         name="CC_Curt"
         label="Current Situation"
         value={change.CC_Curt || ''}
-        rows="4"
+        rows="5"
         onChange={onChange}
         error={errors.CC_Curt}
         labelstyle="col-sm-2 control-label"
@@ -125,7 +125,7 @@ const ChangeForm = ({
         name="CC_Prop"
         label="Proposed Situation"
         value={change.CC_Prop || ''}
-        rows="4"
+        rows="5"
         onChange={onChange}
         error={errors.CC_Prop}
         labelstyle="col-sm-2 control-label"
@@ -135,7 +135,7 @@ const ChangeForm = ({
         name="CC_Rat"
         label="Justification and Rational"
         value={change.CC_Rat || ''}
-        rows="4"
+        rows="2"
         onChange={onChange}
         error={errors.CC_Rat}
         labelstyle="col-sm-2 control-label"
@@ -148,12 +148,12 @@ const ChangeForm = ({
         <button className="btn btn-info dp-margin-10-LR" onClick={onCancel}>
           Cancel
         </button>
-      </div>   
+      </div>
     </form>
   );
 };
 
-ChangeForm.propTypes = {  
+ChangeForm.propTypes = {
     change: React.PropTypes.object.isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,

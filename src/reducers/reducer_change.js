@@ -1,20 +1,22 @@
 import { GET_CHANGE, CREATE_LOG } from 'actions/actions_changes';
 
 const initialState = {
-  CC_No:"",
-  CC_Descpt:"",
+  CC_No: "New",
+  CC_Descpt: "Change Control",
+  CC_Champ: "",
+  CC_Stat: 1,
   CC_LOG: []
 };
 
 export default function (state = initialState, action) {
 
   switch (action.type) {
-    case GET_CHANGE:
-      if (!action.payload.data) {
-        return null;
-      }
+    case GET_CHANGE: {
+      const _change = action.payload.data || initialState;
 
-      return action.payload.data;
+      return _change;
+
+    }
 
     case CREATE_LOG: {
       const _addLog = state.CC_LOG;
