@@ -23,7 +23,7 @@ const SelectInput = ({name, label, inputdiv, labelstyle, onChange, defaultOption
         </div>
         {error && <span className="alert alert-danger" style={errorStyle}>{error}</span>}
       </div>
-        
+
     </div>
   );
 };

@@ -19,7 +19,7 @@ class TaskDetail extends React.Component {
       hideDelete: props.main.user.role !== 'admin' || props.newTask === true ? 'hidden' : 'btn btn-danger',
       newTask: false,
       submitting: false,
-      taskId: '',
+      taskId: props.location.pathname.split('/')[2],
       task: Object.assign({}, props.task),
       status: [
         { value: 1, text: 'Task - Not Started (New)' },
@@ -69,7 +69,7 @@ class TaskDetail extends React.Component {
     this.setState({errors: validation.errors});
 
     if(!validation.formIsValid) {
-      return; 
+      return;
     }
 
     if (this.state.taskId !== 'new') {
@@ -173,7 +173,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     main: state.main,
-    task: state.task, 
+    task: state.task,
     users: usersFormattedForDropdown(state.users)
   };
 }

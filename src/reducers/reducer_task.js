@@ -1,6 +1,6 @@
 import { GET_TASK, EDIT_TASK } from 'actions/actions_tasks';
 
-const initialState = { _id: '', TKCapa: 0, TKStat: 0, TKChamp: '' };
+const initialState = { _id: "new", TKCapa: 0, TKStat: 0, TKChamp: '' };
 
 export default function (state = initialState, action) {
 
