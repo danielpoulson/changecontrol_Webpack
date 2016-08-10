@@ -19,14 +19,14 @@ class TaskDetail extends React.Component {
       hideDelete: props.main.user.role !== 'admin' || props.newTask === true ? 'hidden' : 'btn btn-danger',
       newTask: false,
       submitting: false,
-      taskId: '',
+      taskId: props.location.pathname.split('/')[2],
       task: Object.assign({}, props.task),
       status: [
-        { id: 1, name: 'Task - Not Started (New)' },
-        { id: 2, name: 'Task - On Track' },
-        { id: 3, name: 'Task - In Concern' },
-        { id: 4, name: 'Task - Behind Schedule' },
-        { id: 5, name: 'Task - Completed' }
+        { value: 1, text: 'Task - Not Started (New)' },
+        { value: 2, text: 'Task - On Track' },
+        { value: 3, text: 'Task - In Concern' },
+        { value: 4, text: 'Task - Behind Schedule' },
+        { value: 5, text: 'Task - Completed' }
       ]
     };
 
@@ -35,11 +35,6 @@ class TaskDetail extends React.Component {
     this.saveTask = this.saveTask.bind(this);
     this.updateTaskState = this.updateTaskState.bind(this);
     this.updateTaskStateDate = this.updateTaskStateDate.bind(this);
-}
-
-  componentDidMount() {
-    // const _taskId = this.props.location.pathname.split('/')[2];
-    // this.setState({ taskId: _taskId });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -74,7 +69,7 @@ class TaskDetail extends React.Component {
     this.setState({errors: validation.errors});
 
     if(!validation.formIsValid) {
-      return; 
+      return;
     }
 
     if (this.state.taskId !== 'new') {
@@ -178,7 +173,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     main: state.main,
-    task: state.task, 
+    task: state.task,
     users: usersFormattedForDropdown(state.users)
   };
 }

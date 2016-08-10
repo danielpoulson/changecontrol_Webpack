@@ -1,6 +1,8 @@
-import { GET_TASK } from 'actions/actions_tasks';
+import { GET_TASK, EDIT_TASK } from 'actions/actions_tasks';
 
-export default function (state = null, action) {
+const initialState = { _id: "new", TKCapa: 0, TKStat: 0, TKChamp: '' };
+
+export default function (state = initialState, action) {
 
   switch (action.type) {
     case GET_TASK:
@@ -8,6 +10,9 @@ export default function (state = null, action) {
         return {};
       }
       return action.payload.data;
+
+    case EDIT_TASK:
+      return Object.assign({}, action.payload);
 
     default:
       return state;

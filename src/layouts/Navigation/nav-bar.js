@@ -36,7 +36,7 @@ class NavBar extends React.Component {
   }
 
   setActiveItem(e) {
-    const tabPressed = e.target.offsetParent.id;
+    const tabPressed = e.target.id;
     this.setState({ homeTab: null });
     this.setState({ changesTab: null });
     this.setState({ tasksTab: null });

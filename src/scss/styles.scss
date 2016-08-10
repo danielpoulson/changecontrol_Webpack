@@ -19,6 +19,39 @@ $tab-color: #ED1B2C;
 
 
 /* ------------  START Bootstrap Overrides ---------*/
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 0.01px;
+  text-overflow: '';
+}
+
+.styled select {
+  background: transparent;
+  width: 220px;
+  height: 34px;
+  margin-left: -15px;
+}
+.styled {
+  margin-left: 15px;
+  padding-right: 10px;  
+  width: 220px;
+  height: 34px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: url(../images/arrow-down.png) 95% / 8% no-repeat #eee;
+}
+
+.styled select:-moz-focusring { color: transparent;
+                        text-shadow: 0 0 0 #6A6C70; }
+
+
+html {
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
+}
+
+
 .has-date-error {
     color: red;
     background-color: red;

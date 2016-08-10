@@ -2,18 +2,18 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
 
   entry: [],
 
   output: {
-    publicPath: 'dist/',
+    publicPath: 'dist/'
   },
 
   module: {
     loaders: [{
       test: /\.scss$/,
-      loader: 'style!css!postcss-loader!sass',
+      loader: 'style!css!postcss-loader!sass'
     },
     {
       test: /\.css$/, // Only .css files
@@ -22,23 +22,23 @@ module.exports = {
     {
       test: /\.less$/,
       loader: "style-loader!css-loader!less-loader"
-    }],
+    }]
   },
 
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"',
+        NODE_ENV: '"production"'
       },
-      __DEVELOPMENT__: false,
+      __DEVELOPMENT__: false
     }),
     new ExtractTextPlugin('bundle.css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        warnings: false,
-      },
-    }),
-  ],
+        warnings: false
+      }
+    })
+  ]
 };

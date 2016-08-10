@@ -98,12 +98,12 @@ export default class Home extends Component {
 }
 
 Home.propTypes = {
-  allOpenChanges: React.PropTypes.number.isRequired,
-  allOpenTasks: React.PropTypes.number.isRequired,
-  countChangesUser: React.PropTypes.number.isRequired,
-  countTasksUser: React.PropTypes.number.isRequired,
+  allOpenChanges: React.PropTypes.number,
+  allOpenTasks: React.PropTypes.number,
+  countChangesUser: React.PropTypes.number,
+  countTasksUser: React.PropTypes.number,
   getUserDashboard: React.PropTypes.func.isRequired,
-  fullname: React.PropTypes.string.isRequired,
+  fullname: React.PropTypes.string,
   loadPage: React.PropTypes.func.isRequired,
   loadPageTask: React.PropTypes.func.isRequired
 };

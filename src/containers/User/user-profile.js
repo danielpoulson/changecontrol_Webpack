@@ -10,8 +10,8 @@ import { getUser, getUsers, createUser, resetUser, saveUser, deleteUser } from '
 
 class UserProfile extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
     this.state = {
       isNewUser: false,
@@ -22,8 +22,8 @@ class UserProfile extends Component {
     this.saveUser = this.saveUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
     this.newUser = this.newUser.bind(this);
-    this.onChange = this.onChange.bind(this);
     this.onCancel = this.onCancel.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.updateUserState = this.updateUserState.bind(this);
   }
 
@@ -34,8 +34,13 @@ class UserProfile extends Component {
     }
   }
 
-  onChange(value) {
-    this.props.getUser(value);
+  onCancel(event) {
+    event.preventDefault();
+    this.setState({ isNewUser: false });
+  }
+
+  onChange(event) {
+    this.props.getUser(event.target.value);
   }
 
   newUser() {
@@ -61,7 +66,7 @@ class UserProfile extends Component {
     this.setState({errors: validation.errors});
 
     if(!validation.formIsValid) {
-      return; 
+      return;
     }
 
     if (this.state.isNewUser) {
@@ -86,6 +91,7 @@ class UserProfile extends Component {
     const formStyle = {
       backgroundColor: '#fcfffc',
       border: 'solid 1px',
+      height: 370,
       borderRadius: 4,
       marginRight: 0,
       marginLeft: 0,
@@ -93,7 +99,7 @@ class UserProfile extends Component {
 
     };
 
-    const roleSelect = ['user', 'admin'];
+    const roleSelect = [{value: 'user', text: 'user'}, {value: 'admin', text: 'admin'}];
 
     return (
 
@@ -106,11 +112,12 @@ class UserProfile extends Component {
           </div>
         </div>
 
-        {this.state.isNewUser ? null :
-          <UserSelect users={this.props.users} onChange={this.onChange} newUser={this.newUser} />
-        }
-
         <div className="row" style={formStyle}>
+
+          {this.state.isNewUser ? null :
+            <UserSelect users={this.props.users} onChange={this.onChange} newUser={this.newUser} />
+          }
+
           <UserProfileForm
             errors={this.state.errors}
             user={this.state.user}
@@ -150,7 +157,7 @@ UserProfile.childContextTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    user: state.user,  
+    user: state.user,
     users: usersFormattedForDropdown(state.users)
   };
 }

@@ -9,6 +9,7 @@ import SearchBox from 'components/Common/search-box';
 /* actions */
 import { getChange, getChanges, addChange, loadPage, exportChanges } from 'actions/actions_changes';
 import { setMain } from 'actions/actions_main';
+import { getFiles } from 'actions/actions_files';
 
 class Changes extends Component {
 
@@ -104,6 +105,8 @@ class Changes extends Component {
     };
 
     this.props.exportChanges(info);
+    this.props.getFiles('exp');
+    this.context.router.push('/export');
   }
 
   newChange() {
@@ -180,10 +183,11 @@ class Changes extends Component {
 }
 
 Changes.propTypes = {
-  changes: PropTypes.array,
+  changes: PropTypes.object,
   exportChanges: PropTypes.func,
   getChanges: PropTypes.func,
   getChange: PropTypes.func,
+  getFiles: PropTypes.func,
   loadPage: PropTypes.func,
   setMain: PropTypes.func,
   user: PropTypes.object
@@ -198,4 +202,4 @@ Changes.childContextTypes = {
 };
 
 export default connect(state => ({ changes: state.changes, user: state.main.user }),
-  { getChange, getChanges, addChange, loadPage, exportChanges, setMain })(Changes);
+  { getChange, getChanges, addChange, loadPage, exportChanges, setMain, getFiles })(Changes);

@@ -1,30 +1,25 @@
 import React, { PropTypes } from 'react';
-import Combobox from 'components/Common/combo-box';
+import SelectInput from 'components/Common/select-input';
+import { labStyle, fnStyle } from './user-style.scss';
 
 const UserSelect = (props) => {
-  const fnStyle = {
-    marginLeft: 40,
-    paddingTop: 20,
-    paddingBottom: 10
-  };
 
   return (
-    <div className="col-sm-12">
-      <div style={fnStyle} className="col-sm-6">
-        <Combobox
-          name="Full Name"
-          label="Select user"
-          data={props.users}
-          dpInputCol="col-sm-9"
-          dpLabelCol="col-sm-3"
-          onChange={props.onChange}
-          defaultValue={props.users[0]} />
-      </div>
-      <div style={fnStyle} className="col-sm-3">
-        <button className="btn btn-info" onClick={props.newUser}>
-          New User
-        </button>
-      </div>
+    <div className={fnStyle}>
+      <SelectInput
+        name="user"
+        label="Fullname"
+        labelstyle={`col-sm-2 control-label ${labStyle}`}
+        inputdiv="col-sm-4"
+        value={props.user}
+        defaultOption="Select User"
+        options={props.users}
+        onChange={props.onChange}/>
+
+      <button className="btn btn-info dp-margin-10-LR" onClick={props.newUser}>
+        New User
+      </button>
+
     </div>
   );
 };

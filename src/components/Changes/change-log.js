@@ -3,15 +3,17 @@ import moment from 'moment';
 
 const ChangeLog = (props) => {
 
-  const _log = props.log;
+  let logs = [];
+  const _log = props.log.CC_LOG;
   const spanStyle = { color: 'blue' };
   const butGroup = { padding: 10 };
-  let logs = [];
 
-  if (_log !== null) {
-    logs = _log.CC_LOG.map((log) => <li className="list-group-item" key={log._id}>
-                      <span style={spanStyle} className="glyphicon glyphicon-edit"></span> Change Control : {log.CC_Action}
-                      <small><em> ({moment(new Date(log.CC_ActDate)).format('DD/MM/YYYY')}) {log.CC_ActBy} </em></small></li>);
+  if (_log !== null && _log.length !== 0) {
+
+      logs = _log.map((log) => <li className="list-group-item" key={log._id}>
+                        <span style={spanStyle} className="glyphicon glyphicon-edit"></span> Change Control : {log.CC_Action}
+                        <small><em> ({moment(new Date(log.CC_ActDate)).format('DD/MM/YYYY')}) {log.CC_ActBy} </em></small></li>);
+
   }
 
   return (

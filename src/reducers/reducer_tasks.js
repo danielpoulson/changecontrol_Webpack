@@ -3,7 +3,9 @@ import _ from 'lodash';
 
 const initialState = {
   alldata: [],
-  paged: []
+  paged: [],
+  ctTotal: 0,
+  ctlist: []
 };
 
 function searchIndex(data, index) {
@@ -30,7 +32,7 @@ function searchData(data, searchText, sortColumn) {
   return newList;
 }
 
-export default function (state, action) {
+export default function (state = initialState, action) {
   let alldata = [];
   let _data = {};
   let per_page = 15;
@@ -41,10 +43,6 @@ export default function (state, action) {
   let currIds = [];
   let ctTotal = 0;
   let ctlist = [];
-
-  if (typeof state === 'undefined') {
-    return initialState;
-  }
 
   switch (action.type) {
     case ADD_TASK:
@@ -60,8 +58,9 @@ export default function (state, action) {
 
     case EDIT_TASK: {
       _data = action.payload;
-      currIds = state.alldata.map(c => c._id);
-      const index = currIds.indexOf(_data._id);
+
+      const index = state.alldata.findIndex(item => item._id === _data._id);
+      const ctIndex = state.ctlist.findIndex(item => item._id === _data._id);
 
       alldata = [
         ...state.alldata.slice(0, index),
@@ -69,9 +68,18 @@ export default function (state, action) {
         Object.assign({}, _data),
         ...state.alldata.slice(index + 1)
       ];
+
+      ctlist = [
+        ...state.ctlist.slice(0, ctIndex),
+        // Copy the object before mutating
+        Object.assign({}, _data),
+        ...state.ctlist.slice(ctIndex + 1)
+      ];
+
       return {
         ...state,
-        alldata
+        alldata,
+        ctlist
       };
     }
 

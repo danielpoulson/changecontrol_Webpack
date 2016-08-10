@@ -16,8 +16,8 @@ import { setMain } from 'actions/actions_main';
 
 class ChangeDetail extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       change: Object.assign({}, props.change),
       changeTitle: 'Get the main title',
@@ -28,23 +28,24 @@ class ChangeDetail extends Component {
       FilesTab: 'hidden',
       fCount: 0,
       LogTab: 'hidden',
+      mainId: 'new',
       tasks: [],
       TasksTab: 'hidden',
       tCount: 0,
       status: [
-        { id: 1, name: 'Review' },
-        { id: 2, name: 'Approved' },
-        { id: 3, name: 'On-hold' },
-        { id: 4, name: 'Closed' },
-        { id: 5, name: 'Cancelled' }
+        { value: 1, text: 'Review' },
+        { value: 2, text: 'Approved' },
+        { value: 3, text: 'On-hold' },
+        { value: 4, text: 'Closed' },
+        { value: 5, text: 'Cancelled' }
       ]
     };
 
     this.cancelChange = this.cancelChange.bind(this);
     this.onApprove = this.onApprove.bind(this);
     this.onCancel = this.onCancel.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onDateChange = this.onDateChange.bind(this);
+    this.updateChangeState = this.updateChangeState.bind(this);
+    this.updateChangeStateDate = this.updateChangeStateDate.bind(this);
     this.onFinal = this.onFinal.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
     this.saveChange = this.saveChange.bind(this);
@@ -56,6 +57,13 @@ class ChangeDetail extends Component {
       this.props.getProjectTasks(CC_No);
     }
     this.setState({ ccNo: CC_No });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.change._id != nextProps.change._id) {
+      // Necessary to populate form when existing course is loaded directly.
+      this.setState({change: Object.assign({}, nextProps.change)});
+    }
   }
 
   onRefresh() {
@@ -111,7 +119,7 @@ class ChangeDetail extends Component {
   }
 
 // TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
-  saveChange() {
+  saveChange(event) {
     event.preventDefault();
     let _change = this.state.change;
 
@@ -119,7 +127,7 @@ class ChangeDetail extends Component {
     this.setState({errors: validation.errors});
 
     if(!validation.formIsValid) {
-      return; 
+      return;
     }
 
     if (this.state.ccNo !== 'new') {
@@ -187,7 +195,7 @@ class ChangeDetail extends Component {
               <a onClick={this.showTab.bind(this, 'TasksTab')} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
             </li>
             <li className={fileTabClass}>
-              <a onClick={this.showTab.bind(this, 'FilesTab')} data-toggle="tab">Files <span className="badge"> {this.props.main.fileTabCount} </span></a>
+              <a onClick={this.showTab.bind(this, 'FilesTab')} data-toggle="tab">Files <span className="badge"> {this.props.ctTotal} </span></a>
             </li>
             <li className={logTabClass}>
               <a onClick={this.showTab.bind(this, 'LogTab')} data-toggle="tab">Log</a>
@@ -210,17 +218,17 @@ class ChangeDetail extends Component {
             </div>
           </div>
 
+          <TaskList
+            tasklist = {this.props.tasklist}
+            tasksTab = {this.state.TasksTab}
+            title={this.state.changeTitle} />
+
           <ChangeLog
             logTab={this.state.LogTab}
             onApprove={this.onApprove}
             onFinal={this.onFinal}
             onCancel={this.onCancel}
-            log={this.props.change} />
-
-          <TaskList
-            tasklist = {this.props.tasklist}
-            tasksTab = {this.state.TasksTab}
-            title={this.state.changeTitle} />
+            log={this.state.change} />
 
           <FileList
             filesTab={this.state.FilesTab}
@@ -255,8 +263,7 @@ ChangeDetail.childContextTypes = {
   location: React.PropTypes.object
 };
 
-function mapStateToProps(state, ownProps) {
-
+const mapStateToProps = (state) => {
   return {
     change: state.change,
     main: state.main,
@@ -264,8 +271,9 @@ function mapStateToProps(state, ownProps) {
     ctTotal: state.tasks.ctTotal,
     users: usersFormattedForDropdown(state.users)
   };
-}
+};
 
-export default connect(mapStateToProps, {
-  addChange, createLog, editChange, getChange, getProjectTasks, setMain
-})(ChangeDetail);
+export default connect(
+  mapStateToProps,
+  {addChange, createLog, editChange, getChange, getProjectTasks, setMain}
+)(ChangeDetail);
