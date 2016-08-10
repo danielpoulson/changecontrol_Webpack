@@ -145,4 +145,4 @@ exports.dumpChanges = function(req, res) {
 
 function handleError(err){
     console.log(err);
-};
+}
