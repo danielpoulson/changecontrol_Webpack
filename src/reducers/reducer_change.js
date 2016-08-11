@@ -1,4 +1,4 @@
-import { GET_CHANGE, CREATE_LOG } from 'actions/actions_changes';
+import { GET_CHANGE, EDIT_CHANGE, CREATE_LOG } from 'actions/actions_changes';
 
 const initialState = {
   CC_No: "New",
@@ -11,7 +11,8 @@ const initialState = {
 export default function (state = initialState, action) {
 
   switch (action.type) {
-    case GET_CHANGE: {
+    case GET_CHANGE:
+    case EDIT_CHANGE: {
       const _change = action.payload.data || initialState;
 
       return _change;

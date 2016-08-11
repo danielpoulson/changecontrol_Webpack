@@ -8,7 +8,7 @@ import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(Moment);
 
 const ChangeForm = ({
-  errors, change, status, users, onSave, onChange, onDateChange, onCancel }) => {
+  errors, change, status, users, onDateChange, onChange }) => {
 
   return(
     <form className="form form-horizontal" >
@@ -140,23 +140,12 @@ const ChangeForm = ({
         error={errors.CC_Rat}
         labelstyle="col-sm-2 control-label"
         inputdiv="col-sm-10" />
-
-      <div className="pull-right">
-        <button className="btn btn-success pull-left" onClick={onSave} >
-          Save Change
-        </button>
-        <button className="btn btn-info dp-margin-10-LR" onClick={onCancel}>
-          Cancel
-        </button>
-      </div>
     </form>
   );
 };
 
 ChangeForm.propTypes = {
     change: React.PropTypes.object.isRequired,
-    onSave: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     onDateChange: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,

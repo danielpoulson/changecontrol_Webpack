@@ -8,6 +8,7 @@ import FileList from 'containers/Files/file-list';
 import ChangeLog from 'components/Changes/change-log';
 import classNames from 'classnames';
 import toastr from 'toastr';
+import { cdButtonGroup } from './changeDetail-style.scss';
 
 /* actions */
 import { addChange, createLog, editChange, getChange } from 'actions/actions_changes';
@@ -33,11 +34,11 @@ class ChangeDetail extends Component {
       TasksTab: 'hidden',
       tCount: 0,
       status: [
-        { value: 1, text: 'Review' },
-        { value: 2, text: 'Approved' },
-        { value: 3, text: 'On-hold' },
-        { value: 4, text: 'Closed' },
-        { value: 5, text: 'Cancelled' }
+      { value: 1, text: 'Review' },
+      { value: 2, text: 'Approved' },
+      { value: 3, text: 'On-hold' },
+      { value: 4, text: 'Closed' },
+      { value: 5, text: 'Cancelled' }
       ]
     };
 
@@ -119,18 +120,18 @@ class ChangeDetail extends Component {
   }
 
 // TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
-  saveChange(event) {
-    event.preventDefault();
-    let _change = this.state.change;
+saveChange(event) {
+  event.preventDefault();
+  let _change = this.state.change;
 
-    let validation = changeFormIsValid(_change);
-    this.setState({errors: validation.errors});
+  let validation = changeFormIsValid(_change);
+  this.setState({errors: validation.errors});
 
-    if(!validation.formIsValid) {
-      return;
-    }
+  if(!validation.formIsValid) {
+    return;
+  }
 
-    if (this.state.ccNo !== 'new') {
+  if (this.state.ccNo !== 'new') {
       // _change._id = this.props.change._id; //Not needed already assigned
       // _change.CC_Stat = typeof _change.CC_Stat === 'object' ? _change.CC_Stat.id : _change.CC_Stat;
       // _change.CC_No = this.props.change.CC_No;
@@ -181,60 +182,67 @@ class ChangeDetail extends Component {
     });
 
     return (
-    <div>
-          <div className="">
-            <div className="section-header">
-              <p className="section-header-text-sub">{_title}</p>
+      <div>
+        <div className="">
+          <div className="section-header">
+            <p className="section-header-text-sub">{_title}</p>
+          </div>
+        </div>
+        <ul className="nav nav-tabs dpHand">
+          <li className={detailTabClass}>
+            <a onClick={this.showTab.bind(this, 'DetailTab')} data-toggle="tab">Detail</a>
+          </li>
+          <li className={tasksTabClass}>
+            <a onClick={this.showTab.bind(this, 'TasksTab')} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
+          </li>
+          <li className={fileTabClass}>
+            <a onClick={this.showTab.bind(this, 'FilesTab')} data-toggle="tab">Files <span className="badge"> {this.props.ctTotal} </span></a>
+          </li>
+          <li className={logTabClass}>
+            <a onClick={this.showTab.bind(this, 'LogTab')} data-toggle="tab">Log</a>
+          </li>
+        </ul>
+
+        <div className={`${cdButtonGroup} ${this.state.DetailTab} pull-right`}>
+          <button className="btn btn-success pull-left" onClick={this.saveChange} >
+            Save Change
+          </button>
+          <button className="btn btn-info dp-margin-10-LR" onClick={this.cancelChange}>
+            Cancel
+          </button>
+        </div>
+
+
+        <div className={this.state.DetailTab}>
+          <div className="panel panel-default">
+            <div className="panel-body">
+              <ChangeForm
+                change={this.state.change}
+                errors={this.state.errors}
+                onChange={this.updateChangeState}
+                onDateChange={this.updateChangeStateDate}
+                status={this.state.status}
+                users={this.props.users} />
             </div>
           </div>
-          <ul className="nav nav-tabs dpHand">
-            <li className={detailTabClass}>
-              <a onClick={this.showTab.bind(this, 'DetailTab')} data-toggle="tab">Detail</a>
-            </li>
-            <li className={tasksTabClass}>
-              <a onClick={this.showTab.bind(this, 'TasksTab')} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
-            </li>
-            <li className={fileTabClass}>
-              <a onClick={this.showTab.bind(this, 'FilesTab')} data-toggle="tab">Files <span className="badge"> {this.props.ctTotal} </span></a>
-            </li>
-            <li className={logTabClass}>
-              <a onClick={this.showTab.bind(this, 'LogTab')} data-toggle="tab">Log</a>
-            </li>
-          </ul>
+        </div>
 
-          <div className={this.state.DetailTab}>
-            <div className="panel panel-default">
-              <div className="panel-body">
-                <ChangeForm
-                  change={this.state.change}
-                  errors={this.state.errors}
-                  onCancel={this.cancelChange}
-                  onChange={this.updateChangeState}
-                  onDateChange={this.updateChangeStateDate}
-                  onSave={this.saveChange}
-                  status={this.state.status}
-                  users={this.props.users} />
-              </div>
-            </div>
-          </div>
+        <TaskList
+          tasklist = {this.props.tasklist}
+          tasksTab = {this.state.TasksTab}
+          title={this.state.changeTitle} />
 
-          <TaskList
-            tasklist = {this.props.tasklist}
-            tasksTab = {this.state.TasksTab}
-            title={this.state.changeTitle} />
+        <ChangeLog
+          logTab={this.state.LogTab}
+          onApprove={this.onApprove}
+          onFinal={this.onFinal}
+          onCancel={this.onCancel}
+          log={this.state.change} />
 
-          <ChangeLog
-            logTab={this.state.LogTab}
-            onApprove={this.onApprove}
-            onFinal={this.onFinal}
-            onCancel={this.onCancel}
-            log={this.state.change} />
-
-          <FileList
-            filesTab={this.state.FilesTab}
-            refreshChange={this.onRefresh}
-            sourceId={this.props.location.pathname.split('/')[2]} />
-
+        <FileList
+          filesTab={this.state.FilesTab}
+          refreshChange={this.onRefresh}
+          sourceId={this.props.location.pathname.split('/')[2]} />
       </div>
     );
   }
@@ -276,4 +284,4 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   {addChange, createLog, editChange, getChange, getProjectTasks, setMain}
-)(ChangeDetail);
+  )(ChangeDetail);
