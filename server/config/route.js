@@ -94,8 +94,8 @@ router.route('/api/projects/:status')
 
   router.route('/api/project/:id')
     .get(projects.getProjectById)
-	.put(projects.updateProject)
- 	.post(projects.createProject);
+    .put(projects.updateProject)
+    .post(projects.createProject);
   // app.delete('/api/project/:id', projects.deleteProject);
 
 router.route('/api/projectList/:status')

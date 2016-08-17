@@ -1,8 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var mongooseToCsv = require('mongoose-to-csv'); //https://www.npmjs.com/package/mongoose-to-csv
+"use strict";
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const mongooseToCsv = require('mongoose-to-csv'); //https://www.npmjs.com/package/mongoose-to-csv
 
-var changeSchema = new Schema({
+const changeSchema = new Schema({
     Id: Number,
     CC_No: {type: String, required: '{PATH} is required!'},
     CC_Descpt: {type: String, required: '{PATH} is required!'},
@@ -39,21 +40,21 @@ changeSchema.plugin(mongooseToCsv, {
     },
     virtuals: {
         'TargetDate': function (doc) {
-            var dateString = new Date(doc.CC_TDate);
-            var day = dateString.getDay().toString();
-            var mth = dateString.getMonth();
-            var yr = dateString.getYear();
-            var _date = (_date != 'undefined') ? ('0'+ day ).slice(-2) + '/' + ('0'+ mth ).slice(-2)  + '/' + ('0'+ yr ).slice(-2) : '';
+            const dateString = new Date(doc.CC_TDate);
+            const day = dateString.getDay().toString();
+            const mth = dateString.getMonth();
+            const yr = dateString.getYear();
+            let _date = (_date != 'undefined') ? ('0'+ day ).slice(-2) + '/' + ('0'+ mth ).slice(-2)  + '/' + ('0'+ yr ).slice(-2) : '';
 
             return _date;
         },
 
         'ClosedDate': function (doc) {
-            var dateString = new Date(doc.CC_CDate);
-            var day = dateString.getDay().toString();
-            var mth = dateString.getMonth();
-            var yr = dateString.getYear();
-            var _date = (typeof doc.CC_CDate != 'undefined') ? ('0'+ day ).slice(-2) + '/' + ('0'+ mth ).slice(-2)  + '/' + ('0'+ yr ).slice(-2) : '';
+            const dateString = new Date(doc.CC_CDate);
+            const day = dateString.getDay().toString();
+            const mth = dateString.getMonth();
+            const yr = dateString.getYear();
+            let _date = (typeof doc.CC_CDate != 'undefined') ? ('0'+ day ).slice(-2) + '/' + ('0'+ mth ).slice(-2)  + '/' + ('0'+ yr ).slice(-2) : '';
 
             return _date;
         }
@@ -62,4 +63,4 @@ changeSchema.plugin(mongooseToCsv, {
 });
 
 
-var Change = mongoose.model('Change', changeSchema);
+const Change = mongoose.model('Change', changeSchema);

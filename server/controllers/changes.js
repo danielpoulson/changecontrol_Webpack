@@ -4,6 +4,8 @@ const fs = require('fs');
 const files = require('../controllers/files');
 const tasks = require('../controllers/tasks');
 const users = require('../controllers/users');
+const mailer = require('../config/mailer.js');
+const dateFunc = require('../config/date-function');
 
 exports.getChanges = function(req, res) {
     const status = req.params.status;
@@ -27,8 +29,6 @@ exports.createChange = function(req, res, next) {
         newNum = "CC" + ((yr * 10000) + (count + 1));
         req.body.CC_No = newNum;
 
-        //var project = new Project(req.body);
-
         Change.create(req.body, function(err, _changes) {
             if(err) {
                 if(err.toString().indexOf('E11000') > -1) {
@@ -38,15 +38,25 @@ exports.createChange = function(req, res, next) {
                 return res.send({reason:err.toString()});
             }
             res.status(200).send(_changes);
+            createEmail(_changes.CC_TDate, _changes.CC_No, _changes.CC_Descpt, _changes.CC_Champ);
         });
     });
 };
 
 exports.updateChange = function(req, res) {
-    Change.update({_id : req.body._id}, {$set: req.body}, function (err) {
-        if (err) return handleError(err);
-        res.sendStatus(200);
-    });
+  let _changes = req.body;
+  let _newOwner = _changes.newOwner;
+  delete _changes.newOwner;
+
+  Change.update({_id : req.body._id}, {$set: req.body}, function (err) {
+    if (err) return handleError(err);
+    res.sendStatus(200);
+
+    if (_newOwner === true) {
+      createEmail(_changes.CC_TDate, _changes.CC_No, _changes.CC_Descpt, _changes.CC_Champ);
+    }
+
+  });
 };
 
 exports.updateChangeComment = function(req, res) {
@@ -74,6 +84,24 @@ exports.updateChangeComment = function(req, res) {
 
     });
 };
+
+function createEmail(CC_TDate, CC_No, CC_Descpt, CC_Champ){
+    const _Target = dateFunc.dpFormatDate(CC_TDate);
+    const emailType = "Change Control";
+    const emailActivity = `<b>Change Control - </b><em>${CC_No}</em> </br>
+        <b> Deviation Description:</b><i>${CC_Descpt} <b> Target Date</b> ${_Target}</i>`;
+// TODO: Not the worlds nicest Promise using a timeout need to rework and improve.
+    const p = new Promise(function(resolve, reject) {
+        const toEmail = users.getUserEmail(CC_Champ);
+       setTimeout(() => resolve(toEmail), 2000);
+    }).then(function(res){
+        const _toEmail = res[0].email;
+        mailer.sendMail(_toEmail, emailType, emailActivity);
+    }).catch(function (err) {
+      console.log(err);
+    });
+
+}
 
 exports.getChangeById = function(req, res) {
     Change.findOne({CC_No:req.params.id}).exec(function(err, change) {
@@ -140,6 +168,8 @@ exports.dumpChanges = function(req, res) {
     res.sendStatus(200);
 
 };
+
+/*eslint no-console: 0*/
 
 function handleError(err){
     console.log(err);

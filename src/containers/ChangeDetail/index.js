@@ -131,10 +131,11 @@ saveChange(event) {
     return;
   }
 
+
+  // TODO: (1) @High fucntion to identifiy that a change to the owner has occurred.
+
   if (this.state.ccNo !== 'new') {
-      // _change._id = this.props.change._id; //Not needed already assigned
-      // _change.CC_Stat = typeof _change.CC_Stat === 'object' ? _change.CC_Stat.id : _change.CC_Stat;
-      // _change.CC_No = this.props.change.CC_No;
+      _change.newOwner = _change.CC_Champ !== this.props.change.CC_Champ;
       this.props.editChange(_change);
     } else {
       let created = [];
