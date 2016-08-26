@@ -26,6 +26,12 @@ const upload = multer({ storage: storage });
 //     res.render('login.html');
 // });
 
+router.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 router.post('/login', auth.authenticate);
 // router.post('/login', passport.authenticate('local', {
 //     successRedirect: '/',
