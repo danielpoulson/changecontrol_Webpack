@@ -1,18 +1,17 @@
-"use strict"
-var Task = require('mongoose').model('Task');
-var Change = require('mongoose').model('Change');
-var fs = require('fs');
-var files = require('../controllers/files');
-var Users = require('../controllers/users');
-var json2csv = require('json2csv');
-var mailer = require('../config/mailer.js');
-var moment = require('moment');
-var momentLocalizer = require('react-widgets/lib/localizers/moment');
+"use strict";
+/*eslint no-console: 0*/
+const Task = require('mongoose').model('Task');
+const Change = require('mongoose').model('Change');
+const fs = require('fs');
+const files = require('../controllers/files');
+const Users = require('../controllers/users');
+const json2csv = require('json2csv');
+const mailer = require('../config/mailer.js');
+const moment = require('moment');
+const momentLocalizer = require('react-widgets/lib/localizers/moment');
 
-//TODO: LOW FUNC This all task get function only for change control only should by dynamic
-// When add project functionality the get task function would need to be used for both.
 exports.getTasks = function(req, res) {
-    var status = req.params.status;
+    const status = req.params.status;
 
     Task
         .where('TKStat').lte(status)
@@ -31,8 +30,8 @@ exports.getProjectTaskList = function(req, res) {
 };
 
 exports.updateTask = function(req, res) {
-    var query = {_id: req.params.id};
-    var newOwner = req.body.TKChampNew;
+    const query = {_id: req.params.id};
+    const newOwner = req.body.TKChampNew;
     req.body.TKChampNew = false;
 
     Task.findOneAndUpdate(query, req.body, function (err) {
@@ -47,10 +46,10 @@ exports.updateTask = function(req, res) {
 
 
 exports.deleteTask = function(req, res) {
-    var taskId = req.params.id;
-    var taskTitle = '';
-    var SourceId = '';
-    var user = req.user.fullname;
+    const taskId = req.params.id;
+    let taskTitle = '';
+    let SourceId = '';
+    const user = req.user.fullname;
 
     Task.findOne({_id:taskId}).exec(function(err, task) {
         taskTitle = task.TKName;
@@ -84,22 +83,21 @@ exports.createTask = function(req, res, next) {
 
 
 function createEmail(body){
-    var _targetDate = moment(body.TKTarg).format('DD/MM/YYYY');
-    var emailType = "Change Control - Task";
-    var emailActivity = '<b>Associated Change Control - </b><em>' + body.SourceId + '</em></br><b>Task to Complete: </b><i>'
-     + body.TKName + '<b>  Date Due </b>' + _targetDate + '</i>';
-// TODO LOW 2 Not the worlds nicest Promise using a timeout need to rework and improve.
-    var p = new Promise(function(resolve, reject) {
-        var toEmail = Users.getUserEmail(body.TKChamp);
-       setTimeout(() => resolve(toEmail), 2000);
-    }).then(function(res){
-        var _toEmail = res[0].email;
-        mailer.sendMail(_toEmail, emailType, emailActivity);
-    }).catch(function (err) {
-      console.log(err);
-    });
+  const _targetDate = moment(body.TKTarg).format('DD/MM/YYYY');
+  const emailType = "Change Control - Task";
+  const emailActivity = '<b>Associated Change Control - </b><em>' + body.SourceId + '</em></br><b>Task to Complete: </b><i>'
+   + body.TKName + '<b>  Date Due </b>' + _targetDate + '</i>';
 
-};
+  const p = Users.getUserEmail(body.TKChamp).exec();
+
+  p.then(function(res){
+    const _toEmail = res[0].email;
+    mailer.sendMail(_toEmail, emailType, emailActivity);
+  }).catch(function (err) {
+    console.log(err);
+  });
+
+}
 
 exports.getTaskById = function(req, res) {
     Task.findById(req.params.id).exec(function(err, task) {
@@ -122,9 +120,9 @@ exports.getCountAll = function(){
 };
 
 exports.dumpTasks = function(req, res) {
-    var fileData = {};
-    var newDate = new Date();
-    var int = parseInt((Math.random()*1000000000),10);
+    const fileData = {};
+    const newDate = new Date();
+    const int = parseInt((Math.random()*1000000000),10);
 
     fileData.fsAddedAt = newDate;
     fileData.fsAddedBy = req.body.fsAddedBy;
@@ -136,26 +134,19 @@ exports.dumpTasks = function(req, res) {
 
     files.addExportFile(fileData);
 
-    var _search = !req.body.search ? "." : req.body.search;
-    var regExSearch = new RegExp(_search + ".*", "i");
-    var _status = 4;
+    const _search = !req.body.search ? "." : req.body.search;
+    const regExSearch = new RegExp(_search + ".*", "i");
+    const _status = 4;
 
-    // Task.find({TKStat: {$lt:_status}})
-    //     .select({SourceId:true, TKName:true, TKChamp:true, TKStart:true, TKTarg:true, TKStat:true, _id: 0})
-    //     .where({$or: [{TKChamp : regExSearch }, {SourceId : regExSearch}, {TKName : regExSearch}]})
-    //     .stream()
-    //     .pipe(Task.csvTransformStream())
-    //     .pipe(fs.createWriteStream(file));
-
-    getChangesList(int)
+    getChangesList(int);
     res.sendStatus(200);
 };
 
 
 function getChangesList(int) {
-    var status = 4;
-    var file = '.././uploaded/tasks' + int + '.csv';
-    var fields = ['SourceId', '_name', 'TKName', 'TKTarg', 'TKStart', 'TKChamp', 'TKStat'];
+    const status = 4;
+    const file = '.././uploaded/tasks' + int + '.csv';
+    const fields = ['SourceId', '_name', 'TKName', 'TKTarg', 'TKStart', 'TKChamp', 'TKStat'];
 
     Change.find({CC_Stat: {$lt:status}})
         .select({ CC_No: 1, CC_Descpt: 1, _id:0 })
@@ -168,14 +159,14 @@ function getChangesList(int) {
                 .sort({TKTarg : 1})
                 .exec(function(err, coll) {
 
-                    var reformattedArray = coll.map(function(obj){
+                    const reformattedArray = coll.map(function(obj){
 
-                        var TKName = obj.TKName;
-                        var TKTarg = moment(obj.TKTarg).format("L");
-                        var TKStart = moment(obj.TKStart).format("L");
-                        var TKChamp = obj.TKChamp;
+                        const TKName = obj.TKName;
+                        const TKTarg = moment(obj.TKTarg).format("L");
+                        const TKStart = moment(obj.TKStart).format("L");
+                        const TKChamp = obj.TKChamp;
                         let TKStat = null;
-                        var SourceId = obj.SourceId;
+                        const SourceId = obj.SourceId;
 
                         switch (obj.TKStat) {
                             case 1 :
@@ -198,12 +189,12 @@ function getChangesList(int) {
                                 break;
                         }
 
-                        var _tasks = collection.find(change => change.CC_No === obj.SourceId);
+                        const _tasks = collection.find(change => change.CC_No === obj.SourceId);
 
                         if (typeof _tasks === 'object') {
-                            var _name = _tasks.CC_Descpt;
+                            const _name = _tasks.CC_Descpt;
                             return {TKName, _name, TKTarg, TKStart, TKChamp, TKStat, SourceId};
-                        };
+                        }
 
 
                     });
@@ -217,19 +208,19 @@ function getChangesList(int) {
                     });
 
             });
-    })
-};
+    });
+}
 
 function write_to_log (write_data) {
-    var fs = require("fs");
-    var path = '.././logs/logs.txt';
-    var date = new Date();
-    var day = ("0" + date.getDate()).slice(-2)
-    var month = ("0" + (date.getMonth() + 1)).slice(-2);
-    var year = date.getFullYear();
-    var dString = day + "/" + month + "/" + year;
+    const fs = require("fs");
+    const path = '.././logs/logs.txt';
+    const date = new Date();
+    const day = ("0" + date.getDate()).slice(-2);
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+    const dString = day + "/" + month + "/" + year;
 
-    var write_data = "\r\n" + dString + " - " + write_data;
+    write_data = "\r\n" + dString + " - " + write_data;
 
     fs.appendFile(path, write_data, function(error) {
          if (error) {
@@ -242,4 +233,4 @@ function write_to_log (write_data) {
 
 function handleError(err){
     console.log(err);
-};
+}

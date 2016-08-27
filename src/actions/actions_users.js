@@ -60,7 +60,7 @@ export function deleteUser(data) {
   const fullname = data;
   const url = `/api/user/${data}`;
   axios.delete(url);
-  // TODO: LOW 3 Remove server call to repopulate user after delete
+  // TODO: (3) LOW Remove server call to repopulate user after delete
   // This action should remove the user from the state tree
   // See user-profile ondeleteUser
   return {

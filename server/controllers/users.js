@@ -1,9 +1,10 @@
+"use strict";
 const User = require('mongoose').model('User');
 const passport = require('passport');
 const crypto = require('../config/cryptopass');
 
 exports.getAllUsers = function(req, res) {
-    var status = req.params.status;
+    const status = req.params.status;
 
     User
         .find({})
@@ -11,7 +12,7 @@ exports.getAllUsers = function(req, res) {
         .sort({fullname : 1})
         .exec(function(err, collection) {
 
-          var users = collection.map(function(user) {
+          const users = collection.map(function(user) {
             return user.fullname;
           });
 
@@ -44,7 +45,7 @@ exports.getLoggedUser = function(req, res) {
 };
 
 exports.getUser = function(req, res) {
-    var _fullname = req.params.id;
+    const _fullname = req.params.id;
 
     User
         .find({})
@@ -69,7 +70,7 @@ exports.getUserEmail = function(user) {
 
 exports.createUser = function (req, res, next) {
 
-  var userData = req.body;
+  const userData = req.body;
 
   userData.username = userData.username.toLowerCase();
   userData.passwordHash = crypto.hash(userData.password);
@@ -90,7 +91,7 @@ exports.createUser = function (req, res, next) {
 };
 
 exports.deleteUser= function (req, res) {
-    var id = req.params.id;
+    const id = req.params.id;
 
     User.remove({_id: id}, function (err) {
         if (err) return handleError(err);
@@ -101,14 +102,19 @@ exports.deleteUser= function (req, res) {
 
 };
 
-// TODO: LOW Duplicate code with auth.js
+// TODO: (5) LOW Duplicate code with auth.js
 function makeUserSafe (user) {
-    var safeUser = {};
+    const safeUser = {};
 
-    var safeKeys = ['id', 'fullname', 'email', 'username', 'dept', 'role'];
+    const safeKeys = ['id', 'fullname', 'email', 'username', 'dept', 'role'];
 
     safeKeys.forEach(function (key) {
         safeUser[key] = user[key];
     });
     return safeUser;
+}
+
+/*eslint no-console: 0*/
+function handleError(err) {
+  console.log(err);
 }

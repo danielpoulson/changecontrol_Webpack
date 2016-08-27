@@ -52,7 +52,7 @@ class UserProfile extends Component {
     event.preventDefault();
     this.props.deleteUser(this.props.user._id);
     toastr.warning('User account has been deleted', 'User Account', { timeOut: 1000 });
-    // TODO: LOW 3 Remove server call to repopulate user after delete
+    // TODO: (3) LOWRemove server call to repopulate user after delete
     // When the action to delteUser is call the action does not remove the user from the state tree.
     // See Actions Users deleteUser
     this.props.getUsers();

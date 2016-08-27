@@ -42,7 +42,7 @@ class Changes extends Component {
     this.onChange(1, search);
   }
 
-  // TODO: MED 2 Show all button reverts to "Show all"
+  // TODO: (2) MED Show all button reverts to "Show all"
   // The button should be "Show Current" but reverts back when returning from the details page.
 
   onSearchText(event) {
@@ -75,7 +75,6 @@ class Changes extends Component {
   }
 
   linkClick(i) {
-    // TODO LOW 2 Pagination Adding 1 to the page mumber as it uses the base of 0
     this.onChange(i + 1, this.state.txtSearch);
     this.setState({ activePage: i });
   }

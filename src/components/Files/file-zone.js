@@ -8,7 +8,7 @@ class FileZone extends React.Component {
     super(props);
     this.onDrop = this.onDrop.bind(this);
   }
-  // TODO: MED 2 Change function of the filezone drop function to multiply files
+  // TODO: (5) MED Change function of the filezone drop function to multiply files
   onDrop(files) {
     const sourceId = this.props.sourceId;
     const addFile = this.props.addFile;

@@ -67,7 +67,7 @@ const UserProfileForm = ({ errors, user, deleteUser, onChange, onCancel, onSave,
           <button type="submit" className="btn btn-success pull-left" onClick={onSave}>
           Save
           </button>
-          {/* //TODO: Low 3 This button should be hidden when editing or return to the home screen */}
+          {/* //TODO: (3) LOW This button should be hidden when editing or return to the home screen */}
           <button className="btn btn-info dp-margin-10-LR" onClick={onCancel}>
             Cancel
           </button>

@@ -1,15 +1,17 @@
-var express = require('express');
-var app = express();
-var File = require('mongoose').model('File');
-var path = require('path');
-var rootPath = path.normalize(__dirname + '/../../');
-var fs = require('fs');
+"use strict";
+/*eslint no-console: 0*/
+const express = require('express');
+const app = express();
+const File = require('mongoose').model('File');
+const path = require('path');
+const rootPath = path.normalize(__dirname + '/../../');
+const fs = require('fs');
 
 
 exports.downloadFile = function (req, res) {
-    var filename = req.params.file;
-    var fileType = filename.substring(0,3);
-    var file = '';
+    let filename = req.params.file;
+    const fileType = filename.substring(0,3);
+    let file = '';
 
     if(fileType == 'exp'){
         filename = filename.slice(6);
@@ -35,13 +37,12 @@ exports.downloadFile = function (req, res) {
 };
 
 exports.uploadFile = function (req, res) {
-    var fileData = {};
-    var docName = req.body.docName;
+    const fileData = {};
+    const docName = req.body.docName;
 
     const myRe = /C{2}\d{6}\s[-]\s/;
-    var myArray = myRe.exec(docName);
+    const myArray = myRe.exec(docName);
 
-    //TODO LOW Minor Functionally only works for changes.
 
     if(myArray) {
         fileData.fsFileName = docName.split('.').shift().substr(11);
@@ -75,22 +76,22 @@ exports.uploadFile = function (req, res) {
 
 function addExportFile(fileData){
 
-    File.create(fileData, function (err, small) {
-      if (err) return console.log(err);
-    });
+  File.create(fileData, function (err, small) {
+    if (err) return console.log(err);
+  });
 
-};
+}
 
 exports.getFiles = function (req, res) {
 
-    File.find({fsSource: req.params.files})
-        .exec(function (err, collection) {
-            res.send(collection);
-        });
+  File.find({fsSource: req.params.files})
+    .exec(function (err, collection) {
+        res.send(collection);
+    });
 };
 
 exports.deletefile = function (req, res) {
-    var id = req.params.id;
+    const id = req.params.id;
 
     fileDeletion(id);
     res.status(200);
@@ -108,7 +109,7 @@ function fileDeletion(id) {
             });
 
             File.remove({_id: id}, function (err) {
-                if (err) return handleError(err);
+                if (err) {console.log(err);}
             });
           }
     });
@@ -121,8 +122,8 @@ exports.getFileCount = function(req,res){
 };
 
 exports.updateFileBook = function(req,res){
-    var id = req.params.id;
-    console.log("updateFileBook " + req.params.id)
+    const id = req.params.id;
+    console.log("updateFileBook " + req.params.id);
     File.findById(id, function (err, doc){
         doc.fsBooked = 1;
         doc.save();

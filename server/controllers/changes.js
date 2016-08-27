@@ -86,20 +86,20 @@ exports.updateChangeComment = function(req, res) {
 };
 
 function createEmail(CC_TDate, CC_No, CC_Descpt, CC_Champ){
-    const _Target = dateFunc.dpFormatDate(CC_TDate);
-    const emailType = "Change Control";
-    const emailActivity = `<b>Change Control - </b><em>${CC_No}</em> </br>
-        <b> Deviation Description:</b><i>${CC_Descpt} <b> Target Date</b> ${_Target}</i>`;
-// TODO: Not the worlds nicest Promise using a timeout need to rework and improve.
-    const p = new Promise(function(resolve, reject) {
-        const toEmail = users.getUserEmail(CC_Champ);
-       setTimeout(() => resolve(toEmail), 2000);
-    }).then(function(res){
-        const _toEmail = res[0].email;
-        mailer.sendMail(_toEmail, emailType, emailActivity);
-    }).catch(function (err) {
-      console.log(err);
-    });
+  const _Target = dateFunc.dpFormatDate(CC_TDate);
+  const emailType = "Change Control";
+  const emailActivity = `<b>Change Control - </b><em>${CC_No}</em> </br>
+      <b> Deviation Description:</b><i>${CC_Descpt} <b> Target Date</b> ${_Target}</i>`;
+
+  const p = users.getUserEmail(CC_Champ).exec();
+  
+  p.then(function(res){
+    console.log(res);
+      const _toEmail = res[0].email;
+      mailer.sendMail(_toEmail, emailType, emailActivity);
+  }).catch(function (err) {
+    console.log(err);
+  });
 
 }
 

@@ -57,7 +57,6 @@ router.get('/logout', function (req, res) {
    router.get('/api/user/:id', users.getUser);
    router.get('/api/loggeduser', users.getLoggedUser);
    router.put('/api/updateuser/:username', users.updateUser);
-   // TODO: MED Remove when new create user is complete.
    router.post('/signup', users.createUser);
    router.post('/api/user', users.createUser);
    router.delete('/api/user/:id', users.deleteUser);
@@ -73,7 +72,7 @@ router.route('/api/changes/:status')
 router.post('/api/changes', changes.createChange);
 router.put('/api/changelog/:id', changes.updateChangeComment);
 
-// TODO: LOW (MAJOR) - Get files and tasks that are associated with a change when download a change
+// TODO: (3) (MAJOR) - Get files and tasks that are associated with a change when download a change
 // A change requires the associated tasks and files to be downloaded at the same time however
 // currently these are all downloaded with seperate calls. At the application level the state of a change
 // should be associated with the task and the files so changes to state are managed together.

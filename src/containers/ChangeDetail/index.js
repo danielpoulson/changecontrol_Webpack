@@ -83,15 +83,11 @@ class ChangeDetail extends Component {
     this.logMessage('Change Closed');
   }
 
-  // TODO: LOW 2 Remove the dept field from the user item
-  // Remove CC_ActDept : this.props.main.user.dept
-  // Not needed
   logMessage(message) {
     const _log = {
       CC_No: this.props.change.CC_No,
       CC_Id: 1,
       CC_Action: message,
-      CC_ActDept: this.props.main.user.dept,
       CC_ActBy: this.props.main.user.fullname,
       CC_ActDate: new Date()
     };
@@ -119,7 +115,6 @@ class ChangeDetail extends Component {
     return this.setState({change: _change});
   }
 
-// TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
 saveChange(event) {
   event.preventDefault();
   let _change = this.state.change;
@@ -132,14 +127,12 @@ saveChange(event) {
   }
 
 
-  // TODO: (1) @High fucntion to identifiy that a change to the owner has occurred.
-
   if (this.state.ccNo !== 'new') {
       _change.newOwner = _change.CC_Champ !== this.props.change.CC_Champ;
       this.props.editChange(_change);
     } else {
       let created = [];
-      created.push({ CC_Id: 0, CC_Action: 'Created', CC_ActBy: this.props.main.user.fullname, CC_ActDept: this.props.main.user.dept, CC_ActDate: new Date() });
+      created.push({ CC_Id: 0, CC_Action: 'Created', CC_ActBy: this.props.main.user.fullname, CC_ActDate: new Date() });
       _change.CC_LOG = created;
       _change.CC_Stat = _change.CC_Stat.id || 1;
       this.props.addChange(_change);
