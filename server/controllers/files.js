@@ -5,6 +5,7 @@ const app = express();
 const File = require('mongoose').model('File');
 const path = require('path');
 const rootPath = path.normalize(__dirname + '/../../');
+const uploaded = path.normalize(rootPath + '../uploaded/');
 const fs = require('fs');
 
 
@@ -15,9 +16,9 @@ exports.downloadFile = function (req, res) {
 
     if(fileType == 'exp'){
         filename = filename.slice(6);
-        file = '.././uploaded/' + filename;
+        file = uploaded + filename;
     } else {
-        file = '.././uploaded/' + filename;
+        file = uploaded + filename;
     }
 
     res.download(file, filename, function(err){
@@ -103,7 +104,7 @@ function fileDeletion(id) {
         File.findById(id, function (err, doc){
 
           if(doc){
-            fs.unlink('.././uploaded/' + doc.fsFilePath, function (err) {
+            fs.unlink(uploaded + doc.fsFilePath, function (err) {
                 if (err) throw err;
                 console.log('successfully deleted /uploaded/' + doc.fsFilePath);
             });
