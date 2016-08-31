@@ -130,7 +130,7 @@ router.route('/api/projectList/:status')
 
     //**********File function ***************
  router.get('/server/upload/:file', files.downloadFile);
- router.get('/server/upload/:file', files.downloadFile);
+ // router.get('/server/upload/:file', files.downloadFile);
   //app.post('/api/files', files.createFile);
   router.post('/server/upload', upload.any(), files.uploadFile);
   router.delete('/server/delete/:id', files.deletefile);

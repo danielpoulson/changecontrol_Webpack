@@ -9,6 +9,9 @@ const json2csv = require('json2csv');
 const mailer = require('../config/mailer.js');
 const moment = require('moment');
 const momentLocalizer = require('react-widgets/lib/localizers/moment');
+const path = require('path');
+const rootPath = path.normalize(__dirname + '/../../');
+const uploaded = path.normalize(rootPath + '../uploaded/');
 
 exports.getTasks = function(req, res) {
     const status = req.params.status;
@@ -145,7 +148,7 @@ exports.dumpTasks = function(req, res) {
 
 function getChangesList(int) {
     const status = 4;
-    const file = '.././uploaded/tasks' + int + '.csv';
+    const file = uploaded + 'tasks' + int + '.csv';
     const fields = ['SourceId', '_name', 'TKName', 'TKTarg', 'TKStart', 'TKChamp', 'TKStat'];
 
     Change.find({CC_Stat: {$lt:status}})

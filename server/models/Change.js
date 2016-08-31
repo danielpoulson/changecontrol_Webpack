@@ -44,7 +44,7 @@ changeSchema.plugin(mongooseToCsv, {
             const day = dateString.getDay().toString();
             const mth = dateString.getMonth();
             const yr = dateString.getYear();
-            let _date = (_date != 'undefined') ? ('0'+ day ).slice(-2) + '/' + ('0'+ mth ).slice(-2)  + '/' + ('0'+ yr ).slice(-2) : '';
+            let _date = (typeof doc.CC_TDate != 'undefined') ? ('0'+ day ).slice(-2) + '/' + ('0'+ mth ).slice(-2)  + '/' + ('0'+ yr ).slice(-2) : '';
 
             return _date;
         },

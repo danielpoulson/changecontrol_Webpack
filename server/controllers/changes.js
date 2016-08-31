@@ -6,6 +6,9 @@ const tasks = require('../controllers/tasks');
 const users = require('../controllers/users');
 const mailer = require('../config/mailer.js');
 const dateFunc = require('../config/date-function');
+const path = require('path');
+const rootPath = path.normalize(__dirname + '/../../');
+const uploaded = path.normalize(rootPath + '../uploaded/');
 
 exports.getChanges = function(req, res) {
     const status = req.params.status;
@@ -92,7 +95,7 @@ function createEmail(CC_TDate, CC_No, CC_Descpt, CC_Champ){
       <b> Deviation Description:</b><i>${CC_Descpt} <b> Target Date</b> ${_Target}</i>`;
 
   const p = users.getUserEmail(CC_Champ).exec();
-  
+
   p.then(function(res){
     console.log(res);
       const _toEmail = res[0].email;
@@ -136,7 +139,7 @@ exports.getUserDashboard = function(req, res){
 exports.dumpChanges = function(req, res) {
     //var status = 2;
     const int = parseInt((Math.random()*1000000000),10);
-    const file = '.././uploaded/changes' + int + '.csv';
+    const file = uploaded + 'changes' + int + '.csv';
     let fileData = {};
     const newDate = new Date();
 
