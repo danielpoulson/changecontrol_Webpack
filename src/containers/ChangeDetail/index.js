@@ -190,7 +190,7 @@ saveChange(event) {
             <a onClick={this.showTab.bind(this, 'TasksTab')} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
           </li>
           <li className={fileTabClass}>
-            <a onClick={this.showTab.bind(this, 'FilesTab')} data-toggle="tab">Files <span className="badge"> {this.props.ctTotal} </span></a>
+            <a onClick={this.showTab.bind(this, 'FilesTab')} data-toggle="tab">Files <span className="badge"> {this.props.main.fileTabCount} </span></a>
           </li>
           <li className={logTabClass}>
             <a onClick={this.showTab.bind(this, 'LogTab')} data-toggle="tab">Log</a>

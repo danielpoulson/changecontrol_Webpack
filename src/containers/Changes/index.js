@@ -109,7 +109,7 @@ class Changes extends Component {
   }
 
   newChange() {
-    this.props.getChange(null);
+    this.props.getChange('new');
     this.props.setMain({ MainId: 'new', CurrentMode: 'change', loading: false });
     this.context.router.push('/change/new');
   }

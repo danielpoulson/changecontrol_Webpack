@@ -21,9 +21,12 @@ export function getChanges(data) {
 }
 
 export function getChange(data) {
-
   const url = `/api/change/${data}`;
-  const request = axios.get(url);
+  let request = {};
+
+  if (data !== 'new') {
+    request = axios.get(url);
+  }
 
   return {
     type: GET_CHANGE,
