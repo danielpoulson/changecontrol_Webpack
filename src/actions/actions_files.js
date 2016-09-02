@@ -47,9 +47,9 @@ export function removeFile(id) {
 
 }
 //
-export function bookoutFile(id) {
+export function bookoutFile(id, user) {
   const url = `/api/filebooked/${id}`;
-  axios.put(url);
+  axios.put(url, {user: user});
 
   return {
     type: BOOKOUT_FILE,

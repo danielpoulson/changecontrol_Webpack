@@ -124,9 +124,10 @@ exports.getFileCount = function(req,res){
 
 exports.updateFileBook = function(req,res){
     const id = req.params.id;
-    console.log("updateFileBook " + req.params.id);
     File.findById(id, function (err, doc){
         doc.fsBooked = 1;
+        doc.fsAddedAt = new Date();
+        doc.fsAddedBy = req.body.user;
         doc.save();
     });
 

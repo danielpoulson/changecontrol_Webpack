@@ -45,8 +45,8 @@ class FileList extends Component {
     this.props.removeFile(id);
   }
 
-  onBookoutFile(id) {
-    this.props.bookoutFile(id);
+  onBookoutFile(id, user) {
+    this.props.bookoutFile(id, user);
   }
 
   render() {

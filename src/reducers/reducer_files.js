@@ -1,19 +1,17 @@
 import { GET_FILES, ADD_FILE, BOOKOUT_FILE, DELETE_FILE } from 'actions/actions_files';
 
-function toggleBooked(state, action) {
-  switch (action.type) {
-    case 'BOOKOUT_FILE':
-      if (state._id !== action.payload) {
-        return state;
-      }
+function toggleBooked(file, action) {
 
-      return {
-        ...state,
-        fsBooked: 1
-      };
-    default:
-      return state;
+  if (file._id !== action.payload) {
+    return file;
   }
+
+  return {
+    ...file,
+    fsBooked: 1,
+    fsAddedBy: sessionStorage.getItem('username'),
+    fsAddedAt: new Date()
+  };
 }
 
 function searchIndex(data, index) {

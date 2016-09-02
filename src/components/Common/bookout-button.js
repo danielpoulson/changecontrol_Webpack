@@ -22,7 +22,7 @@ export default class BookoutButton extends React.Component {
       window.location.href = `/server/upload/${this.props.fileLoad}`;
 
       this.props.createLog(_log);
-      this.props.bookoutFile(this.props.fileId);
+      this.props.bookoutFile(this.props.fileId, this.props.user.fullname);
 
     }
   }
