@@ -39,11 +39,10 @@ DatePicker.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  error: PropTypes.string,
+  error: PropTypes.bool,
   labelstyle: PropTypes.string,
   value: PropTypes.any,
   touched: PropTypes.bool
 };
 
 export default DatePicker;
-

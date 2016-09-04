@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import TaskForm from 'components/Tasks/task-form';
+import ErrorPanel from 'components/Common/error-panel';
 import toastr from 'toastr';
 import {taskFormIsValid} from './task-form.validation';
 import {usersFormattedForDropdown} from '../../selectors/selectors';
@@ -15,7 +16,8 @@ class TaskDetail extends React.Component {
 
     this.state = {
       dirty: false,
-      errors: {},
+      errors: [],
+      errorsObj: {},
       hideDelete: props.main.user.role !== 'admin' || props.newTask === true ? 'hidden' : 'btn btn-danger',
       newTask: false,
       submitting: false,
@@ -67,6 +69,7 @@ class TaskDetail extends React.Component {
 
     let validation = taskFormIsValid(_task);
     this.setState({errors: validation.errors});
+    this.setState({errorsObj: validation.errorsObj});
 
     if(!validation.formIsValid) {
       return;
@@ -128,8 +131,9 @@ class TaskDetail extends React.Component {
           </div>
 
           <div style={formStyle}>
+            {this.state.errors.length > 0 ? <ErrorPanel errors={this.state.errors}/> : ""}
             <TaskForm
-              errors={this.state.errors}
+              errors={this.state.errorsObj}
               hideDelete={this.state.hideDelete}
               onCancel={this.cancelTask}
               onChange={this.updateTaskState}

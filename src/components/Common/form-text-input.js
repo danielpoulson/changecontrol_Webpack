@@ -10,7 +10,7 @@ class TextInput extends React.Component {
     const _inputdiv = this.props.inputdiv;
     const _labelstyle = this.props.labelstyle;
 
-    if (this.props.error && this.props.error.length > 0) {
+    if (this.props.error) {
       wrapperClass += " " + 'has-error';
     }
 
@@ -25,7 +25,6 @@ class TextInput extends React.Component {
             ref={this.props.name}
             value={this.props.value || ''}
             onChange={this.props.onChange} />
-          {this.props.error && <div className="alert alert-danger">{this.props.error}</div>}
         </div>
       </fieldset>
     );
@@ -41,7 +40,7 @@ TextInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   value: PropTypes.string,
-  error: PropTypes.string,
+  error: PropTypes.bool,
   inputdiv: PropTypes.string,
   inputstyle: PropTypes.string,
   labelstyle: PropTypes.string,

@@ -6,6 +6,7 @@ import {usersFormattedForDropdown} from '../../selectors/selectors';
 import TaskList from 'components/Tasks/task-list';
 import FileList from 'containers/Files/file-list';
 import ChangeLog from 'components/Changes/change-log';
+import ErrorPanel from 'components/Common/error-panel';
 import classNames from 'classnames';
 import toastr from 'toastr';
 import { cdButtonGroup } from './changeDetail-style.scss';
@@ -25,7 +26,8 @@ class ChangeDetail extends Component {
       ccNo: '',
       dirty: false,
       DetailTab: 'show',
-      errors: {},
+      errors: [],
+      errorsObj: {},
       FilesTab: 'hidden',
       fCount: 0,
       LogTab: 'hidden',
@@ -121,6 +123,7 @@ saveChange(event) {
 
   let validation = changeFormIsValid(_change);
   this.setState({errors: validation.errors});
+  this.setState({errorsObj: validation.errorsObj});
 
   if(!validation.formIsValid) {
     return;
@@ -187,7 +190,7 @@ saveChange(event) {
             <a onClick={this.showTab.bind(this, 'DetailTab')} data-toggle="tab">Detail</a>
           </li>
           <li className={tasksTabClass}>
-            <a onClick={this.showTab.bind(this, 'TasksTab')} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
+            <a onClick={this.showTab.bind(this, 'TasksTab')} data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
           </li>
           <li className={fileTabClass}>
             <a onClick={this.showTab.bind(this, 'FilesTab')} data-toggle="tab">Files <span className="badge"> {this.props.main.fileTabCount} </span></a>
@@ -210,9 +213,10 @@ saveChange(event) {
         <div className={this.state.DetailTab}>
           <div className="panel panel-default">
             <div className="panel-body">
+              {this.state.errors.length > 0 ? <ErrorPanel errors={this.state.errors}/> : ""}
               <ChangeForm
                 change={this.state.change}
-                errors={this.state.errors}
+                errors={this.state.errorsObj}
                 onChange={this.updateChangeState}
                 onDateChange={this.updateChangeStateDate}
                 status={this.state.status}
