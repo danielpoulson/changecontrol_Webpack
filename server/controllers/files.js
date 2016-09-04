@@ -61,7 +61,7 @@ exports.uploadFile = function (req, res) {
 
     File.update({fsFileName: fileData.fsFileName}, fileData, {upsert: true}, function (err) {
         if (err) {
-            res.status(200);
+            res.sendStatus(200);
             console.log(err.toString());
         }
 
@@ -95,7 +95,7 @@ exports.deletefile = function (req, res) {
     const id = req.params.id;
 
     fileDeletion(id);
-    res.status(200);
+    res.sendStatus(200);
 
 };
 
