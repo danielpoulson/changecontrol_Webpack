@@ -3,9 +3,13 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const path = require('path');
+const rootPath = path.normalize(__dirname + '/../../');
+const appViews = rootPath + '/views/';
+const _webpackConfig = rootPath + 'webpack/common.config';
 
-module.exports = function (app, config) {
-    app.set('views', config.appViews);
+module.exports = function (app) {
+    app.set('views', appViews);
     app.engine('html', require('ejs').renderFile);
     app.use(logger('dev'));
     app.use(cookieParser());
@@ -24,7 +28,7 @@ module.exports = function (app, config) {
     // Only load this middleware in dev mode (important).
     if (app.get('env') === 'development') {
       const webpack = require('webpack');
-      const webpackConfig = require(config.webpackConfig);
+      const webpackConfig = require(_webpackConfig);
       const compiler = webpack(webpackConfig);
 
       app.use(require('webpack-dev-middleware')(compiler, {
@@ -37,6 +41,6 @@ module.exports = function (app, config) {
 
     }
 
-    app.use(express.static(config.staticFiles));
+    app.use(express.static(rootPath));
 
 };

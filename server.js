@@ -2,9 +2,14 @@ const express = require('express');
 const env = process.env.NODE_ENV || 'development';
 const auth = require('./server/config/auth');
 
+process.env.NODE_ENV = 'development';
+process.env.PORT = 9005;
+
 const app = express();
-const config = require('./server/config/config')[env];
-require('./server/config/express')(app, config);
+const config = {
+  db: 'mongodb://localhost/techservices'
+};
+require('./server/config/express')(app);
 require('./server/config/mongoose')(config);
 require('./server/config/passport')();
 app.use(require('./server/config/route'));
@@ -13,9 +18,8 @@ app.get('*', function (req, res) {
     res.render('index.html');
 });
 
-app.listen(config.port, function() {
-    console.log('Express server 🌎  listening on port ' + config.port);
+app.listen(process.env.PORT, function() {
+    console.log('Express server 🌎  listening on port ' + process.env.PORT);
     console.log('env = ' + process.env.NODE_ENV +
-                '\n__dirname = ' + __dirname +
                 '\nprocess.cwd = ' + process.cwd());
 });
