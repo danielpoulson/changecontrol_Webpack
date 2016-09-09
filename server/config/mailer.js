@@ -2,7 +2,7 @@
 /*eslint no-console: 0*/
 const nodemailer = require('nodemailer');
 const mg = require('nodemailer-mailgun-transport');
-const connection = require('./config');
+const config = require('./config');
 const path = require('path');
 const rootPath = path.normalize(__dirname);
 const fs = require('fs');
@@ -12,7 +12,7 @@ exports.sendMail = function(toEmail, emailType, emailActivity) {
   // This is your API key that you retrieve from www.mailgun.com/cp (free up to 10K monthly emails)
 
   let auth = {
-    auth: connection.mailgun
+    auth: config.mailgun
   };
 
   const nodemailerMailgun = nodemailer.createTransport(mg(auth));

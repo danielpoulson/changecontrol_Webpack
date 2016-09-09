@@ -1,3 +1,4 @@
+// @flow
 const express = require('express');
 const env = process.env.NODE_ENV || 'development';
 const auth = require('./server/config/auth');
@@ -18,8 +19,9 @@ app.get('*', function (req, res) {
     res.render('index.html');
 });
 
+/*eslint no-console: 0*/
 app.listen(process.env.PORT, function() {
-    console.log('Express server 🌎  listening on port ' + process.env.PORT);
+    console.log('Express server 🌎  listening on port : ' + process.env.PORT);
     console.log('env = ' + process.env.NODE_ENV +
                 '\nprocess.cwd = ' + process.cwd());
 });

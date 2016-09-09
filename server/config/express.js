@@ -8,6 +8,8 @@ const rootPath = path.normalize(__dirname + '/../../');
 const appViews = rootPath + '/views/';
 const _webpackConfig = rootPath + 'webpack/common.config';
 
+/*eslint no-console: 0*/
+
 module.exports = function (app) {
     app.set('views', appViews);
     app.engine('html', require('ejs').renderFile);
@@ -27,6 +29,7 @@ module.exports = function (app) {
 
     // Only load this middleware in dev mode (important).
     if (app.get('env') === 'development') {
+      console.log("Webpack in development");
       const webpack = require('webpack');
       const webpackConfig = require(_webpackConfig);
       const compiler = webpack(webpackConfig);
