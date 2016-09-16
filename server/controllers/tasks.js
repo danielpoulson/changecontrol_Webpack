@@ -8,7 +8,6 @@ const Users = require('../controllers/users');
 const json2csv = require('json2csv');
 const mailer = require('../config/mailer.js');
 const moment = require('moment');
-const momentLocalizer = require('react-widgets/lib/localizers/moment');
 const path = require('path');
 const rootPath = path.normalize(__dirname + '/../../');
 const uploaded = path.normalize(rootPath + '../uploaded/');

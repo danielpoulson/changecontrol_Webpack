@@ -6,7 +6,6 @@ const passport = require('passport');
 const path = require('path');
 const rootPath = path.normalize(__dirname + '/../../');
 const appViews = rootPath + '/views/';
-const _webpackConfig = rootPath + 'webpack/common.config';
 
 /*eslint no-console: 0*/
 
@@ -25,24 +24,6 @@ module.exports = function (app) {
     }));
     app.use(passport.initialize());
     app.use(passport.session());
-
-
-    // Only load this middleware in dev mode (important).
-    if (app.get('env') === 'development') {
-      console.log("Webpack in development");
-      const webpack = require('webpack');
-      const webpackConfig = require(_webpackConfig);
-      const compiler = webpack(webpackConfig);
-
-      app.use(require('webpack-dev-middleware')(compiler, {
-        noInfo: true, publicPath: webpackConfig.output.publicPath,
-      }));
-
-        app.use(require('webpack-hot-middleware')(compiler, {
-        log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000,
-      }));
-
-    }
 
     app.use(express.static(rootPath));
 
