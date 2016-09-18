@@ -16,8 +16,8 @@ export default class BookoutButton extends React.Component {
       toastr.error('This function does not work with internet explorer. Please contact your administrator', 'Error - Internet Explorer', { timeOut: 5000 });
     } else {
 
-      const _log = { CC_No: this.props.source, CC_Id: 4, CC_Action: `File booked out - ${this.props.fileLoad}`,
-                CC_ActBy: this.props.user.fullname, CC_ActDate: new Date() };
+      // const _log = { CC_No: this.props.source, CC_Id: 4, CC_Action: `File booked out - ${this.props.fileLoad}`,
+      //           CC_ActBy: this.props.user.fullname, CC_ActDate: new Date() };
 
       window.location.href = `/server/upload/${this.props.fileLoad}`;
 

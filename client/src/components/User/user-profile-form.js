@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import TextInputTask from 'components/Common/form-text-input';
-import SelectInput from 'components/Common/select-input';
+import TextInputTask from '../../components/Common/form-text-input';
+import SelectInput from '../../components/Common/select-input';
 
 const UserProfileForm = ({ errors, user, deleteUser, onChange, onCancel, onSave, roleSelect, newUser}) => {
 

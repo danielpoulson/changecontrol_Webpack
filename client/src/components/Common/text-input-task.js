@@ -5,7 +5,7 @@ const TextInputTask = (props) => {
   let wrapperClass = 'form-group';
 
   if (props.touched && props.error && props.error.length > 0) {
-    wrapperClass += ' ' + 'has-error';
+    wrapperClass += " has-error";
   }
 
   const labelClass = `control-label ${props.dpLabelCol}`;

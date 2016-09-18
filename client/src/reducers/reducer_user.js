@@ -1,4 +1,4 @@
-import { GET_USER, RESET_USER } from 'actions/actions_users';
+import { GET_USER, RESET_USER } from '../actions/actions_users';
 
 const initialState = { _id: ''};
 

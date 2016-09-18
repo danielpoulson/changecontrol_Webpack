@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import TaskList from 'components/Tasks/task-list';
-import Pagination from 'components/Common/pagination';
-import SearchBox from 'components/Common/search-box';
+import TaskList from '../../components/Tasks/task-list';
+import Pagination from '../../components/Common/pagination';
+import SearchBox from '../../components/Common/search-box';
 /* actions */
-import { getAllTasks, loadPageTask, exportTasks } from 'actions/actions_tasks';
-import { getFiles } from 'actions/actions_files';
+import { getAllTasks, loadPageTask, exportTasks } from '../../actions/actions_tasks';
+import { getFiles } from '../../actions/actions_files';
 
 // TODO: (5) MED - Make a common component search box Changes and Task List
 // Changes and Task share the same search text box function which should be made as a common component
@@ -110,16 +110,16 @@ class Tasks extends Component {
 
           <div className="col-sm-6">
             <Pagination
-              activePage = {this.state.activePage}
-              numPage = {this.props.tasks.per_page}
-              count = {this.props.tasks.total}
-              getPage = {this.linkClick.bind(this)} />
+              activePage={this.state.activePage}
+              numPage={this.props.tasks.per_page}
+              count={this.props.tasks.total}
+              getPage={this.linkClick.bind(this)} />
           </div>
         </div>
 
         <TaskList
-          tasklist = {this.props.tasks.paged}
-          type = "All" />
+          tasklist={this.props.tasks.paged}
+          type="All" />
 
         </div>
     );

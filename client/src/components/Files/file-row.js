@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
-import { getExt } from 'utils/status';
-import DownloadButton from 'components/Common/download-button';
-import BookoutButton from 'components/Common/bookout-button';
+import { getExt } from '../../utils/status';
+import DownloadButton from '../../components/Common/download-button';
+import BookoutButton from '../../components/Common/bookout-button';
 
 
 const FileRow = (props) => {

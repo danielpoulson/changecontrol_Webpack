@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import TaskTable from './task-table';
-import { getTask } from 'actions/actions_tasks';
-import { getChange } from 'actions/actions_changes';
-import { setMain } from 'actions/actions_main';
+import { getTask } from '../../actions/actions_tasks';
+import { getChange } from '../../actions/actions_changes';
+import { setMain } from '../../actions/actions_main';
 
 class TaskList extends Component {
   constructor(props) {
@@ -44,8 +44,8 @@ class TaskList extends Component {
       <div className={this.props.tasksTab}>
         <div>
           <TaskTable
-            tasklist = {this.props.tasklist}
-            handleClick = {this.handleClick} />
+            tasklist={this.props.tasklist}
+            handleClick={this.handleClick} />
         </div>
         <div className={hideButton}>
             <input type="submit" value="New Task" className="btn btn-success pull-left" onClick={this.newTask} />

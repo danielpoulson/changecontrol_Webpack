@@ -1,4 +1,4 @@
-import { GET_USERS, USER_CREATED } from 'actions/actions_users';
+import { GET_USERS, USER_CREATED } from '../actions/actions_users';
 
 
 export default function (state = [], action) {

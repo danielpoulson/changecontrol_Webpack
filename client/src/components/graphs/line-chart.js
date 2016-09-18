@@ -1,9 +1,9 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import d3 from 'd3';
 import tip from 'd3-tip';
 import _ from 'lodash';
 import { myData } from './data';
-import './styles.scss';
+import './styles.css';
 
 d3.tip = tip;
 

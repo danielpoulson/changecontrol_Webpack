@@ -1,4 +1,4 @@
-import { GET_TASK, EDIT_TASK } from 'actions/actions_tasks';
+import { GET_TASK, EDIT_TASK } from '../actions/actions_tasks';
 
 const initialState = { _id: "new", TKCapa: 0, TKStat: 0, TKChamp: '' };
 

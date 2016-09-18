@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-import TextArea from 'components/Common/text-area';
-import TextInputTask from 'components/Common/form-text-input';
-import DateTimePicker from 'components/Common/date-picker';
-import SelectInput from 'components/Common/select-input';
+import TextArea from '../../components/Common/text-area';
+import TextInputTask from '../../components/Common/form-text-input';
+import DateTimePicker from '../../components/Common/date-picker';
+import SelectInput from '../../components/Common/select-input';
 
 const TaskForm = ({
     errors, task, status, users, onSaveTask, hideDelete, onDeleteTask, onChange, onDateChange, onCancel, submitting

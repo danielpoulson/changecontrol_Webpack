@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Login from 'components/Login/login';
-import NavBar from 'layouts/Navigation/nav-bar';
+import Login from '../../components/Login/login';
+import NavBar from '../../layouts/Navigation/nav-bar';
 
-import { getUserDashboard, login } from 'actions/actions_main';
+import { getUserDashboard, login } from '../../actions/actions_main';
 
 /* component styles */
-import './styles.scss';
+import './styles.css';
 
 class Header extends Component {
   constructor(props){

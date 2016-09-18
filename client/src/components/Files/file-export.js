@@ -1,5 +1,5 @@
 import React from 'react';
-import FileList from 'containers/Files/file-list';
+import FileList from '../../containers/Files/file-list';
 
 const FileExport = () => (
   <div>

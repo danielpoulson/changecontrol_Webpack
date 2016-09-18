@@ -81,7 +81,7 @@ export function getStatCC(status) {
       styled = 'fa fa-ban fa-lg';
       break;
     default:
-      styled;
+      styled = '';
   }
 
   return styled;

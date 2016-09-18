@@ -2,14 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Toastr from 'toastr';
 
-import ChangeList from 'components/Changes/change-list';
-import Pagination from 'components/Common/pagination';
-import SearchBox from 'components/Common/search-box';
+import ChangeList from '../../components/Changes/change-list';
+import Pagination from '../../components/Common/pagination';
+import SearchBox from '../../components/Common/search-box';
 
 /* actions */
-import { getChange, getChanges, addChange, loadPage, exportChanges } from 'actions/actions_changes';
-import { setMain } from 'actions/actions_main';
-import { getFiles } from 'actions/actions_files';
+import { getChange, getChanges, addChange, loadPage, exportChanges } from '../../actions/actions_changes';
+import { setMain } from '../../actions/actions_main';
+import { getFiles } from '../../actions/actions_files';
 
 class Changes extends Component {
 
@@ -160,10 +160,10 @@ class Changes extends Component {
 
           <div className="col-sm-6">
             <Pagination
-              activePage = {this.state.activePage}
-              numPage = {this.props.changes.per_page}
-              count = {this.props.changes.total}
-              getPage = {this.linkClick.bind(this)} />
+              activePage={this.state.activePage}
+              numPage={this.props.changes.per_page}
+              count={this.props.changes.total}
+              getPage={this.linkClick.bind(this)} />
           </div>
         </div>
 
@@ -172,8 +172,8 @@ class Changes extends Component {
           <ChangeList
             changelist={this.props.changes.paged}
             getChange={this.onGetChange}
-            sortByClick = {this.onSortByClick}
-            colSelected = {this.props.changes.sorted} />
+            sortByClick={this.onSortByClick}
+            colSelected={this.props.changes.sorted} />
         </div>
 
       </section>

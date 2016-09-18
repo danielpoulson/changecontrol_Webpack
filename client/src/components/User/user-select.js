@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import SelectInput from 'components/Common/select-input';
-import { labStyle, fnStyle } from './user-style.scss';
+import SelectInput from '../../components/Common/select-input';
+import { labStyle, fnStyle } from './user-style.css';
 
 const UserSelect = (props) => {
 

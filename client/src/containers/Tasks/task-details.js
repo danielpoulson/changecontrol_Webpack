@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import TaskForm from 'components/Tasks/task-form';
-import ErrorPanel from 'components/Common/error-panel';
+import TaskForm from '../../components/Tasks/task-form';
+import ErrorPanel from '../../components/Common/error-panel';
 import toastr from 'toastr';
 import {taskFormIsValid} from './task-form.validation';
 import {usersFormattedForDropdown} from '../../selectors/selectors';
 
-import * as taskActions from 'actions/actions_tasks';
-import * as mainActions from 'actions/actions_main';
+import * as taskActions from '../../actions/actions_tasks';
+import * as mainActions from '../../actions/actions_main';
 
 class TaskDetail extends React.Component {
   constructor(props, context) {
@@ -40,7 +40,7 @@ class TaskDetail extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.task._id != nextProps.task._id) {
+    if (this.props.task._id !== nextProps.task._id) {
       // Necessary to populate form when existing course is loaded directly.
       this.setState({task: Object.assign({}, nextProps.task)});
     }
@@ -173,7 +173,6 @@ TaskDetail.childContextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  const taskId = ownProps.params.id;
 
   return {
     main: state.main,

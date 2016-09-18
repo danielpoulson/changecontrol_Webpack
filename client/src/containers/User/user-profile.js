@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import UserProfileForm from 'components/User/user-profile-form';
-import UserSelect from 'components/User/user-select';
+import UserProfileForm from '../../components/User/user-profile-form';
+import UserSelect from '../../components/User/user-select';
 import {usersFormattedForDropdown} from '../../selectors/selectors';
 import {userFormIsValid} from './user-form.validation';
 import toastr from 'toastr';
 
-import { getUser, getUsers, createUser, resetUser, saveUser, deleteUser } from 'actions/actions_users';
+import { getUser, getUsers, createUser, resetUser, saveUser, deleteUser } from '../../actions/actions_users';
 
 class UserProfile extends Component {
 
@@ -28,7 +28,7 @@ class UserProfile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.user._id != nextProps.user._id) {
+    if (this.props.user._id !== nextProps.user._id) {
       // Necessary to populate form when existing course is loaded directly.
       this.setState({user: Object.assign({}, nextProps.user)});
     }

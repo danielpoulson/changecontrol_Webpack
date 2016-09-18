@@ -1,4 +1,4 @@
-import { ADD_TASK, EDIT_TASK, DELETE_TASK, GET_TASKS, LOAD_PAGE_TASKS, GET_PROJECT_TASKS } from 'actions/actions_tasks';
+import { ADD_TASK, EDIT_TASK, DELETE_TASK, GET_TASKS, LOAD_PAGE_TASKS, GET_PROJECT_TASKS } from '../actions/actions_tasks';
 import _ from 'lodash';
 
 const initialState = {
@@ -40,7 +40,6 @@ export default function (state = initialState, action) {
   let offset = 0;
   let paged = [];
   let searchText = '';
-  let currIds = [];
   let ctTotal = 0;
   let ctlist = [];
 

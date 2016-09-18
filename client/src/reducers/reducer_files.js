@@ -1,4 +1,4 @@
-import { GET_FILES, ADD_FILE, BOOKOUT_FILE, DELETE_FILE } from 'actions/actions_files';
+import { GET_FILES, ADD_FILE, BOOKOUT_FILE, DELETE_FILE } from '../actions/actions_files';
 
 function toggleBooked(file, action) {
 

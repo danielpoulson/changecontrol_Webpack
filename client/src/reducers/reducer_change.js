@@ -1,4 +1,4 @@
-import { GET_CHANGE, EDIT_CHANGE, CREATE_LOG } from 'actions/actions_changes';
+import { GET_CHANGE, EDIT_CHANGE, CREATE_LOG } from '../actions/actions_changes';
 
 const initialState = {
   CC_No: "New",

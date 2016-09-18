@@ -1,9 +1,5 @@
 /* global styles */
 
-@import 'fonts/roboto';
-@import 'typography';
-@import 'links';
-
 
 :global(body) {
 

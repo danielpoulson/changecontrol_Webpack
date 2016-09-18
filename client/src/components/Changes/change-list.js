@@ -26,7 +26,7 @@ const ChangeList = (props) => {
   if (_changes !== undefined) {
 
     changes = _changes.map((change) => <ChangeRow key={change.CC_No} change={change}
-      getChange = {props.getChange}
+      getChange={props.getChange}
     />);
   }
 

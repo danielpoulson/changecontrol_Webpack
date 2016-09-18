@@ -3,15 +3,13 @@ import React, { PropTypes } from 'react';
 class TextInput extends React.Component {
   render() {
 
-    const spanStyle = { color: 'red' };
-
     let wrapperClass = 'form-group';
     const _inputstyle = 'form-control' || this.props.inputstyle;
     const _inputdiv = this.props.inputdiv;
     const _labelstyle = this.props.labelstyle;
 
     if (this.props.error) {
-      wrapperClass += " " + 'has-error';
+      wrapperClass += " has-error";
     }
 
     return (

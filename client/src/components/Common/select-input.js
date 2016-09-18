@@ -4,7 +4,7 @@ const SelectInput = ({name, label, inputdiv, labelstyle, onChange, defaultOption
   let wrapperClass = "form-control";
 
   if (error) {
-    wrapperClass += " " + 'has-error';
+    wrapperClass += " has-error";
   }
 
   return (

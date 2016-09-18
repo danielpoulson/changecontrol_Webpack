@@ -1,20 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import ChangeForm from 'components/Changes/change-form';
+import ChangeForm from '../../components/Changes/change-form';
 import {changeFormIsValid} from './change-form.validation';
 import {usersFormattedForDropdown} from '../../selectors/selectors';
-import TaskList from 'components/Tasks/task-list';
-import FileList from 'containers/Files/file-list';
-import ChangeLog from 'components/Changes/change-log';
-import ErrorPanel from 'components/Common/error-panel';
+import TaskList from '../../components/Tasks/task-list';
+import FileList from '../../containers/Files/file-list';
+import ChangeLog from '../../components/Changes/change-log';
+import ErrorPanel from '../../components/Common/error-panel';
 import classNames from 'classnames';
 import toastr from 'toastr';
-import { cdButtonGroup } from './changeDetail-style.scss';
+import { cdButtonGroup } from './changeDetail-style.css';
 
 /* actions */
-import { addChange, createLog, editChange, getChange } from 'actions/actions_changes';
-import { getProjectTasks } from 'actions/actions_tasks';
-import { setMain } from 'actions/actions_main';
+import { addChange, createLog, editChange, getChange } from '../../actions/actions_changes';
+import { getProjectTasks } from '../../actions/actions_tasks';
+import { setMain } from '../../actions/actions_main';
 
 class ChangeDetail extends Component {
 
@@ -63,7 +63,7 @@ class ChangeDetail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.change._id != nextProps.change._id) {
+    if (this.props.change._id !== nextProps.change._id) {
       // Necessary to populate form when existing course is loaded directly.
       this.setState({change: Object.assign({}, nextProps.change)});
     }
@@ -226,8 +226,8 @@ saveChange(event) {
         </div>
 
         <TaskList
-          tasklist = {this.props.tasklist}
-          tasksTab = {this.state.TasksTab}
+          tasklist={this.props.tasklist}
+          tasksTab={this.state.TasksTab}
           title={this.state.changeTitle} />
 
         <ChangeLog

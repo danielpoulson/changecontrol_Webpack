@@ -1,4 +1,4 @@
-import { SET_MAIN, SET_USER, USER_LOGGED_OUT, SET_FILETAB_COUNT, SET_LOADING, SET_USER_DASHBOARD} from 'actions/actions_main';
+import { SET_MAIN, SET_USER, USER_LOGGED_OUT, SET_FILETAB_COUNT, SET_LOADING, SET_USER_DASHBOARD} from '../actions/actions_main';
 import toastr from 'toastr';
 
 const initialState = {

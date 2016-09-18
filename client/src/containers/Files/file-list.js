@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import FileTable from 'components/Files/file-table';
-import FileZone from 'components/Files/file-zone';
+import FileTable from '../../components/Files/file-table';
+import FileZone from '../../components/Files/file-zone';
 
 /* actions */
-import { getFiles, addFile, bookoutFile, deleteFile, removeFile } from 'actions/actions_files';
-import { setFiletabCount } from 'actions/actions_main';
-import { createLog } from 'actions/actions_changes';
+import { getFiles, addFile, bookoutFile, deleteFile, removeFile } from '../../actions/actions_files';
+import { setFiletabCount } from '../../actions/actions_main';
+import { createLog } from '../../actions/actions_changes';
 
 class FileList extends Component {
   constructor(props) {

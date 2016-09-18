@@ -1,4 +1,4 @@
-import { LOAD_PAGE } from 'actions/actions_paged';
+import { LOAD_PAGE } from '../actions/actions_paged';
 
 export default function (state = [], action) {
   switch (action.type) {

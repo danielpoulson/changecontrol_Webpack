@@ -1,6 +1,6 @@
 import React from 'react';
 /* component styles */
-import { image } from './error-panel.scss';
+import { image } from './error-panel.css';
 
 
 const ErrorPanel = ({errors}) => {

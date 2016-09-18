@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import { getFiles } from 'actions/actions_files';
-import { logoutUser } from 'actions/actions_main';
+import { getFiles } from '../../actions/actions_files';
+import { logoutUser } from '../../actions/actions_main';
 
-import { styles } from './styles.scss';
+import { styles } from './styles.css';
 
 class NavBar extends React.Component {
 

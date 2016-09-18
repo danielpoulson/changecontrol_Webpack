@@ -13,12 +13,12 @@ const Pagination = (props) => {
 
   return (
     <nav>
-      <ul className = "list-inline pull-right dpPag" >
-        <li className = {firstPage ? 'hidden' : 'dpHand'} onClick = {props.getPage.bind(null, activePage - 1)} >
-          <span className = "glyphicon glyphicon-chevron-left" ></span></li>
+      <ul className="list-inline pull-right dpPag" >
+        <li className={firstPage ? 'hidden' : 'dpHand'} onClick={props.getPage.bind(null, activePage - 1)} >
+          <span className="glyphicon glyphicon-chevron-left" ></span></li>
         <li>{activePage + 1} of {pag}</li>
-        <li className = {lastPage ? 'hidden' : 'dpHand'} onClick = {props.getPage.bind(null, activePage + 1)} >
-          <span className = "glyphicon glyphicon-chevron-right" ></span>
+        <li className={lastPage ? 'hidden' : 'dpHand'} onClick={props.getPage.bind(null, activePage + 1)} >
+          <span className="glyphicon glyphicon-chevron-right" ></span>
         </li>
         <li>Records {count}</li>
       </ul>
