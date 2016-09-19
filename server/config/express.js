@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
 const rootPath = path.normalize(__dirname + '/../../');
-const appViews = rootPath + '/views/';
+const appViews = rootPath + '/build/';
 
 /*eslint no-console: 0*/
 
@@ -25,6 +25,6 @@ module.exports = function (app) {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    app.use(express.static(rootPath));
+    app.use(express.static(appViews));
 
 };
