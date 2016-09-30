@@ -5,11 +5,15 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
 const rootPath = path.normalize(__dirname + '/../../');
-const appViews = rootPath + '/build/';
+let appViews = rootPath + '/build/';
 
 /*eslint no-console: 0*/
 
-module.exports = function (app) {
+module.exports = function (app, config) {
+
+  if (config.env === 'development') {
+    appViews = rootPath + '/client/';
+  }
     app.set('views', appViews);
     app.engine('html', require('ejs').renderFile);
     app.use(logger('dev'));

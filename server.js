@@ -8,9 +8,10 @@ process.env.PORT = 9005;
 
 const app = express();
 const config = {
-  db: 'mongodb://localhost/techservices'
+  db: 'mongodb://localhost/techservices',
+  env: process.env.NODE_ENV
 };
-require('./server/config/express')(app);
+require('./server/config/express')(app, config);
 require('./server/config/mongoose')(config);
 require('./server/config/passport')();
 app.use(require('./server/config/route'));
