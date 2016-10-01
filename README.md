@@ -7,3 +7,5 @@ npm install git+https://github.com/orliesaurus/nodemailer-mailgun-transport.git
 * Improve promises emailer server/controllers/changes
 * Fix a bug where changes to the task owner didn't send an email components/TaskDetail
 * Change validation CC_Pry is required add validation logic
+* Create a seperate client and server app.
+* Implement create react app

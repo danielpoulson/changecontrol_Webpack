@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 /* global styles for app */
@@ -21,7 +22,7 @@ import { Footer } from '../../layouts/Footer';
 export class App extends Component {
 
   componentWillMount() {
-    const authorised = sessionStorage.getItem('authorised');
+    const authorised:any = sessionStorage.getItem('authorised');    
     this.props.getAllTasks();
     this.props.getUsers();
     if (authorised === 'true') {
