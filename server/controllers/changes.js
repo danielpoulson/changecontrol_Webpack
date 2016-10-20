@@ -6,9 +6,7 @@ const tasks = require('../controllers/tasks');
 const users = require('../controllers/users');
 const mailer = require('../config/mailer.js');
 const dateFunc = require('../config/date-function');
-const path = require('path');
-const rootPath = path.normalize(__dirname + '/../../');
-const uploaded = path.normalize(rootPath + '../uploaded/');
+const utils = require('../config/utils');
 
 exports.getChanges = function(req, res) {
     const status = req.params.status;
@@ -139,7 +137,7 @@ exports.getUserDashboard = function(req, res){
 exports.dumpChanges = function(req, res) {
     //var status = 2;
     const int = parseInt((Math.random()*1000000000),10);
-    const file = uploaded + 'changes' + int + '.csv';
+    const file = utils.uploaded + 'changes' + int + '.csv';
     let fileData = {};
     const newDate = new Date();
 
