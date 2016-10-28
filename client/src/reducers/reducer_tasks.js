@@ -50,9 +50,17 @@ export default function (state = initialState, action) {
         ...state.alldata,
         _data
       ];
+      ctlist = [
+        ...state.ctlist,
+        _data
+      ];
+      ctTotal = ctlist.length;
+
       return {
         ...state,
-        alldata
+        alldata,
+        ctlist,
+        ctTotal
       };
 
     case EDIT_TASK: {

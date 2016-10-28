@@ -85,6 +85,7 @@ class TaskDetail extends React.Component {
     }
 
     toastr.success('Task has been saved', 'Task Detail', { timeOut: 1000 });
+    this.props.mainActions.setLoading({ loading: false });
     this.taskNav(_SourceId);
   }
 
