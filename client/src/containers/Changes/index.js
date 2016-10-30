@@ -31,10 +31,11 @@ class Changes extends Component {
     this.onSearchText = this.onSearchText.bind(this);
     this.onSortByClick = this.onSortByClick.bind(this);
     this.onGetChange = this.onGetChange.bind(this);
+    this.linkClick = this.linkClick.bind(this);
   }
 
   componentWillMount() {
-    const search = this.props.changes.searchText;
+    const search:number = this.props.changes.searchText;
     if (!this.props.changes.alldata.length > 0) {
       this.props.getChanges(4);
     }
@@ -163,7 +164,7 @@ class Changes extends Component {
               activePage={this.state.activePage}
               numPage={this.props.changes.per_page}
               count={this.props.changes.total}
-              getPage={this.linkClick.bind(this)} />
+              getPage={this.linkClick} />
           </div>
         </div>
 

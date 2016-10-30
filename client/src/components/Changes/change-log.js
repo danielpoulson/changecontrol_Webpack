@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
+import './change-list.css';
 
 const ChangeLog = (props) => {
 
@@ -7,10 +8,11 @@ const ChangeLog = (props) => {
   const _log = props.log.CC_LOG;
   const spanStyle = { color: 'blue' };
   const butGroup = { padding: 10 };
+  const listStyleLi = {padding: 5};
 
   if (_log !== null && _log.length !== 0) {
 
-      logs = _log.map((log) => <li className="list-group-item" key={log._id}>
+      logs = _log.map((log) => <li style={listStyleLi} key={log._id}>
                         <span style={spanStyle} className="glyphicon glyphicon-edit"></span> Change Control : {log.CC_Action}
                         <small><em> ({moment(new Date(log.CC_ActDate)).format('DD/MM/YYYY')}) {log.CC_ActBy} </em></small></li>);
 
@@ -25,9 +27,9 @@ const ChangeLog = (props) => {
                   <button className="btn btn-danger dp-margin-10-LR" onClick={props.onCancel}>Cancel / Withdrawn</button>
               </div>
           </div>
-          <div className="col-sm-12 margin-10-top">
-              <ul className="list-group">{logs}</ul>
-          </div>
+        <div className="panel panel-default panelStyle">
+            <ul className="scrollable">{logs}</ul>
+        </div>
       </div>
 
   );

@@ -4,21 +4,30 @@ const Pagination = (props) => {
   const activePage = props.activePage;
   const count = props.count;
   const numPage = props.numPage;
-  let pag = 1;
+  const linkStyle = { color: '#71ABFF' };
+  let pagnum = 1;
 
-  pag = Math.ceil(count / numPage);
+  pagnum = Math.ceil(count / numPage);
   const firstPage = activePage === 0;
-  const lastPage = activePage + 1 === pag;
+  const lastPage = activePage + 1 === pagnum;
+  const pagDisplay = `${activePage + 1} of ${pagnum}`;
 
 
   return (
     <nav>
       <ul className="list-inline pull-right dpPag" >
-        <li className={firstPage ? 'hidden' : 'dpHand'} onClick={props.getPage.bind(null, activePage - 1)} >
-          <span className="glyphicon glyphicon-chevron-left" ></span></li>
-        <li>{activePage + 1} of {pag}</li>
-        <li className={lastPage ? 'hidden' : 'dpHand'} onClick={props.getPage.bind(null, activePage + 1)} >
+        <li className={firstPage ? 'hidden' : 'dpHand'} style={linkStyle} onClick={() => { props.getPage(0);}} >
+          <em>First</em>
+        </li>
+        <li className={firstPage ? 'hidden' : 'dpHand'} onClick={() => { props.getPage(activePage - 1);}} >
+          <span className="glyphicon glyphicon-chevron-left" ></span>
+        </li>
+        <li>{pagDisplay}</li>
+        <li className={lastPage ? 'hidden' : 'dpHand'} onClick={()=>{props.getPage(activePage + 1);}} >
           <span className="glyphicon glyphicon-chevron-right" ></span>
+        </li>
+        <li className={lastPage ? 'hidden' : 'dpHand'} style={linkStyle} onClick={() => {props.getPage(pagnum - 1);}} >
+          <em>Last</em>
         </li>
         <li>Records {count}</li>
       </ul>

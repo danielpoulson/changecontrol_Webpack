@@ -1,3 +1,4 @@
+// @flow
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
@@ -7,16 +8,12 @@ import { getChange } from '../../actions/actions_changes';
 import { setMain } from '../../actions/actions_main';
 
 class TaskList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.handleClick = this.handleClick.bind(this);
-    this.newTask = this.newTask.bind(this);
-  }
 
-  handleClick(i) {
+  state = {};
+
+  handleClick = (i) => {
     if (this.props.type === 'All') {
-      const ccNo = this.props.tasklist[i].SourceId;
+      const ccNo:string = this.props.tasklist[i].SourceId;
       this.props.setMain({ MainId: ccNo, CurrentMode: 'change', loading: true });
       this.props.getChange(ccNo);
       this.context.router.push(`/change/${ccNo}`);
@@ -25,12 +22,12 @@ class TaskList extends Component {
       this.props.getTask(_id);
       this.context.router.push(`/task/${_id}`);
     }
-  }
+  };
 
-  newTask() {
+  newTask = () => {
     this.props.getTask('new');
     this.context.router.push('/task/new');
-  }
+  };
 
   render() {
 

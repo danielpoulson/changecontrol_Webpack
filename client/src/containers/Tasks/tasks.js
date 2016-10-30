@@ -8,9 +8,6 @@ import SearchBox from '../../components/Common/search-box';
 import { getAllTasks, loadPageTask, exportTasks } from '../../actions/actions_tasks';
 import { getFiles } from '../../actions/actions_files';
 
-// TODO: (5) MED - Make a common component search box Changes and Task List
-// Changes and Task share the same search text box function which should be made as a common component
-
 class Tasks extends Component {
   constructor(props) {
     super(props);
@@ -34,8 +31,7 @@ class Tasks extends Component {
     if (!this.props.tasks.alldata.length > 0) {
       this.props.getAllTasks();
     }
-    // TODO: (1) (FUNC) Sticky options on the task list
-    // This section should remember you page and or serach options.
+
     this.setState({ txtSearch: search });
     this.onChange(1, search);
   }
