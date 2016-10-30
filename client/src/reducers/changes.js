@@ -26,6 +26,10 @@ function searchData(data, searchText, sortColumn) {
   return newList;
 }
 
+function removeByIndex(data, index) {
+  return data.filter((item) => item._id !== index);
+}
+
 export default function (state, action) {
   let alldata = [];
   let _data = {};
@@ -69,6 +73,18 @@ export default function (state, action) {
         paged,
         alldata
       };
+
+      case 'DELETE_CHANGE': {
+        const _id = action.payload;
+        alldata = removeByIndex(state.alldata, _id);
+        paged = removeByIndex(state.paged, _id);
+
+        return {
+          ...state,
+          alldata,
+          paged
+        };
+      }
 
     case GET_CHANGES:
       alldata = action.payload.data;

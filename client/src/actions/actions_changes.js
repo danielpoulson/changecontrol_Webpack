@@ -57,6 +57,18 @@ export function editChange(data) {
 
 }
 
+// TODO: Delete change from cached list of changes
+
+export function closeChange(data) {
+  const url = `/api/change/${data._id}`;
+  axios.put(url, data);
+
+  return {
+    type: 'DELETE_CHANGE',
+    payload: data._id
+  };
+}
+
 export function loadPage(data) {
   return {
 

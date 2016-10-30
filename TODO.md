@@ -27,3 +27,9 @@ Issues / bugs
 //     in RouterContext (created by Router)
 //     in Router
 //     in Provider
+
+//TODO: (4) MED When updating the status of a change the icon for that change is not reloaded.
+// The icon is reloaded if any changes is made at the same time
+
+//TODO: (4) MED When updating the status of a task the icon turns to a purple box.
+// The icon is reloaded once the change is reloaded

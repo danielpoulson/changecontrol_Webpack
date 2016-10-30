@@ -12,7 +12,7 @@ import toastr from 'toastr';
 import { cdButtonGroup } from './changeDetail-style.css';
 
 /* actions */
-import { addChange, createLog, editChange, getChange } from '../../actions/actions_changes';
+import { addChange, createLog, closeChange, editChange, getChange } from '../../actions/actions_changes';
 import { getProjectTasks } from '../../actions/actions_tasks';
 import { setMain } from '../../actions/actions_main';
 
@@ -132,7 +132,16 @@ saveChange(event) {
 
   if (this.state.ccNo !== 'new') {
       _change.newOwner = _change.CC_Champ !== this.props.change.CC_Champ;
-      this.props.editChange(_change);
+
+      if(_change.CC_Stat >= 4 ) {
+        // TODO: If the status is 4 or greater delete cached record
+        this.props.closeChange(_change);
+      } else {
+        this.props.editChange(_change);
+      }
+
+      console.log(_change.CC_Stat);
+
     } else {
       let created = [];
       created.push({ CC_Id: 0, CC_Action: 'Created', CC_ActBy: this.props.main.user.fullname, CC_ActDate: new Date() });
@@ -251,6 +260,7 @@ ChangeDetail.propTypes = {
   change: PropTypes.object,
   ctTotal: PropTypes.number,
   createLog: PropTypes.func,
+  closeChange: PropTypes.func,
   editChange: PropTypes.func,
   getChange: PropTypes.func,
   getProjectTasks: PropTypes.func,
@@ -281,5 +291,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  {addChange, createLog, editChange, getChange, getProjectTasks, setMain}
+  {addChange, createLog, closeChange, editChange, getChange, getProjectTasks, setMain}
   )(ChangeDetail);

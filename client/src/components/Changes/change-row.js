@@ -1,10 +1,6 @@
-import React, {
-  PropTypes
-} from 'react';
+import React, {PropTypes} from 'react';
 import moment from 'moment';
-import {
-  getStatCC
-} from '../../utils/status';
+import {getStatCC} from '../../utils/status';
 
 const ChangeRow = (props) => {
   const _change = props.change;
