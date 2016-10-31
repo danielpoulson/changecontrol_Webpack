@@ -140,13 +140,11 @@ saveChange(event) {
         this.props.editChange(_change);
       }
 
-      console.log(_change.CC_Stat);
-
     } else {
       let created = [];
       created.push({ CC_Id: 0, CC_Action: 'Created', CC_ActBy: this.props.main.user.fullname, CC_ActDate: new Date() });
       _change.CC_LOG = created;
-      _change.CC_Stat = _change.CC_Stat.id || 1;
+      _change.CC_Stat = _change.CC_Stat || 1;
       this.props.addChange(_change);
     }
 

@@ -37,8 +37,9 @@ export function getExt(ext) {
 
 export function getStatus(status) {
   let styled = '';
+  const _status = parseInt(status, 10);
 
-  switch (status) {
+  switch (_status) {
     case 1:
       styled = 'fa fa-star fa-lg';
       break;
@@ -63,8 +64,9 @@ export function getStatus(status) {
 
 export function getStatCC(status) {
   let styled = '';
+  const _status = parseInt(status, 10);
 
-  switch (status) {
+  switch (_status) {
     case 1:
       styled = 'fa fa-star fa-lg';
       break;

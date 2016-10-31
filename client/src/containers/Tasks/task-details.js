@@ -79,7 +79,7 @@ class TaskDetail extends React.Component {
       _task.TKChampNew = _task.TKChamp !== this.props.task.TKChamp;
       this.props.taskActions.editTask(_task);
     } else {
-      _task.TKStat = _task.TKStat.id || 1;
+      _task.TKStat = _task.TKStat || 1;
       _task.SourceId = _SourceId;
       this.props.taskActions.addTask(_task);
     }
