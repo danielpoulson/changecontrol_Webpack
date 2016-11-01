@@ -35,7 +35,7 @@ class Changes extends Component {
   }
 
   componentWillMount() {
-    const search:number = this.props.changes.searchText;
+    const search = this.props.changes.searchText;
     if (!this.props.changes.alldata.length > 0) {
       this.props.getChanges(4);
     }
