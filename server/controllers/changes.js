@@ -61,30 +61,19 @@ exports.updateChange = function(req, res) {
 };
 
 exports.updateChangeComment = function(req, res) {
-    const _log = req.body;
+  const _log = req.body;
 
-    const _query =  {$and : [{CC_No: req.params.id }, {CC_LOG : { $elemMatch: { CC_Id : "4", CC_Action : req.body.CC_Action}}}]};
-    const _update = {'CC_LOG.$.CC_Id' : "4", 'CC_LOG.$.CC_ActDept': req.body.CC_ActDept , 'CC_LOG.$.CC_ActBy': req.body.CC_ActBy,
-        'CC_LOG.$.CC_ActDate': req.body.CC_ActDate, 'CC_LOG.$.CC_Action' : req.body.CC_Action};
-    const _updateP = {'CC_Id' : "4", 'CC_ActDept': req.body.CC_ActDept , 'CC_ActBy': req.body.CC_ActBy,
-                'CC_ActDate': req.body.CC_ActDate, 'CC_Action' : req.body.CC_Action};
+  const _update = {'CC_Id' : "4", 'CC_ActDept': req.body.CC_ActDept , 'CC_ActBy': req.body.CC_ActBy,
+              'CC_ActDate': req.body.CC_ActDate, 'CC_Action' : req.body.CC_Action};
 
-    Change.update(_query, {$set: _update }, function (err, data) {
-      if (err) return handleError(err);
+  req.body._id = Math.floor(Math.random() * (9999999 - 1)) + 1;
 
-      req.body._id = Math.floor(Math.random() * (9999999 - 1)) + 1;
-
-      if(!data.nModified) {
-            Change.update({CC_No : req.params.id}, {$push: {CC_LOG : _updateP}}, function (err) {
-                if (err) return handleError(err);
-                res.send(_log);
-            });
-      } else {
-        res.send(_log);
-      }
-
-    });
+   Change.update({CC_No : req.params.id}, {$push: {CC_LOG : _update}}, (err, data) => {
+     if (err) return handleError(err);
+     res.send(_log);
+   });
 };
+
 
 function createEmail(CC_TDate, CC_No, CC_Descpt, CC_Champ){
   const _Target = dateFunc.dpFormatDate(CC_TDate);
@@ -174,4 +163,8 @@ exports.dumpChanges = function(req, res) {
 
 function handleError(err){
     console.log(err);
+}
+
+function logMessage(message){
+    console.log(message);
 }
