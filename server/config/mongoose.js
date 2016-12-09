@@ -6,6 +6,7 @@ var taskModel = require('../models/Task');
 var filesModel = require('../models/File');
 
 module.exports = function(config) {
+	mongoose.Promise = global.Promise;
 	mongoose.connect(config.db);
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error...'));
