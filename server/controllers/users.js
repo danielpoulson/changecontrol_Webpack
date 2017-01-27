@@ -40,6 +40,28 @@ exports.updateUser = function (req, res, next) {
 
 };
 
+exports.updatePassword = function(req, res) {
+  const password = req.body.password;
+
+  console.log(password);
+  console.log(req.params.id);
+
+  if (password) {
+    
+    const _passwordHash = crypto.hash(password);
+
+    User.update({_id : req.params.id}, {$set: {passwordHash: _passwordHash}}, function (err) {
+      if (err){console.log(err); res.sendStatus(500);}
+      res.sendStatus(200);
+    });
+
+  } else {
+
+    res.sendStatus(500);
+
+  }
+};
+
 exports.getLoggedUser = function(req, res) {
   res.send({success:true, user: makeUserSafe(req.user)});
 };

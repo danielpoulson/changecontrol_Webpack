@@ -9,6 +9,7 @@ import ChangeDetail from './containers/ChangeDetail';
 import TaskDetail from './containers/Tasks/task-details';
 import Tasks from './containers/Tasks/tasks';
 import User from './containers/User/user-profile';
+import UserPass from './containers/User/user-pass';
 import Export from './components/Files/file-export';
 
 function requireAuth(nextState, replace) {
@@ -26,6 +27,7 @@ export default (
     <Route path="task/:id" component={TaskDetail} onEnter={requireAuth} />
     <Route path="tasks" component={Tasks} onEnter={requireAuth} />
     <Route path="user" component={User} onEnter={requireAuth} />
+    <Route path="user_pass" component={UserPass} onEnter={requireAuth} />
     <Route path="export" component={Export} onEnter={requireAuth} />
      <IndexRoute component={Home} />
     <Route status={404} path="*" component={Home} />

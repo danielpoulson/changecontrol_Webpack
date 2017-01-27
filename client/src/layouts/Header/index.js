@@ -16,6 +16,7 @@ class Header extends Component {
     };
     this.onLogin = this.onLogin.bind(this);
     this.setStateLogin = this.setStateLogin.bind(this);
+    this.changePassword = this.changePassword.bind(this);
   }
 
   onLogin(e) {
@@ -32,6 +33,10 @@ class Header extends Component {
     return this.setState({ login: _login });
   }
 
+  changePassword() {
+    this.context.router.push('/user_pass');
+  }
+
   render() {
     const textStyle = {
       color: 'white'
@@ -39,6 +44,11 @@ class Header extends Component {
 
     const loginStyle = {
       marginTop: 5
+    };
+
+    const changePassword = {
+      color: 'white',
+      paddingRight: 18 
     };
 
 
@@ -59,6 +69,9 @@ class Header extends Component {
                             <p style={textStyle} className="pull-right">Welcome: {this.props.fullname}</p>
                         }
                     </div>
+                    <div className="pull-right" style={changePassword} onClick={this.changePassword}>
+                      {this.props.fullname ? "Change Password?" : "" }
+                    </div>
                 </section>
 
             </div>
@@ -72,6 +85,10 @@ Header.propTypes = {
   getUserDashboard: React.PropTypes.func.isRequired,
   login: React.PropTypes.func,
   fullname: React.PropTypes.string
+};
+
+Header.contextTypes = {
+  router: React.PropTypes.object.isRequired
 };
 
 export default connect(

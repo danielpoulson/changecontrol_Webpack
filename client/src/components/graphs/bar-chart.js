@@ -1,14 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import d3 from 'd3';
-import { changeData } from './data';
 
-export default class BarChart extends React.Component{
+class BarChart extends React.Component{
 
-	componentDidMount(){
-		this.renderChart();
+	componentDidUpdate() {
+		this.renderChart(this.props.barData);
 	}
 
-	renderChart(){
+	renderChart(barData){
 		const margin = {top: 20, right: 20, bottom: 30, left: 40},
 			width = 500 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
@@ -33,13 +33,15 @@ export default class BarChart extends React.Component{
 			.orient("left")
 			.tickFormat(d3.format(".2s"));
 
+		d3.select("#chartArea").select("svg").remove();
+
 		let svg = d3.select("#chartArea").append("svg")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
 			.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      const data = changeData;
+      const data = barData;
 			//Removes the first element of the array the "Years" item and creates a new array
 			//of category names e.g ["closed", "open"]
 			// var _category = d3.keys(data[0]).filter(function(key) { return key !== "Years"; });
@@ -151,3 +153,5 @@ export default class BarChart extends React.Component{
 		return <div id="chartArea"></div>;
 	}
 }
+
+export default connect( state => ({ barData: state.main.barData }))(BarChart);

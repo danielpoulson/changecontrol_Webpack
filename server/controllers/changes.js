@@ -7,6 +7,7 @@ const users = require('../controllers/users');
 const mailer = require('../config/mailer.js');
 const dateFunc = require('../config/date-function');
 const utils = require('../config/utils');
+const server_data = require('../config/server_data');
 
 exports.getChanges = function(req, res) {
     const status = req.params.status;
@@ -103,6 +104,8 @@ exports.getChangeById = function(req, res) {
 exports.getUserDashboard = function(req, res){
   const dashboard = {};
   let username = '';
+  dashboard.lineData = server_data.lineData;
+  dashboard.barData = server_data.barData;
   const promise = Change.count({CC_Stat: {$lt:4}}).exec();
 
   promise.then(data => {
@@ -122,6 +125,7 @@ exports.getUserDashboard = function(req, res){
     res.send(dashboard);
   });
 };
+
 
 exports.dumpChanges = function(req, res) {
     //var status = 2;

@@ -56,6 +56,15 @@ export function saveUser(data) {
   };
 }
 
+export function savePass(id, password) {
+  const url = `/api/updatepass/${id}`;
+  axios.put(url, {password: password});
+  
+  return {
+    type: "PASSWORD_CHANGED"
+  };
+}
+
 export function deleteUser(data) {
   const fullname = data;
   const url = `/api/user/${data}`;

@@ -29,6 +29,7 @@ export default function (state = initialState, action) {
          _user = action.payload.data.user;
         sessionStorage.setItem('authorised', true);
         sessionStorage.setItem('username', action.payload.data.user.username);
+        sessionStorage.setItem('id', action.payload.data.user.id);
       } else {
         toastr.error('Your username / password combination was incorrect!', 'Authentication Failed', { timeOut: 2000, positionClass: 'toast-bottom-right' });
       }
@@ -62,8 +63,12 @@ export default function (state = initialState, action) {
     const countTasksUser = action.payload.data ? action.payload.data.taskCount : 0;
     const allOpenTasks = action.payload.data ? action.payload.data.allTaskCount : 0;
     const allOpenChanges = action.payload.data ? action.payload.data.allChangeCount : 0;
+    const barData = action.payload.data ? action.payload.data.barData : {};
+    const lineData = action.payload.data ? action.payload.data.lineData : {};
     return {
       ...state,
+      barData,
+      lineData,
       countChangesUser,
       countTasksUser,
       allOpenTasks,

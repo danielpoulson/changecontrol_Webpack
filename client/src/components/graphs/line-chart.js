@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import d3 from 'd3';
 import tip from 'd3-tip';
 import _ from 'lodash';
-import { myData } from './data';
 import './styles.css';
 
 d3.tip = tip;
 
-export default class LineGraph extends Component{
+class LineGraph extends Component{
 
-  componentDidMount(){
-    this.updateChart();
+  componentDidUpdate() {
+    this.updateChart(this.props.lineData);
   }
 
-  updateChart(){
+  updateChart(lineData){
     const margin = {top: 30, right: 20, bottom: 30, left: 50};
     const w = 500 - margin.left - margin.right;
     const h = 300 - margin.top - margin.bottom;
-    const data = myData;
+    const data = lineData;
 
     const dates = _.map(data, 'date');
     const counts = _.map(data, 'count');
@@ -51,6 +51,7 @@ export default class LineGraph extends Component{
         return y(d.count);
       });
 
+    d3.select("#chart").select("svg").remove();
 
     let svg = d3
       .select('#chart')
@@ -106,3 +107,5 @@ export default class LineGraph extends Component{
     return <div id="chart"></div>;
   }
 }
+
+export default connect( state => ({ lineData: state.main.lineData }))(LineGraph);

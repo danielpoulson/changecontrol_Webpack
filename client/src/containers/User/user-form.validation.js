@@ -28,3 +28,20 @@ export function userFormIsValid(user) {
 
   return { formIsValid, errors };
 }
+
+export function userPassIsValid(pass) {
+  let formIsValid = true;
+  let errors = []; //Clears any previous errors
+
+  if (!pass) {
+    
+    errors.push('This field is required');
+    formIsValid = false;
+
+  } else if (pass.length < 6) {
+    errors.push('Password must have at least 7 characters');
+    formIsValid = false;
+  }
+
+  return { formIsValid, errors };
+}

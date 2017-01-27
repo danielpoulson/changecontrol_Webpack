@@ -57,6 +57,7 @@ router.get('/logout', function (req, res) {
    router.get('/api/allusers', users.getAllUsers);
    router.get('/api/user/:id', users.getUser);
    router.get('/api/loggeduser', users.getLoggedUser);
+   router.put('/api/updatepass/:id', users.updatePassword);
    router.put('/api/updateuser/:username', users.updateUser);
    router.post('/signup', users.createUser);
    router.post('/api/user', users.createUser);
