@@ -6,7 +6,7 @@ process.env.PORT = 9005;
 
 const app = express();
 const config = {
-  db: 'mongodb://localhost/techservices',
+  db: 'mongodb://localhost/changecontrol',
   env: process.env.NODE_ENV
 };
 

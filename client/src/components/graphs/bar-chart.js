@@ -45,7 +45,7 @@ class BarChart extends React.Component{
 			//Removes the first element of the array the "Years" item and creates a new array
 			//of category names e.g ["closed", "open"]
 			// var _category = d3.keys(data[0]).filter(function(key) { return key !== "Years"; });
-      const _category = ['closed', 'open'];
+      const _category = [ 'open', 'closed'];
 
 		// This function is used to make grid lines
 		// function make_x_axis() {
@@ -64,11 +64,13 @@ class BarChart extends React.Component{
 		}
 
 		data.forEach(function(d) {
-			d._object = _category.map(function(name) { return {name: name, value: +d[name]}; });
+			d._object = _category.map( name => ({name: name, value: +d[name]}));
 		});
 
+		console.log(data);
+
 		//Passes to x0.domain the Years ["2013", "2014", "2015"]
-		x0.domain(data.map(d => d.Years));
+		x0.domain(data.map(d => d._id));
 		x1.domain(_category).rangeRoundBands([0, x0.rangeBand()]);
 		// From the 'data' array 'open' is used to set the domain of y as it always has the largest values which are used to set the height of y.
 		y.domain([0, d3.max(data, d => d.open)]);
@@ -109,7 +111,7 @@ class BarChart extends React.Component{
 			.data(data)
 			.enter().append("g")
 			.attr("class", "g")
-			.attr("transform", function(d) { return "translate(" + x0(d.Years) + ",0)"; });
+			.attr("transform", function(d) { return "translate(" + x0(d._id) + ",0)"; });
 
 		state.selectAll("rect")
 			.data(d => d._object)

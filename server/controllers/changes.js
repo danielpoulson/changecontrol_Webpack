@@ -104,8 +104,89 @@ exports.getChangeById = function(req, res) {
 exports.getUserDashboard = function(req, res){
   const dashboard = {};
   let username = '';
+  let _barData = [];
   dashboard.lineData = server_data.lineData;
   dashboard.barData = server_data.barData;
+
+  //TODO: (2) MED There is no limit to the number of years in the bar graph
+
+  Change.aggregate(
+    [
+      { "$unwind": "$CC_LOG" },
+      {
+        "$project": {
+          "Created": "$CC_LOG.CC_Action",
+          "Year": {$year: "$CC_LOG.CC_ActDate"}
+        }
+      },
+      { $match : { Created: "Created" } },
+      { $group: {
+          "_id": "$Year",
+          "open": { "$sum": 1 }
+      }},
+      { $sort: {"_id": 1}}  
+    ],
+    function(err,result) {
+
+      _barData = result;
+
+      Change.aggregate(
+        [
+          { "$unwind": "$CC_LOG" },
+          {
+            "$project": {
+              "Created": "$CC_LOG.CC_Action",
+              "Year": {$year: "$CC_LOG.CC_ActDate"},
+              "CC_Stat": 1
+            }
+          },
+          { 
+            "$match": { 
+              "$and": [
+                { Created: "Created" },
+                { "CC_Stat": { $gt: 3 } },
+              ]
+            }
+          },
+          { $group: {
+              "_id": "$Year",
+              "closed": { "$sum": 1 }
+          }}
+        ],
+        function (err, result) {
+
+          dashboard.barData = _barData.map( barData => {
+            const id = barData._id;
+            const _result = result.filter( obj => obj._id === id);
+            return Object.assign(barData, _result[0]);
+          });
+
+          //TODO: (2) This is fake data as there is no data for the first 2 years
+
+          if (dashboard.barData.length === 1) {
+            const fakeData = [{
+                "_id": 2015,
+                "closed": 0,
+                "open": 0
+              },
+              {
+                "_id": 2016,
+                "closed": 0,
+                "open": 0
+              }];
+
+              dashboard.barData = fakeData.concat(dashboard.barData);
+
+              console.log(dashboard.barData);
+          }
+
+        }
+      )
+    }
+  );
+
+
+
   const promise = Change.count({CC_Stat: {$lt:4}}).exec();
 
   promise.then(data => {
