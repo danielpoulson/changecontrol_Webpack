@@ -67,8 +67,6 @@ class BarChart extends React.Component{
 			d._object = _category.map( name => ({name: name, value: +d[name]}));
 		});
 
-		console.log(data);
-
 		//Passes to x0.domain the Years ["2013", "2014", "2015"]
 		x0.domain(data.map(d => d._id));
 		x1.domain(_category).rangeRoundBands([0, x0.rangeBand()]);
